@@ -1,0 +1,10 @@
+#error_page {
+	padding: 2em;
+}
+
+#error_page ul {
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: square;
+    margin: 0em 0em 2em 1.5em;
+}

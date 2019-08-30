@@ -1,0 +1,63 @@
+div#limit_match_size {
+	margin-left: 3em;
+}
+div#limit_match_size div.fld {
+	margin-bottom: 5px;
+}
+div#limit_match_size {
+	width: 25em;
+}
+
+div#limit_match_size.off fieldset {
+	color: gray;
+}
+div#limit_match_size.off input {
+	background: transparent;
+	border: none;
+	color: gray;
+}
+
+#limit_match_size div.label,
+#limit_match_size div.ip_text_field,
+#limit_match_size div.ip_valid_indicator
+{
+	display: inline;
+}
+
+#id_minimum_match_word_count {
+	width: 3em;
+	text-align: right;
+}
+
+div#exclude_small_matches {
+	margin: 0;
+	padding: 0;
+	margin-left: 3em;
+}
+div#exclude_small_matches div.fld {
+	margin-bottom: 5px;
+}
+div#exclude_small_matches {
+	width: 25em;
+}
+
+div#exclude_small_matches.off fieldset {
+	color: gray;
+}
+div#exclude_small_matches.off input {
+	background: transparent;
+	border: none;
+	color: gray;
+}
+
+#exclude_small_matches div.label,
+#exclude_small_matches div.ip_text_field,
+#exclude_small_matches div.ip_valid_indicator
+{
+	display: inline;
+}
+
+#id_exclude_word_count, #id_exclude_percent {
+	width: 3em;
+	text-align: right;
+}

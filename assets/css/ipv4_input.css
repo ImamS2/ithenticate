@@ -1,0 +1,48 @@
+.ipv4-input {
+	display: inline-block;
+	position: relative;
+	border: 1px rgb(210, 210, 210) solid;
+}
+
+.ipv4-input.selected {
+	border-color: rgb(155, 155, 155);
+}
+
+.ipv4-cell {
+	/*border: none;*/
+	width: 30px;
+	text-align: center;
+	outline: none;
+	margin:0 2px;
+}
+
+.ipv4-dot {
+}
+
+/* bootstrap's RWD style */
+.ipv4-input.rwd {
+	display: block;
+	width: 100%;
+	height: 34px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+.ipv4-input.selected.rwd  {
+	border-color: #66afe9;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+}
+
+.ipv4-input.rwd > .ipv4-cell  {
+	border-radius: 4px;
+	height: 100%;
+	width: 25%;
+	padding: 0;
+}
+
+.ipv4-input.rwd > .ipv4-dot  {
+	position: absolute;
+	top: 25%; /* this value will depends on the .ipv4-input's height */
+}

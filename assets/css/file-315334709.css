@@ -1,0 +1,110 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('https://cdn2.hubspot.net/hub/92785/file-294178832-eot/templates/v1/fonts/icomoon.eot');
+	src:url('https://cdn2.hubspot.net/hub/92785/file-294178832-eot/templates/v1/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('https://cdn2.hubspot.net/hub/92785/file-293628416-woff/templates/v1/fonts/icomoon.woff') format('woff'),
+		url('https://cdn2.hubspot.net/hub/92785/file-292070784-ttf/templates/v1/fonts/icomoon.ttf') format('truetype'),
+		url('https://cdn2.hubspot.net/hub/92785/file-293608696-svg/templates/v1/fonts/icomoon.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+[class*="icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-lock:before {
+	content: "\e600";
+}
+.icon-clock:before {
+	content: "\e601";
+}
+.icon-pencil:before {
+	content: "\e000";
+}
+.icon-atom:before {
+	content: "\e001";
+}
+.icon-book:before {
+	content: "\e002";
+}
+.icon-courthouse:before {
+	content: "\e003";
+}
+.icon-diploma:before {
+	content: "\e004";
+}
+.icon-paper-search:before {
+	content: "\e005";
+}
+.icon-quote-end:before {
+	content: "\e006";
+}
+.icon-quote-start:before {
+	content: "\e007";
+}
+.icon-shield:before {
+	content: "\e008";
+}
+.icon-globe:before {
+	content: "\e009";
+}
+.icon-circle:before {
+	content: "\e00a";
+}
+.icon-check:before {
+	content: "\e00b";
+}
+.icon-hdd:before {
+	content: "\e00c";
+}
+.icon-group:before {
+	content: "\e00d";
+}
+.icon-ok:before {
+	content: "\e00e";
+}
+.icon-x:before {
+	content: "\e00f";
+}
+.icon-search:before {
+	content: "\e010";
+}
+.icon-facebook:before {
+	content: "\e011";
+}
+.icon-twitter:before {
+	content: "\e012";
+}
+.icon-linkedin:before {
+	content: "\e013";
+}
+.icon-envelope:before {
+	content: "\e014";
+}
+.icon-cloud:before {
+	content: "\e015";
+}
+
+/*input.search::before{
+            font-family: 'icomoon';
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            -webkit-font-smoothing: antialiased;
+            content: "\e010";
+            position: absolute;
+            color: #888;
+            top: 10px;
+            right: 10px;
+}*/
