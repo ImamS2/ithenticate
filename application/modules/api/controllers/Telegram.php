@@ -19,7 +19,7 @@ class Telegram extends Api_Controller
 		$this->load->helper("form");
 		$this->token = "";
 		$this->url = $this->url . $this->token . "/";
-		$this->id_chat_base = "151054190";
+		$this->id_chat_base = "";
 		$this->debug = TRUE;
 		$this->method = "poll";
 		$this->last_id = NULL;
