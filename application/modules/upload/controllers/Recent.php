@@ -19,10 +19,12 @@ class Recent extends Recent_Controller
 {
 	function __construct()
 	{
+		Modules::load("folder");
 		parent::__construct();
 		$this->template->set_template("template" . DIRECTORY_SEPARATOR . "admin");
 		$this->template->set("body_class","template layout_3_2colh");
 		$this->load->model("File_model");
+		$this->load->model("Folder_model");
 	}
 
 	public function index()

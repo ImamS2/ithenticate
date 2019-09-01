@@ -58,8 +58,14 @@ $route["en_us/login"] = "auth/login";
 $route["en_us/logout"] = "auth/logout";
 
 $route["en_us/folder/(:num)"] = "folder/index/$1";
+$route["en_us/folder/(:any)"] = "error_not_found";
 $route["en_us/user_file/(:num)"] = "user_file/index/$1";
+$route["en_us/user_file/(:any)"] = "error_not_found";
 $route["en_us/upload/(:num)"] = "upload/index/$1";
+$route["en_us/upload/recent"] = "upload/recent";
+$route["en_us/upload/(:any)"] = "error_not_found";
 $route["en_us/upload/uploadlog/(:num)"] = "upload/recent/uploadlog/$1";
+$route["en_us/upload/uploadlog/(:any)"] = "error_not_found";
 $route["en_us/report/(:num)"] = "document/report/$1";
+$route["en_us/report/(:any)"] = "error_not_found";
 $route["en_us/(.+)$"] = "$1";
