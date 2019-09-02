@@ -114,14 +114,13 @@
 						<li>User ID: <?= $userdata->id ?></li>
 						<?php if ($this->ion_auth->in_group("cho admin")): ?>
 							<?php if ($use_api === TRUE): ?>
-								<li>Expiry date: <?= $expired_real ?></li>
+								<li><?= isset($expired_real) ? "Expiry date: " . $expired_real : "" ?></li>
+							<?php endif ?>
 								<br>
 								<br>
 								<li>
-									<?= anchor(site_url("en_us/user/reports"),"Cek Sisa Quota",array("class" => "btn btn-primary")) ?>
+									<?= anchor(site_url("en_us/user/report"),"Cek Sisa Quota",array("class" => "btn btn-primary")) ?>
 								</li>
-							<?php else: ?>
-							<?php endif ?>
 						<?php else: ?>
 							<li>Expiry date: <?= date("m-d-Y", $userdata->expired_at) ?></li>
 							<?php if (isset($limit_quota_left) && !empty($limit_quota_left)): ?>

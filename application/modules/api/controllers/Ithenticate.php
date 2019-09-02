@@ -27,11 +27,6 @@ class Ithenticate extends Api_Controller
 			$this->username = $api_active->api_username;
 			$this->password = $api_active->api_password;
 			$this->sid = $api_active->sid;
-		} else {
-			// tidak ada api aktif
-			// karena tidak ada akun api yang aktif, plannya ganti ke mode manual dulu.
-			// $this->Settings_model->get_manual();
-			exit();
 		}
 		// pre($this);
 	}
@@ -526,10 +521,7 @@ class Ithenticate extends Api_Controller
 
 		$data = $this->Api_account_model->curl_request($ch,"Ithenticate");
 		// pre($data);
-		if ($data === false) {
-			$this->load->model("Settings_model");
-			return $this->Settings_model->get_manual();
-		} else {
+		if ($data !== false) {
 			return $data;
 		}
 

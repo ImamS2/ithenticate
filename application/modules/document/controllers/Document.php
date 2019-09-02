@@ -82,22 +82,4 @@ class Document extends Admin_Controller
 			redirect("en_us","refresh");
 		}
 	}
-
-	public function report($id = NULL)
-	{
-		if (isset($id) && !empty($id)) {
-			$file_obj = $this->Document_model->get_file($id);
-			if ($file_obj->num_rows() === 1) {
-				$this->template->set_template("template" . DIRECTORY_SEPARATOR . "admin");
-				$this->template->set("body_class","yui-skin-sam template layout_3_2colh");
-				$file_detail = $file_obj->row_array();
-			} else {
-				$this->session->set_flashdata("message","ID File not found");
-				redirect("en_us","refresh");
-			}
-		} else {
-			$this->session->set_flashdata("message","ID File must be set");
-			redirect("en_us","refresh");
-		}
-	}
 }

@@ -23,6 +23,18 @@ if (!function_exists("pre"))
 	}
 }
 
+if (!function_exists("run_javascript")) {
+	function run_javascript($script = array()) {
+		echo "<script type=\"text/javascript\">";
+		if (!empty($script)) {
+			foreach ($script as $js) {
+				echo $js;
+			}
+		}
+		echo "</script>";
+	}
+}
+
 /*
 |
 |----------------------------------------------------------------
