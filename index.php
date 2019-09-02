@@ -53,19 +53,9 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-switch ($_SERVER['HTTP_HOST'])
-{
-	case 'app-ithenticate.com':
-		$env = 'production';
-		break;
-	
-	default:
-		$env = 'development';
-		break;
-}
 
 define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : $env);
-
+echo ($_SERVER["CI_ENV"]);
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
