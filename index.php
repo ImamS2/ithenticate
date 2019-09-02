@@ -55,7 +55,7 @@
  */
 
 define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : $env);
-echo ($_SERVER["CI_ENV"]);
+// echo ($_SERVER["CI_ENV"]);
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING

@@ -1,7 +1,7 @@
 <IfModule mod_rewrite.c>
-    RewriteEngine On
+	RewriteEngine On
 
-    SetEnvIf Host www.app-ithenticate.com$ CI_ENV=production
+	SetEnvIf Host www.app-ithenticate.com$ CI_ENV=production
 	SetEnvIf Host testaja.app-ithenticate.com$ CI_ENV=testing
 	SetEnvIf Host app-ithenticate.com/testaja$ CI_ENV=testing
 	SetEnvIf Host localhost$ CI_ENV=development
@@ -9,9 +9,9 @@
 	SetEnvIf Host 127.0.1.*$ CI_ENV=testing
 	SetEnvIf Host 127.0.2.*$ CI_ENV=production
 
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.php/$1 [L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ index.php/$1 [L]
 </IfModule>
 
 php_value max_execution_time 120
