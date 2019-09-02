@@ -17,9 +17,9 @@
 			-moz-binding: url('/mozxml/ellipsis.xml'); /* http://mattsnider.com/css/css-string-truncation-with-ellipsis/ */
 		}
 		</style>
-		<link rel="apple-touch-icon" href="/static/sc/0425/sproutcore/foundation/en_us/a/images/sproutcore-logo.png" />
-		<link rel="apple-touch-startup-image" media="screen and (orientation:portrait)" href="/static/sc/0425/sproutcore/foundation/en_us/a/images/sproutcore-startup-portrait.png" />
-		<link rel="apple-touch-startup-image" media="screen and (orientation:landscape)" href="/static/sc/0425/sproutcore/foundation/en_us/a/images/sproutcore-startup-landscape.png" />
+		<link rel="apple-touch-icon" href="assets/images/sproutcore-logo.png" />
+		<link rel="apple-touch-startup-image" media="screen and (orientation:portrait)" href="assets/images/sproutcore-startup-portrait.png" />
+		<link rel="apple-touch-startup-image" media="screen and (orientation:landscape)" href="assets/images/sproutcore-startup-landscape.png" />
 
 		<title>iThenticate Document Viewer</title>
 
@@ -120,9 +120,9 @@
 		</script>
 		<script type="text/javascript">SC.buildMode = "production";</script>
 
-		<link href="/static/sc/0425/cv/en_us/a/stylesheet-packed.css" rel="stylesheet" type="text/css" />
-		<link href="/static/sc/0425/sproutcore/standard_theme/en_us/a/stylesheet.css" rel="stylesheet" type="text/css" />
-		<link href="/static/sc/0425/ithenticate_dv/en_us/a/stylesheet.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/stylesheet-packed.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/stylesheet.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/r-stylesheet.css" rel="stylesheet" type="text/css" />
 	</head>
 
 	<body class="sc-theme focus">
@@ -181,8 +181,8 @@
 			<div class="waiting infobar"> </div>
 			<p class="loading">Loading Document Viewer...</p>
 		</div>
-		<script type="text/javascript" src="/static/sc/0425/cv/en_us/a/javascript-packed.js"></script>
-		<script type="text/javascript" src="/static/sc/0425/ithenticate_dv/en_us/a/javascript.js"></script>
+		<script type="text/javascript" src="assets/js/javascript-packed.js"></script>
+		<script type="text/javascript" src="assets/js/r-javascript.js"></script>
 		<script type="text/javascript">String.preferredLanguage = "en_us";</script>
 		<script type="text/javascript">
 			<!--//--><![CDATA[//><!--

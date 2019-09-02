@@ -38,13 +38,13 @@ class Report extends Admin_Controller
 
 	private function _api($id)
 	{
-		echo "gunakan api<br>Id file : ".$id;
+		// echo "gunakan api<br>Id file : ".$id;
 		$this->load->view("report");
 	}
 
 	private function _manual($id)
 	{
-		echo "mode manual<br>Id file : ".$id;
+		// echo "mode manual<br>Id file : ".$id;
 		$this->load->view("report");
 	}
 }
