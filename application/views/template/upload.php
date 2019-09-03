@@ -20,6 +20,7 @@
 				<div class="progressmeter bd"><img src="<?= site_url("assets/images/spinner.gif") ?>"></div>
 			</div>
 		</div>
+		<?= Modules::run("widget_admin/alert_api");?>
 		<?= Modules::run("widget_admin/nav_tab");?>
 		<?= Modules::run("widget_admin/header");?>
 		<?= Modules::run("widget_admin/announcement");?>

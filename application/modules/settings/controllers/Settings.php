@@ -191,4 +191,9 @@ class Settings extends Settings_Controller
 		}
 		return FALSE;
 	}
+
+	public function override_manual()
+	{
+		$this->Settings_model->get_manual();
+	}
 }

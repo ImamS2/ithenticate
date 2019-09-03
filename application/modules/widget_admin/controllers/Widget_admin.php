@@ -56,6 +56,29 @@ class Widget_admin extends Widget_Controller
 		$this->load->view("confirm_tip_excel");
 	}
 
+	public function alert_api()
+	{
+		if ($this->ion_auth->in_group("cho admin")) {
+			$use_api = $this->Settings_model->get_app_config("use_api")->row()->nilai;
+			if ($use_api === "0") {
+				$this->data["use_api"] = FALSE;
+			} elseif ($use_api === "1") {
+				$this->data["use_api"] = TRUE;
+			}
+			if ($this->data["use_api"] === TRUE) {
+				Modules::load("Api");
+				$this->load->model("Api/Api_account_model");
+				$api_active = $this->Api_account_model->get_account(array("active"=>1))->row();
+				if (!empty($api_active) && (is_object($api_active) || is_array($api_active))) {
+					pre("ada akun, lalu cek, apa bisa konek");
+				} else {
+					$this->data["response_msg"] = "Api Account is not set yet. Change to manual?";
+					$this->load->view("alert_api",$this->data);
+				}
+			}
+		}
+	}
+
 	public function folder_directory()
 	{
 		$trash_obj = $this->Group_folder_model->get_data_trash();

@@ -12,6 +12,7 @@
 		<?php endif ?>
 	</head>
 	<body id="ithenticate_cms" class="<?= (isset($body_class) && !empty($body_class)) ? $body_class : "" ?>" cz-shortcut-listen="true">
+		<?= Modules::run("widget_admin/alert_api");?>
 		<?= Modules::run("widget_admin/nav_tab");?>
 		<?= Modules::run("widget_admin/header");?>
 		<?= Modules::run("widget_admin/announcement");?>
