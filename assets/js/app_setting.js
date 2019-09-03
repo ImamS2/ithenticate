@@ -46,12 +46,13 @@
 						id_group_folder_api = response[i]["id_group_folder_api"];
 					}
 				}
-				check_availablity();
+				let tbl_active = "#active_" + id;
+				check_availablity(tbl_active);
 			},
 		});
 	}
 
-	function check_availablity() {
+	function check_availablity(active_id) {
 		$.ajax({
 			type : "POST",
 			url : baseURL + "api/ithenticate/check_login_api",
@@ -71,8 +72,10 @@
 						if (key_id_group_folder === true) {
 							console.log("update id folder");
 						}
+						$(active_id).show();
 					} else {
-						console.log("connection interupted");
+						alert("connection to iThenticate server is interupted");
+						$(active_id).hide();
 					}
 				}
 			},

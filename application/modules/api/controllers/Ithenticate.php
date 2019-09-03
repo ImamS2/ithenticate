@@ -21,7 +21,7 @@ class Ithenticate extends Api_Controller
 	{
 		parent::__construct();
 		$this->load->model("Api_account_model");
-		$api_active = $this->Api_account_model->get_account(array("active"=>1))->row();
+		$api_active = $this->Api_account_model->where(array("active"=>1))->get_account()->row();
 		if (!empty($api_active) && (is_object($api_active) || is_array($api_active))) {
 			$this->id_account = $api_active->id;
 			$this->username = $api_active->api_username;
@@ -51,6 +51,12 @@ class Ithenticate extends Api_Controller
 				$get_account = $this->Api_account_model->get_account(array("id"=>$id));
 				if ($get_account->num_rows() > 0) {
 					$result = $get_account->result();
+					// $account = $get_account->row();
+					// $id_account = $account->id;
+					// $params = array(
+					// 	"checked" => TRUE,
+					// );
+					// $edit_checked = $this->Api_account_model->edit_account_data($id_account,$params);
 				}
 			}
 		}

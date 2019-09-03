@@ -73,7 +73,7 @@ class Widget_admin extends Widget_Controller
 					pre("ada akun, lalu cek, apa bisa konek");
 				} else {
 					$this->data["response_msg"] = "Api Account is not set yet. Change to manual?";
-					$this->data["link_manual"] = "en_us/settings/override_manual";
+					$this->data["link_manual"] = "en_us/settings/be_manual";
 					$this->data["uri_string"] = $this->uri->uri_string;
 					$this->load->view("alert_api",$this->data);
 				}

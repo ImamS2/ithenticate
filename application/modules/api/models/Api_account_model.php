@@ -15,14 +15,8 @@ class Api_account_model extends MY_Model
 		$this->load->database();
 	}
 
-	function get_account($where = [])
+	function get_account()
 	{
-		// return $this->db->select("*")
-		// 				->get_where($this->table,$where);
-		$this->select();
-		if (isset($where) && !empty($where)) {
-			$this->where($where);
-		}
 		$this->get();
 		return $this;
 	}
