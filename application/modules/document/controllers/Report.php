@@ -10,7 +10,7 @@ class Report extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model("Document_model");
-		// $this->template->set_template("template" . DIRECTORY_SEPARATOR . "admin");
+		// $this->template->set_template("template" . DIRECTORY_SEPARATOR . "report");
 		// $this->template->set("body_class","yui-skin-sam template layout_3_2colh");
 	}
 
