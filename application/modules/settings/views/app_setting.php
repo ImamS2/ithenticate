@@ -96,7 +96,7 @@
 														<?= anchor(site_url("settings/api_activate/".$account->id),"Activate",array("class"=>"btn btn-xs btn-primary","style"=> ($account->checked == NULL) ? "display:none" : "","id"=>"active_".$account->id)) ?>
 													<?php endif ?>
 												</td>
-												<td><?= $account->name_group_folder_api ?></td>
+												<td><?= $account->id_group_folder_api . " - " . $account->name_group_folder_api ?></td>
 												<td>
 													<a href="javascript:void(0);" class="cek_api btn btn-xs btn-primary" data-id="<?= $account->id ?>"> Cek API</a>
 												</td>

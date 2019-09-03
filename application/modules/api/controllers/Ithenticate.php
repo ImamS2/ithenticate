@@ -48,10 +48,10 @@ class Ithenticate extends Api_Controller
 			$result = new stdClass();
 
 			if (!empty($id)) {
-				$get_account = $this->Api_account_model->get_account(array("id"=>$id));
+				$get_account = $this->Api_account_model->where(array("id"=>$id))->get_account();
 				if ($get_account->num_rows() > 0) {
-					$result = $get_account->result();
-					// $account = $get_account->row();
+					$result = $get_account->row();
+					// $account = $result;
 					// $id_account = $account->id;
 					// $params = array(
 					// 	"checked" => TRUE,
@@ -85,7 +85,11 @@ class Ithenticate extends Api_Controller
 				$id_group_folder_api = $postData["id_group_folder_api"];
 			}
 
-			if (!empty($username) && !empty($password)) {
+			if (array_key_exists("id", $postData)) {
+				$id_account = $postData["id"];
+			}
+
+			if (!empty($username) && !empty($password) && !empty($id_account)) {
 				$this->password = $password;
 				$this->username = $username;
 				$this->check_only = TRUE;
@@ -110,9 +114,17 @@ class Ithenticate extends Api_Controller
 							if ($id_group_folder_api === $id) {
 								pre("sama,\n lalu, cek folder per kampus");
 							} else {
-								$name = $username;
+								$explosion = explode("@", $username);
+								$name = $explosion[0];
 								$buat_group_folder_default = $this->group_folder_add($name);
 								if ($this->api_status === "200") {
+									$params = array(
+										"checked" => TRUE,
+										"id_group_folder_api" => $buat_group_folder_default,
+										"name_group_folder_api" => $name,
+									);
+									$edit_checked = $this->Api_account_model->edit_account_data($id_account,$params);
+
 									$response["login_result"] = $this->messages;
 									$response["id_group_folder_api"] = $buat_group_folder_default;
 								} else {
@@ -122,9 +134,17 @@ class Ithenticate extends Api_Controller
 						}
 					} else {
 						// tidak ada group foldernya
-						$name = $username;
+						$explosion = explode("@", $username);
+						$name = $explosion[0];
 						$buat_group_folder_default = $this->group_folder_add($name);
 						if ($this->api_status === "200") {
+							$params = array(
+								"checked" => TRUE,
+								"id_group_folder_api" => $buat_group_folder_default,
+								"name_group_folder_api" => $name,
+							);
+							$edit_checked = $this->Api_account_model->edit_account_data($id_account,$params);
+
 							$response["login_result"] = $this->messages;
 							$response["id_group_folder_api"] = $buat_group_folder_default;
 						} else {
@@ -138,6 +158,7 @@ class Ithenticate extends Api_Controller
 			}
 		}
 		$data = $response;
+		// $data = $postData;
 		echo json_encode($data);
 	}
 

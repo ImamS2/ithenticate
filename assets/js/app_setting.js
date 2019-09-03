@@ -39,24 +39,22 @@
 			},
 			dataType:"json",
 			success : function (response){
-				if (response.length > 0) {
-					for (var i = 0; i < response.length; i++) {
-						username = response[i]["api_username"];
-						password = response[i]["api_password"];
-						id_group_folder_api = response[i]["id_group_folder_api"];
-					}
-				}
-				let tbl_active = "#active_" + id;
-				check_availablity(tbl_active);
+				// console.log(response);
+				// console.log(tbl_active);
+				username = response["api_username"];
+				password = response["api_password"];
+				id_group_folder_api = response["id_group_folder_api"];
+				check_availablity(id);
 			},
 		});
 	}
 
-	function check_availablity(active_id) {
+	function check_availablity(id) {
 		$.ajax({
 			type : "POST",
 			url : baseURL + "api/ithenticate/check_login_api",
 			data : {
+				id : id,
 				username: username,
 				password: password,
 				id_group_folder_api : id_group_folder_api,
@@ -66,18 +64,24 @@
 				console.log(response);
 				let key_login_result = "login_result" in response;
 				let key_id_group_folder = "id_group_folder_api" in response;
+				let tbl_active = "#active_" + id;
 				if (key_login_result === true) {
-					if (response["login_result"] !== null) {
+					if (response["login_result"] != null) {
 						console.log("connection established");
 						if (key_id_group_folder === true) {
-							console.log("update id folder");
-							$(active_id).show();
+							if(login_result.length == 1) {
+								let group_api = login_result[9];
+								name_group = group_api["name"];
+								id_group = group_api["id"];
+								
+							}
+							$(tbl_active).show();
 						} else {
 							alert(response["login_result"]);
 						}
 					} else {
 						alert("connection to iThenticate server is interupted");
-						$(active_id).hide();
+						$(tbl_active).hide();
 					}
 				}
 			},

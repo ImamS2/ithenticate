@@ -68,7 +68,7 @@ class Widget_admin extends Widget_Controller
 			if ($this->data["use_api"] === TRUE) {
 				Modules::load("Api");
 				$this->load->model("Api/Api_account_model");
-				$api_active = $this->Api_account_model->get_account(array("active"=>1))->row();
+				$api_active = $this->Api_account_model->where(array("active"=>1))->get_account()->row();
 				if (!empty($api_active) && (is_object($api_active) || is_array($api_active))) {
 					pre("ada akun, lalu cek, apa bisa konek");
 				} else {
