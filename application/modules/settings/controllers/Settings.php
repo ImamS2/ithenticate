@@ -157,7 +157,8 @@ class Settings extends Settings_Controller
 	public function api_activate($id)
 	{
 		if (isset($id) && !empty($id)) {
-			$this->load->model(array("Api_account_model"));
+			Modules::load("Api");
+			$this->load->model("Api/Api_account_model");
 			$api_activation = $this->Settings_model->get_automatic();
 			$api_active = $this->Api_account_model->get_account(array("active"=>1))->row();
 			if (!empty($api_active) && (is_object($api_active) || is_array($api_active))) {
@@ -178,7 +179,8 @@ class Settings extends Settings_Controller
 	public function api_deactivate($id)
 	{
 		if (isset($id) && !empty($id)) {
-			$this->load->model(array("Api_account_model"));
+			Modules::load("Api");
+			$this->load->model("Api/Api_account_model");
 			$edit_account_data = $this->Api_account_model->edit_account_data($id,array("active"=>0));
 			if ($edit_account_data != FALSE) {
 				$this->session->set_flashdata("message","API Account deactivated success");

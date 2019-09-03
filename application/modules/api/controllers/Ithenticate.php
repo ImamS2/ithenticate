@@ -20,7 +20,7 @@ class Ithenticate extends Api_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(array("Api_account_model"));
+		$this->load->model("Api_account_model");
 		$api_active = $this->Api_account_model->get_account(array("active"=>1))->row();
 		if (!empty($api_active) && (is_object($api_active) || is_array($api_active))) {
 			$this->id_account = $api_active->id;

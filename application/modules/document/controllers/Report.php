@@ -10,8 +10,8 @@ class Report extends Admin_Controller
 	{
 		parent::__construct();
 		$this->load->model("Document_model");
-		// $this->template->set_template("template" . DIRECTORY_SEPARATOR . "report");
-		// $this->template->set("body_class","yui-skin-sam template layout_3_2colh");
+		$this->template->set_template("template" . DIRECTORY_SEPARATOR . "report");
+		$this->template->set("body_class","sc-theme focus box-shadow border-rad safari windows en_us sc-focus");
 	}
 
 	public function index($id = NULL)
@@ -38,13 +38,25 @@ class Report extends Admin_Controller
 
 	private function _api($id)
 	{
-		// echo "gunakan api<br>Id file : ".$id;
-		$this->load->view("report");
+		$main_css = $this->main_css;
+		$main_js = $this->main_js;
+		$_template = array(
+			"main_css" => $main_css,
+			"main_js" => $main_js,
+			"title" => "Document Viewer",
+		);
+		$this->Document_model->render_page("report",$this->data,$_template);
 	}
 
 	private function _manual($id)
 	{
-		// echo "mode manual<br>Id file : ".$id;
-		$this->load->view("report");
+		$main_css = $this->main_css;
+		$main_js = $this->main_js;
+		$_template = array(
+			"main_css" => $main_css,
+			"main_js" => $main_js,
+			"title" => "Document Viewer",
+		);
+		$this->Document_model->render_page("report",$this->data,$_template);
 	}
 }
