@@ -1,7 +1,7 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 
-	SetEnvIf Host www.app-ithenticate.com$ CI_ENV=production
+	SetEnvIf Host app-ithenticate.com$ CI_ENV=production
 	SetEnvIf Host testaja.app-ithenticate.com$ CI_ENV=testing
 	SetEnvIf Host app-ithenticate.com/testaja$ CI_ENV=testing
 	SetEnvIf Host localhost$ CI_ENV=development

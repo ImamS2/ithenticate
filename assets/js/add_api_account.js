@@ -11,10 +11,14 @@
 		if(api_password.val() !== ""){
 			password = api_password.val();
 		}
-		check_availablity();
+		if (username === undefined || password === undefined) {
+			alert("Username or Password is empty");
+		} else {
+			add_check_availablity();
+		}
 	});
 
-	function check_availablity() {
+	function add_check_availablity() {
 		$.ajax({
 			type : "POST",
 			url : baseURL + "api/ithenticate/check_login_api",
@@ -34,7 +38,7 @@
 							console.log("update id folder");
 						}
 					} else {
-						console.log("connection interupted");
+						alert("connection to iThenticate server is interupted");
 					}
 				}
 			},

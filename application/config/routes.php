@@ -66,6 +66,6 @@ $route["en_us/upload/recent"] = "upload/recent";
 $route["en_us/upload/(:any)"] = "error_not_found";
 $route["en_us/upload/uploadlog/(:num)"] = "upload/recent/uploadlog/$1";
 $route["en_us/upload/uploadlog/(:any)"] = "error_not_found";
-$route["en_us/report/(:num)"] = "document/report/$1";
+$route["en_us/report/(:num)"] = "document/report/index/$1";
 $route["en_us/report/(:any)"] = "error_not_found";
 $route["en_us/(.+)$"] = "$1";
