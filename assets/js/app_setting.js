@@ -71,8 +71,10 @@
 						console.log("connection established");
 						if (key_id_group_folder === true) {
 							console.log("update id folder");
+							$(active_id).show();
+						} else {
+							alert(response["login_result"]);
 						}
-						$(active_id).show();
 					} else {
 						alert("connection to iThenticate server is interupted");
 						$(active_id).hide();

@@ -21,7 +21,8 @@ class Upload extends Upload_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(array("File_model"));
+		$this->load->model("File_model");
+		$this->load->model("Folder/Folder_model");
 		$this->template->set("message",$this->session->flashdata("message"));
 		$this->template->set_template("template" . DIRECTORY_SEPARATOR . "upload");
 		$this->template->set("body_class","yui-skin-sam template layout_3_2colh");

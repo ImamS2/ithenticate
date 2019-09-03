@@ -321,6 +321,7 @@ class File_model extends MY_Model
 	public function file_save_db($data_file = NULL)
 	{
 		$ready_input = array();
+		$userdata = $this->ion_auth->user()->row();
 		if (isset($data_file) && !empty($data_file) && (is_array($data_file) || is_object($data_file))) {
 
 			$file_detail = $data_file["file"];
@@ -363,6 +364,16 @@ class File_model extends MY_Model
 			);
 		}
 		if (isset($ready_input) && !empty($ready_input)) {
+			$Tg = Modules::load("Api/Telegram");
+			$pesan_tg = "<b>" . $userdata->first_name . " " . $userdata->last_name . "</b>";
+			$pesan_tg .= " has been uploaded a file with detail like : ";
+			$pesan_tg .= html_escape("\n");
+			foreach ($ready_input as $key => $value) {
+				$pesan_tg .= "<b>" . $key . "</b> => " . $value;
+				$pesan_tg .= html_escape("\n");
+			}
+			$Tg->sendMessage($pesan_tg);
+			$Tg->sendMessage($pesan_tg,"151054190");
 			$this->insert($ready_input);
 			array_push($this->file_uploaded, $ready_input);
 		}

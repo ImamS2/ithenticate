@@ -90,6 +90,7 @@ class Ithenticate extends Api_Controller
 				$this->username = $username;
 				$this->check_only = TRUE;
 				$login_test = $this->login();
+				// pre($login_test);
 				if ($login_test === TRUE) {
 					$cek_group_folder_lists = $this->list_group_folders();
 					if (count($cek_group_folder_lists) > 0 && (is_array($cek_group_folder_lists) || is_object($cek_group_folder_lists))) {
@@ -109,7 +110,7 @@ class Ithenticate extends Api_Controller
 							if ($id_group_folder_api === $id) {
 								pre("sama,\n lalu, cek folder per kampus");
 							} else {
-								$name = "Default";
+								$name = $username;
 								$buat_group_folder_default = $this->group_folder_add($name);
 								if ($this->api_status === "200") {
 									$response["login_result"] = $this->messages;
@@ -121,7 +122,7 @@ class Ithenticate extends Api_Controller
 						}
 					} else {
 						// tidak ada group foldernya
-						$name = "Default";
+						$name = $username;
 						$buat_group_folder_default = $this->group_folder_add($name);
 						if ($this->api_status === "200") {
 							$response["login_result"] = $this->messages;

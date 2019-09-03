@@ -10,31 +10,25 @@ class Telegram extends Api_Controller
 	protected $token;
 	protected $id_chat_base;
 	protected $debug;
-	protected $method;
-	protected $last_id;
+	protected $parse_mode;
 
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->helper("form");
-		$this->token = "";
-		$this->url = $this->url . $this->token . "/";
-		$this->id_chat_base = "";
-		$this->debug = TRUE;
-		$this->method = "poll";
-		$this->last_id = NULL;
-	}
+		$this->load->config("Api/telegram");
 
-	public function test()
-	{
-		$this->load->view("index");
+		$this->token = $this->config->item("telegram_bot_key");
+		$this->url = $this->url . $this->token . "/";
+		$this->debug = TRUE;
+		$this->id_chat_base = $this->config->item("creator");
+		$this->parse_mode = $this->config->item("parse_mode");
 	}
 
 	public function getMe($token_bot = NULL)
 	{
 		$token_bot = isset($token_bot) ? $token_bot : $this->token;
 		if (strlen($token_bot) > 20) {
-			pre($this->apiRequest("getMe"));
 			return $this->apiRequest("getMe");
 		} else {
 			return FALSE;
@@ -51,22 +45,51 @@ class Telegram extends Api_Controller
 			if (!empty($last_id)){
 				$params = ["offset" => $last_id+1, "limit" => 1];
 			}
-			pre($this->apiRequest("getUpdates", $params));
 			return $this->apiRequest("getUpdates", $params);
 		}
 	}
 
-	public function sendMessage($pesan = NULL, $idchat = NULL, $idpesan = NULL)
+	public function getWebhookInfo()
+	{
+		$token_bot = isset($token_bot) ? $token_bot : $this->token;
+		if (strlen($token_bot) > 20) {
+			return $this->apiRequest("getWebhookInfo");
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function deleteWebhook()
+	{
+		$token_bot = isset($token_bot) ? $token_bot : $this->token;
+		if (strlen($token_bot) > 20) {
+			return $this->apiRequest("deleteWebhooks");
+		} else {
+			return FALSE;
+		}
+	}
+
+	public function sendMessage($pesan = NULL, $idchat = NULL, $mark_html = NULL, $idpesan = NULL)
 	{
 		if (empty($idchat)) {
-			$idchat = $this->id_chat_base;
+			if (empty($this->id_chat_base)) {
+			} else {
+				$idchat = $this->id_chat_base;
+			}
 		}
-		$pesan = $this->input->post("message");
+		if (!empty($mark_html)) {
+			$parse_mode = $mark_html;
+		} else {
+			$parse_mode = $this->parse_mode;
+		}
+		$pesan = isset($pesan) ? $pesan : $this->input->post("message");
 		$data = array(
 			"chat_id"=> $idchat,
 			"text" => $pesan,
 			"reply_to_message_id" => $idpesan,
+			"parse_mode" => $parse_mode,
 		);
+		// $this->load->view("send");
 		return $this->apiRequest("sendMessage", $data);
 	}
 
@@ -110,39 +133,6 @@ class Telegram extends Api_Controller
 				echo "Pesan yang dikirim: ".$text.PHP_EOL;
 				print_r($hasil);
 			}
-		}
-	}
-
-	public function pollMethod()
-	{
-		if ($this->method === "poll") {
-			// $last_id = null;
-			while (true){
-				$result = $this->getUpdates($this->last_id);
-				if (!empty($result)) {
-					echo "+";
-					$last_id = $this->printUpdates($result);
-				} else {
-					echo "-";
-				}
-
-				sleep(1);
-			}
-			// $result = $this->getUpdates($this->last_id);
-			// if (count($result) > 1) {
-			// 	$this->last_id = $result[0]["update_id"];
-			// 	$result = $this->getUpdates($this->last_id);
-			// }
-			// pre($result);
-		}
-	}
-
-	public function webhookMethod()
-	{
-		if ($this->method === "webhook") {
-			$content = file_get_contents("php://input");
-			pre($content);
-			$update = json_decode($content, true);
 		}
 	}
 

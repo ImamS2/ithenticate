@@ -111,7 +111,7 @@
 								<div class="ip_file_field">
 									<div class="ip_valid_indicator">
 										<div class="fileuploader fileuploader-theme-default">
-											<input type="file" name="file" class="File form-control __validateProfile:File" id="form673file" style="position: absolute; z-index: -9999; height: 0px; width: 0px; padding: 0px; margin: 0px; line-height: 0; outline: 0px; border: 0px; opacity: 0;">
+											<input type="file" name="file_1" class="File form-control __validateProfile:File" id="form673file" style="position: absolute; z-index: -9999; height: 0px; width: 0px; padding: 0px; margin: 0px; line-height: 0; outline: 0px; border: 0px; opacity: 0;">
 										</div>
 									</div>
 								</div>
