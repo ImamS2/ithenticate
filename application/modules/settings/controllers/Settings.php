@@ -195,5 +195,7 @@ class Settings extends Settings_Controller
 	public function override_manual()
 	{
 		$this->Settings_model->get_manual();
+		$uri_backlink = $this->input->get("uri");
+		redirect($uri_backlink,"refresh");
 	}
 }
