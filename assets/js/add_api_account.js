@@ -36,6 +36,8 @@
 						console.log("connection established");
 						if (key_id_group_folder === true) {
 							console.log("update id folder");
+						} else {
+							alert(response["login_result"]);
 						}
 					} else {
 						alert("connection to iThenticate server is interupted");

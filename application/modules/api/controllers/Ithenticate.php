@@ -87,11 +87,19 @@ class Ithenticate extends Api_Controller
 
 			if (array_key_exists("id", $postData)) {
 				$id_account = $postData["id"];
+			} else {
 			}
 
-			if (!empty($username) && !empty($password) && !empty($id_account)) {
+			if (array_key_exists("active", $postData)) {
+				$active = $postData["active"];
+			} else {
+				$active = "0";
+			}
+
+			if (!empty($username) && !empty($password) || !empty($id_account)) {
 				$this->password = $password;
 				$this->username = $username;
+				// $this->id_account = $id_account;
 				$this->check_only = TRUE;
 				$login_test = $this->login();
 				// pre($login_test);
@@ -119,16 +127,20 @@ class Ithenticate extends Api_Controller
 								$buat_group_folder_default = $this->group_folder_add($name);
 								if ($this->api_status === "200") {
 									$params = array(
-										"checked" => TRUE,
+										"checked" => $this->check_only,
 										"id_group_folder_api" => $buat_group_folder_default,
 										"name_group_folder_api" => $name,
 									);
-									$edit_checked = $this->Api_account_model->edit_account_data($id_account,$params);
+									if (!empty($id_account)) {
+										$edit_checked = $this->Api_account_model->edit_account_data($id_account,$params);
+									}
 
 									$response["login_result"] = $this->messages;
 									$response["id_group_folder_api"] = $buat_group_folder_default;
+									$response["active"] = $active;
 								} else {
 									$response["login_result"] = $buat_group_folder_default;
+									$response["active"] = $active;
 								}
 							}
 						}
@@ -139,21 +151,27 @@ class Ithenticate extends Api_Controller
 						$buat_group_folder_default = $this->group_folder_add($name);
 						if ($this->api_status === "200") {
 							$params = array(
-								"checked" => TRUE,
+								"checked" => $this->check_only,
 								"id_group_folder_api" => $buat_group_folder_default,
 								"name_group_folder_api" => $name,
 							);
-							$edit_checked = $this->Api_account_model->edit_account_data($id_account,$params);
+							if (!empty($id_account)) {
+								$edit_checked = $this->Api_account_model->edit_account_data($id_account,$params);
+							}
 
 							$response["login_result"] = $this->messages;
 							$response["id_group_folder_api"] = $buat_group_folder_default;
+							$response["active"] = $active;
 						} else {
 							$response["login_result"] = $buat_group_folder_default;
+							$response["active"] = $active;
 						}
 					}
 					$response["login_result"] = $cek_group_folder_lists;
+					$response["active"] = $active;
 				} else {
 					$response["login_result"] = $login_test;
+					$response["active"] = $active;
 				}
 			}
 		}

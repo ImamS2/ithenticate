@@ -4,6 +4,7 @@
 	let cek_api_btn = $(".cek_api");
 	let username;
 	let password;
+	let active;
 	let id_group_folder_api;
 
 	$(document).ready(function(){
@@ -43,6 +44,7 @@
 				// console.log(tbl_active);
 				username = response["api_username"];
 				password = response["api_password"];
+				active = response["active"];
 				id_group_folder_api = response["id_group_folder_api"];
 				check_availablity(id);
 			},
@@ -57,6 +59,7 @@
 				id : id,
 				username: username,
 				password: password,
+				active: active,
 				id_group_folder_api : id_group_folder_api,
 			},
 			dataType:"json",
@@ -65,15 +68,17 @@
 				let key_login_result = "login_result" in response;
 				let key_id_group_folder = "id_group_folder_api" in response;
 				let tbl_active = "#active_" + id;
+				let active = "active" in response;
 				if (key_login_result === true) {
 					if (response["login_result"] != null) {
 						console.log("connection established");
 						if (key_id_group_folder === true) {
 							if(login_result.length == 1) {
-								let group_api = login_result[9];
+								let group_api = login_result[0];
 								name_group = group_api["name"];
 								id_group = group_api["id"];
-								
+								let text_group = id_group + " - " + name_group;
+								console.log(text_group);
 							}
 							$(tbl_active).show();
 						} else {
@@ -81,7 +86,9 @@
 						}
 					} else {
 						alert("connection to iThenticate server is interupted");
-						$(tbl_active).hide();
+						if (active !== true) {
+							$(tbl_active).hide();
+						}
 					}
 				}
 			},
