@@ -4,7 +4,6 @@
 	let cek_api_btn = $(".cek_api");
 	let username;
 	let password;
-	let active;
 	let id_group_folder_api;
 
 	$(document).ready(function(){
@@ -41,10 +40,8 @@
 			dataType:"json",
 			success : function (response){
 				// console.log(response);
-				// console.log(tbl_active);
 				username = response["api_username"];
 				password = response["api_password"];
-				active = response["active"];
 				id_group_folder_api = response["id_group_folder_api"];
 				check_availablity(id);
 			},
@@ -59,7 +56,6 @@
 				id : id,
 				username: username,
 				password: password,
-				active: active,
 				id_group_folder_api : id_group_folder_api,
 			},
 			dataType:"json",
@@ -67,30 +63,32 @@
 				console.log(response);
 				let key_login_result = "login_result" in response;
 				let key_id_group_folder = "id_group_folder_api" in response;
-				let tbl_active = "#active_" + id;
-				let actived = "active" in response;
+				let key_name_group_folder = "name_group_folder_api" in response;
 				if (key_login_result === true) {
-					if (response["login_result"] != null) {
-						console.log("connection established");
-						if (key_id_group_folder === true) {
-							if(login_result.length == 1) {
-								let group_api = login_result[0];
-								name_group = group_api["name"];
-								id_group = group_api["id"];
-								let text_group = id_group + " - " + name_group;
-								console.log(text_group);
-							}
-							$(tbl_active).show();
-						} else {
-							alert(response["login_result"]);
-						}
+					if (response["login_result"] === true) {
+						alert("lakukan cek group");
 					} else {
-						alert("connection to iThenticate server is interupted");
-						console.log(actived);
-						if (actived !== true) {
-							$(tbl_active).hide();
-						}
+						alert(response["login_result"]);
 					}
+					// if (response["login_result"] != null) {
+					// 	console.log("connection established");
+					// 	if (key_id_group_folder === true && key_name_group_folder === true) {
+					// 		// if(response["login_result"].length == 1) {
+					// 		// 	let group_api = login_result[0];
+					// 		// }
+					// 		name_group = response["name_group_folder_api"];
+					// 		id_group = response["id_group_folder_api"];
+					// 		let text_group = id_group + " - " + name_group;
+					// 		console.log(text_group);
+					// 		let group_api_selected = "#group_api_" + id;
+					// 		let group_api_text = $(group_api_selected);
+					// 		group_api_text.text(text_group);
+					// 	} else {
+					// 		alert(response["login_result"]);
+					// 	}
+					// } else {
+					// 	alert("connection to iThenticate server is interupted");
+					// }
 				}
 			},
 		});

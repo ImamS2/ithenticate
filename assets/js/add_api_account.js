@@ -32,16 +32,21 @@
 				let key_login_result = "login_result" in response;
 				let key_id_group_folder = "id_group_folder_api" in response;
 				if (key_login_result === true) {
-					if (response["login_result"] !== null) {
-						console.log("connection established");
-						if (key_id_group_folder === true) {
-							console.log("update id folder");
-						} else {
-							alert(response["login_result"]);
-						}
+					if (response["login_result"] === true) {
+						alert("lakukan cek group");
 					} else {
-						alert("connection to iThenticate server is interupted");
+						alert(response["login_result"]);
 					}
+					// if (response["login_result"] !== null) {
+					// 	console.log("connection established");
+					// 	if (key_id_group_folder === true) {
+					// 		console.log("update id folder");
+					// 	} else {
+					// 		alert(response["login_result"]);
+					// 	}
+					// } else {
+					// 	alert("connection to iThenticate server is interupted");
+					// }
 				}
 			},
 		});

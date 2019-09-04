@@ -91,12 +91,12 @@
 												<td><?= $account->api_username ?></td>
 												<td>
 													<?php if ($account->active == 1): ?>
-														<?= anchor(site_url("settings/api_deactivate/".$account->id),"Deactivate",array("class"=>"btn btn-xs btn-danger","style"=>($account->checked == NULL) ? "color:#ffffff;text-decoration:none;display:none;" : "color:#ffffff;text-decoration:none;","id"=>"active_".$account->id)); ?>
+														<?= anchor(site_url("settings/api_deactivate/".$account->id),"Deactivate",array("class"=>"btn btn-xs btn-danger","style"=>"color:#ffffff;text-decoration:none;","id"=>"active_".$account->id)); ?>
 													<?php else: ?>
-														<?= anchor(site_url("settings/api_activate/".$account->id),"Activate",array("class"=>"btn btn-xs btn-primary","style"=> ($account->checked == NULL) ? "display:none" : "","id"=>"active_".$account->id)) ?>
+														<?= anchor(site_url("settings/api_activate/".$account->id),"Activate",array("class"=>"btn btn-xs btn-primary","id"=>"active_".$account->id)) ?>
 													<?php endif ?>
 												</td>
-												<td><?= $account->id_group_folder_api . " - " . $account->name_group_folder_api ?></td>
+												<td id="group_api_<?= $account->id ?>"><?= $account->id_group_folder_api . " - " . $account->name_group_folder_api ?></td>
 												<td>
 													<a href="javascript:void(0);" class="cek_api btn btn-xs btn-primary" data-id="<?= $account->id ?>"> Cek API</a>
 												</td>

@@ -159,6 +159,15 @@ class Api_account_model extends MY_Model
 						}
 						break;
 
+					case "folders":
+						$folders = new stdClass();
+						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
+							foreach ($resp["value"] as $resp_folders) {
+							}
+						}
+						$return->folders = $folders;
+						break;
+
 					case "account":
 						$account = new stdClass();
 						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
@@ -213,8 +222,8 @@ class Api_account_model extends MY_Model
 									}
 								}
 							}
-							$return->account = $account;
 						}
+						$return->account = $account;
 						break;
 
 					case "groups":
