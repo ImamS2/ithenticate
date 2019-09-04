@@ -87,7 +87,6 @@ class Ithenticate extends Api_Controller
 
 			if (array_key_exists("id", $postData)) {
 				$id_account = $postData["id"];
-			} else {
 			}
 
 			if (array_key_exists("active", $postData)) {

@@ -68,7 +68,7 @@
 				let key_login_result = "login_result" in response;
 				let key_id_group_folder = "id_group_folder_api" in response;
 				let tbl_active = "#active_" + id;
-				let active = "active" in response;
+				let actived = "active" in response;
 				if (key_login_result === true) {
 					if (response["login_result"] != null) {
 						console.log("connection established");
@@ -86,7 +86,8 @@
 						}
 					} else {
 						alert("connection to iThenticate server is interupted");
-						if (active !== true) {
+						console.log(actived);
+						if (actived !== true) {
 							$(tbl_active).hide();
 						}
 					}
