@@ -2,6 +2,7 @@
 	let cek_api_btn = $("#cek_api");
 	let api_username = $("input[name=api_username]");
 	let api_password = $("input[name=api_password]");
+	let save_btn = $("#save_acc");
 	let username;
 	let password;
 	cek_api_btn.click(function(event){
@@ -14,11 +15,11 @@
 		if (username === undefined || password === undefined) {
 			alert("Username or Password is empty");
 		} else {
-			add_check_availablity();
+			check_availablity();
 		}
 	});
 
-	function add_check_availablity() {
+	function check_availablity() {
 		$.ajax({
 			type : "POST",
 			url : baseURL + "api/ithenticate/check_login_api",
@@ -30,23 +31,17 @@
 			success : function (response){
 				console.log(response);
 				let key_login_result = "login_result" in response;
-				let key_id_group_folder = "id_group_folder_api" in response;
 				if (key_login_result === true) {
 					if (response["login_result"] === true) {
-						alert("lakukan cek group");
+						// alert("muncul tombol save");
+						save_btn.show();
 					} else {
-						alert(response["login_result"]);
+						if (response["login_result"] === null) {
+							alert("Connection to iThenticate server is unreachable");
+						} else {
+							alert(response["login_result"]);
+						}
 					}
-					// if (response["login_result"] !== null) {
-					// 	console.log("connection established");
-					// 	if (key_id_group_folder === true) {
-					// 		console.log("update id folder");
-					// 	} else {
-					// 		alert(response["login_result"]);
-					// 	}
-					// } else {
-					// 	alert("connection to iThenticate server is interupted");
-					// }
 				}
 			},
 		});

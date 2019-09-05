@@ -65,7 +65,6 @@ class Ithenticate extends Api_Controller
 
 			$username = "";
 			$password = "";
-			$id_group_folder_api = "";
 
 			if (array_key_exists("username", $postData)) {
 				$username = $postData["username"];
@@ -75,14 +74,6 @@ class Ithenticate extends Api_Controller
 				$password = $postData["password"];
 			}
 
-			if (array_key_exists("id_group_folder_api", $postData)) {
-				$id_group_folder_api = $postData["id_group_folder_api"];
-			}
-
-			if (array_key_exists("id", $postData)) {
-				$id_account = $postData["id"];
-			}
-
 			if (!empty($username) && !empty($password) || !empty($id_account)) {
 				$this->password = $password;
 				$this->username = $username;
@@ -90,98 +81,12 @@ class Ithenticate extends Api_Controller
 				$this->check_only = TRUE;
 				$login_test = $this->login();
 				// pre($login_test);
-				if ($login_test === TRUE) {
-					$cek_group_folder_lists = $this->list_group_folders();
-					// var_dump(count($cek_group_folder_lists) > 0);
-					if (count($cek_group_folder_lists) > 0 && (is_array($cek_group_folder_lists) || is_object($cek_group_folder_lists))) {
-						//ada group foldernya
-						pre($this->list_folders());
-					// 	// pre($cek_group_folder_lists);
-					// 	$id_api_foldere = array();
-					// 	foreach ($cek_group_folder_lists as $group_folders) {
-
-					// 		$id = "";
-					// 		$name = "";
-
-					// 		if (array_key_exists("id", $group_folders)) {
-					// 			$id = $group_folders["id"];
-					// 		}
-					// 		if (array_key_exists("name", $group_folders)) {
-					// 			$name = $group_folders["name"];
-					// 		}
-					// 		array_push($id_api_foldere, $id);
-					// 		// var_dump($id === $id_group_folder_api);
-					// 		// pre($name);
-					// 	}
-
-					// 	// var_dump(in_array($id_group_folder_api, $id_api_foldere));
-
-					// 	if (in_array($id_group_folder_api, $id_api_foldere)) {
-					// 		// pre("sama,\n lalu, cek folder per kampus");
-					// 		$response["login_result"] =  $this->list_group_folders();
-					// 	} else {
-					// 		$explosion = explode("@", $username);
-					// 		$name = $explosion[0];
-					// 		$buat_group_folder_default = $this->group_folder_add($name);
-					// 		if ($this->api_status === "200") {
-					// 			$params = array(
-					// 				"id_group_folder_api" => $buat_group_folder_default,
-					// 				"name_group_folder_api" => $name,
-					// 			);
-					// 			if (!empty($id_account)) {
-					// 				$edit_checked = $this->Api_account_model->edit_account_data($id_account,$params);
-					// 			}
-
-					// 			$response["login_result"] = $this->messages;
-					// 			$response["id_group_folder_api"] = $buat_group_folder_default;
-					// 			$response["name_group_folder_api"] = $name;
-					// 		} else {
-					// 			$response["login_result"] = $buat_group_folder_default;
-					// 		}
-					// 	}
-					} else {
-						// tidak ada group foldernya
-						$explosion = explode("@", $username);
-						$name = $explosion[0];
-						$buat_group_folder_default = $this->group_folder_add($name);
-						if ($this->api_status === "200") {
-							$params = array(
-								"id_group_folder_api" => $buat_group_folder_default,
-								"name_group_folder_api" => $name,
-							);
-							if (!empty($id_account)) {
-								$edit_checked = $this->Api_account_model->edit_account_data($id_account,$params);
-							}
-
-							$response["group_folder_add"] = $this->messages;
-							$response["id_group_folder_api"] = $buat_group_folder_default;
-							$response["name_group_folder_api"] = $name;
-						} else {
-							$response["group_folder_add"] = $buat_group_folder_default;
-						}
-					}
-					$response["group_folders"] = $cek_group_folder_lists;
-				}
 				$response["login_result"] = $login_test;
 			}
 		}
 		$data = $response;
 		// $data = $postData;
 		echo json_encode($data);
-	}
-
-	public function group_folder_add_default($username)
-	{
-		$explosion = explode("@", $username);
-		$name = $explosion[0];
-		$buat_group_folder_default = $this->group_folder_add($name);
-		if ($this->api_status === "200") {
-			$response["group_folder_add"] = $this->messages;
-			$response["id_group_folder_api"] = $buat_group_folder_default;
-			$response["name_group_folder_api"] = $name;
-		} else {
-			$response["group_folder_add"] = $buat_group_folder_default;
-		}
 	}
 
 	function login($remethod = FALSE)
@@ -342,10 +247,50 @@ class Ithenticate extends Api_Controller
 		$xml = $this->pre_request("list_folders");
 		if (!empty($xml)) {
 			$data = $this->send_request($xml);
-			pre($data);
+			// pre($data);
 			if (isset($data) && !empty($data)) {
 				$response = $this->Api_account_model->ithenticate_response($data);
 				// pre($response);
+				if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
+					if (array_key_exists("status", $response)) {
+						$status = $response->status;
+					}
+					if (array_key_exists("api_status", $response)) {
+						$api_status = $response->api_status;
+					}
+					if (array_key_exists("response_timestamp", $response)) {
+						$response_timestamp = $response->response_timestamp;
+					}
+					if (isset($api_status) && !empty($api_status) && isset($status) && !empty($status)) {
+						switch ($api_status) {
+							case "200":
+								if (array_key_exists("folders", $response)) {
+									$folders = $response->folders;
+								}
+								return $folders;
+								break;
+
+							case "401":
+								if (array_key_exists("messages", $response)) {
+									$messages = $response->messages;
+								}
+								switch ($messages) {
+									case "Failed to provide authenticated sid":
+										// pre($messages);
+										return $this->login("list_group_folders");
+										break;
+									
+									default:
+										break;
+								}
+								return $messages;
+								break;
+							
+							default:
+								break;
+						}
+					}
+				}
 			}
 		}
 	}
