@@ -160,9 +160,87 @@ class Api_account_model extends MY_Model
 						break;
 
 					case "folders":
-						$folders = new stdClass();
+						$folders = array();
 						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
-							foreach ($resp["value"] as $resp_folders) {
+							$folder_val = $resp["value"]["array"]["data"]["value"];
+							if (array_key_exists("struct", $folder_val)) {
+								$foldere = array();
+								$folder_components = $folder_val["struct"]["member"];
+								foreach ($folder_components as $folder_component) {
+									switch ($folder_component["name"]) {
+										case "id":
+											$foldere["id"] = $folder_component["value"]["int"];
+											break;
+
+										case "name":
+											$foldere["name"] = $folder_component["value"]["string"];
+											break;
+
+										case "group":
+											$data_group_induk = $folder_component["value"]["struct"]["member"];
+											$group_indukan = array();
+											foreach ($data_group_induk as $group_induk) {
+												switch ($group_induk["name"]) {
+													case "id":
+														$group_indukan["id"] = $group_induk["value"]["int"];
+														break;
+
+													case "name":
+														$group_indukan["name"] = $group_induk["value"]["string"];
+														break;
+													
+													default:
+														break;
+												}
+											}
+											$foldere["group_induk"] = $group_indukan;
+											break;
+										
+										default:
+											break;
+									}
+								}
+								array_push($folders, $foldere);
+							} else {
+								foreach ($folder_val as $folder) {
+									$foldere = array();
+									$folder_components = $folder["struct"]["member"];
+									foreach ($folder_components as $folder_component) {
+										switch ($folder_component["name"]) {
+											case "id":
+												$foldere["id"] = $folder_component["value"]["int"];
+												break;
+
+											case "name":
+												$foldere["name"] = $folder_component["value"]["string"];
+												break;
+
+											case "group":
+												$data_group_induk = $folder_component["value"]["struct"]["member"];
+												$group_indukan = array();
+												foreach ($data_group_induk as $group_induk) {
+													switch ($group_induk["name"]) {
+														case "id":
+															$group_indukan["id"] = $group_induk["value"]["int"];
+															break;
+
+														case "name":
+															$group_indukan["name"] = $group_induk["value"]["string"];
+															break;
+														
+														default:
+															break;
+													}
+												}
+												$foldere["group_induk"] = $group_indukan;
+												break;
+											
+											default:
+												break;
+										}
+									}
+									array_push($folders, $foldere);
+								}
 							}
 						}
 						$return->folders = $folders;

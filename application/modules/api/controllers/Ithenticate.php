@@ -95,6 +95,7 @@ class Ithenticate extends Api_Controller
 					// var_dump(count($cek_group_folder_lists) > 0);
 					if (count($cek_group_folder_lists) > 0 && (is_array($cek_group_folder_lists) || is_object($cek_group_folder_lists))) {
 						//ada group foldernya
+						pre($this->list_folders());
 					// 	// pre($cek_group_folder_lists);
 					// 	$id_api_foldere = array();
 					// 	foreach ($cek_group_folder_lists as $group_folders) {
@@ -169,13 +170,17 @@ class Ithenticate extends Api_Controller
 		echo json_encode($data);
 	}
 
-	public function group_folder_add_checked($username)
+	public function group_folder_add_default($username)
 	{
 		$explosion = explode("@", $username);
 		$name = $explosion[0];
 		$buat_group_folder_default = $this->group_folder_add($name);
 		if ($this->api_status === "200") {
+			$response["group_folder_add"] = $this->messages;
+			$response["id_group_folder_api"] = $buat_group_folder_default;
+			$response["name_group_folder_api"] = $name;
 		} else {
+			$response["group_folder_add"] = $buat_group_folder_default;
 		}
 	}
 
@@ -337,10 +342,10 @@ class Ithenticate extends Api_Controller
 		$xml = $this->pre_request("list_folders");
 		if (!empty($xml)) {
 			$data = $this->send_request($xml);
-			// pre($data);
+			pre($data);
 			if (isset($data) && !empty($data)) {
 				$response = $this->Api_account_model->ithenticate_response($data);
-				pre($response);
+				// pre($response);
 			}
 		}
 	}
