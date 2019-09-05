@@ -417,18 +417,22 @@ class Ithenticate extends Api_Controller
 		}
 	}
 
-	function folder_add($id_folder_group, $name, $description, $exclude_quotes)
+	function folder_add($id_folder_group, $name, $description = NULL, $exclude_quotes = NULL)
 	{
-		$params = array(
-			"id_folder_group" => $id_folder_group,
-			"name" => $name,
-			"description" => $description,
-			"exclude_quotes" => $exclude_quotes,
-		);
-		$xml = $this->pre_request("folder_add",$params);
-		if (!empty($xml)) {
-			$data = $this->send_request($xml);
-			pre($data);
+		if (isset($id_folder_group) && !empty($id_folder_group) && isset($name) && !empty($name)) {
+			$params = array(
+				"id_folder_group" => $id_folder_group,
+				"name" => $name,
+				"description" => $description,
+				"exclude_quotes" => $exclude_quotes,
+			);
+			$xml = $this->pre_request("folder_add",$params);
+			if (!empty($xml)) {
+				$data = $this->send_request($xml);
+				pre($data);
+			}
+		} else {
+			return false;
 		}
 	}
 
