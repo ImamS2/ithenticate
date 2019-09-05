@@ -89,6 +89,10 @@ class Ithenticate extends Api_Controller
 		echo json_encode($data);
 	}
 
+	function create_group_folder()
+	{
+	}
+
 	function login($remethod = FALSE)
 	{
 		if ($remethod === FALSE) {
@@ -413,9 +417,15 @@ class Ithenticate extends Api_Controller
 		}
 	}
 
-	function folder_add()
+	function folder_add($id_folder_group, $name, $description, $exclude_quotes)
 	{
-		$xml = $this->pre_request("folder_add");
+		$params = array(
+			"id_folder_group" => $id_folder_group,
+			"name" => $name,
+			"description" => $description,
+			"exclude_quotes" => $exclude_quotes,
+		);
+		$xml = $this->pre_request("folder_add",$params);
 		if (!empty($xml)) {
 			$data = $this->send_request($xml);
 			pre($data);

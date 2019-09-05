@@ -61,9 +61,7 @@
 				console.log(response);
 				let key_login_result = "login_result" in response;
 				if (key_login_result === true) {
-					if (response["login_result"] === true) {
-						alert("lakukan cek group");
-					} else {
+					if (response["login_result"] !== true) {
 						if (response["login_result"] === null) {
 							alert("Connection to iThenticate server is unreachable");
 						} else {
