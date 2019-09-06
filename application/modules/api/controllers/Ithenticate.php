@@ -85,6 +85,8 @@ class Ithenticate extends Api_Controller
 				$this->check_only = TRUE;
 				$login_test = $this->login();
 				// pre($login_test);
+				// pre($this->sid);
+				$response["sid"] = $this->sid;
 				$response["login_result"] = $login_test;
 			}
 		}
@@ -94,10 +96,26 @@ class Ithenticate extends Api_Controller
 		return $response;
 	}
 
-	function create_group_folder()
+	function group_folder_check()
 	{
 		$postData = $this->input->post();
-		$data = $postData;
+		if (isset($postData) && !empty($postData)) {
+
+			$sid = "";
+
+			if (array_key_exists("sid", $postData)) {
+				$sid = $postData["sid"];
+				$this->sid = $sid;
+			}
+
+			if (!empty($sid)) {
+				$list_group_folders = $this->list_group_folders();
+				// pre($list_group_folders);
+				$response["list_group_folders"] = $list_group_folders;
+				$response["sid"] = $sid;
+			}
+		}
+		$data = $response;
 		echo json_encode($data);
 	}
 
@@ -146,7 +164,7 @@ class Ithenticate extends Api_Controller
 								if ($this->check_only === TRUE) {
 									return true;
 								} else {
-									return $this->Api_account_model->edit_account_data($this->id_account,array("sid" => $sid,"active" => 1,"response_timestamp"=>$response_timestamp));
+									return $this->Api_account_model->edit_account_data($this->id_account,array("sid" => $sid,"response_timestamp"=>$response_timestamp));
 								}
 								break;
 

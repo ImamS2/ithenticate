@@ -37,8 +37,8 @@
 							</div>
 						</div>
 						<div class="form_submit">
-							<a href="#" class="btn btn-primary" id="cek_api">Check API</a>
-							<input type="submit" class="btn btn-primary" style="display: none;" value="Save Account" id="save_acc">
+							<a href="javascript:void(0);" class="btn btn-primary" id="cek_api">Check API</a>
+							<a href="javascript:void(0);" class="btn btn-primary" style="display: none;" data-id="" id="save_acc">Save Account</a>
 							<a href="<?= site_url("en_us/settings/app_setting")?>" class="btn btn-link">Cancel</a>
 							<div class="clear"></div>
 						</div>

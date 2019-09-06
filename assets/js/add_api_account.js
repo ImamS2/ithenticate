@@ -5,7 +5,10 @@
 	let save_btn = $("#save_acc");
 	let username;
 	let password;
-	cek_api_btn.click(function(event){
+	let cek_login;
+	let cek_group_folder;
+
+	cek_api_btn.click(function(){
 		if(api_username.val() !== ""){
 			username = api_username.val();
 		}
@@ -15,35 +18,72 @@
 		if (username === undefined || password === undefined) {
 			alert("Username or Password is empty");
 		} else {
-			check_availablity();
+			cek_login = check_availablity();
+			cek_login.done(function(cek_login_resp){
+				if (cek_login_resp["login_result"] === true) {
+					let sid = cek_login_resp["sid"];
+					$("#save_acc").data("sid",sid);
+					save_btn.show();
+					alert("Account is Active");
+				} else {
+					if (cek_login_resp["login_result"] === null) {
+						alert("Connection to iThenticate server is unreachable");
+						return false;
+					} else {
+						alert(cek_login_resp["login_result"]);
+						return false;
+					}
+				}
+			}).fail(function(cek_login_resp){
+				alert(cek_login_resp);
+				return false;
+			});
 		}
 	});
 
+	save_btn.click(function(){
+		let sid = $(this).data("sid");
+		if (sid !== undefined) {
+			cek_group_folder = group_folder_list(sid);
+			cek_group_folder.done(function(cek_group_resp){
+				console.log(cek_group_resp);
+			}).fail(function(cek_group_fail){
+				alert(cek_group_fail);
+				return false;
+			});
+		} else {
+			alert("You must check api first");
+			return false;
+		}
+	});
+
+	function group_folder_list(sid) {
+		dataType = "json";
+		data = {
+			sid : sid
+		};
+		url_request = baseURL + "api/ithenticate/group_folder_check";
+		type = "POST";
+		return ajax_request(type,url_request,data,dataType);
+	}
+
 	function check_availablity() {
-		$.ajax({
-			type : "POST",
-			url : baseURL + "api/ithenticate/check_login_api",
-			data : {
-				username: username,
-				password: password,
-			},
-			dataType:"json",
-			success : function (response){
-				console.log(response);
-				let key_login_result = "login_result" in response;
-				if (key_login_result === true) {
-					if (response["login_result"] === true) {
-						// alert("muncul tombol save");
-						save_btn.show();
-					} else {
-						if (response["login_result"] === null) {
-							alert("Connection to iThenticate server is unreachable");
-						} else {
-							alert(response["login_result"]);
-						}
-					}
-				}
-			},
+		dataType = "json";
+		data = {
+			username: username,
+			password: password,
+		};
+		url_request = baseURL + "api/ithenticate/check_login_api";
+		type = "POST";
+		return ajax_request(type,url_request,data,dataType);
+	}
+
+	function ajax_request(type,url_request,data,dataType) {
+		return $.ajax({
+			type : type,
+			url : url_request,
+			data : data,
+			dataType : dataType,
 		});
 	}
 })(jQuery);
