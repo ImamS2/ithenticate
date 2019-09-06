@@ -159,8 +159,7 @@ class Settings extends Settings_Controller
 		if (isset($id) && !empty($id)) {
 			Modules::load("Api");
 			$this->load->model("Api/Api_account_model");
-			$api_activation = $this->Settings_model->get_automatic();
-			$api_active = $this->Api_account_model->get_account(array("active"=>1))->row();
+			$api_active = $this->Api_account_model->where(array("active"=>1))->get_account()->row();
 			if (!empty($api_active) && (is_object($api_active) || is_array($api_active))) {
 				$id_aktif_dulu = $api_active->id;
 				$nonaktifkan_api_dulu = $this->Api_account_model->edit_account_data($id_aktif_dulu,array("active"=>0));
@@ -171,6 +170,7 @@ class Settings extends Settings_Controller
 			} else {
 				$this->session->set_flashdata("message","API Account activated failed");
 			}
+			$this->Settings_model->get_automatic();
 			redirect("en_us/settings/app_setting","refresh");
 		}
 		return FALSE;

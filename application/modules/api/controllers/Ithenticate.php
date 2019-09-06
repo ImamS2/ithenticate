@@ -59,6 +59,7 @@ class Ithenticate extends Api_Controller
 		}
 		$data = $result;
 		echo json_encode($data);
+		return $data;
 	}
 
 	function check_login_api()
@@ -90,10 +91,14 @@ class Ithenticate extends Api_Controller
 		$data = $response;
 		// $data = $postData;
 		echo json_encode($data);
+		return $response;
 	}
 
 	function create_group_folder()
 	{
+		$postData = $this->input->post();
+		$data = $postData;
+		echo json_encode($data);
 	}
 
 	function login($remethod = FALSE)
@@ -596,17 +601,17 @@ class Ithenticate extends Api_Controller
 		}
 
 		// if (!curl_errno($ch)) {
-		// 	$xml = simplexml_load_string($data, "SimpleXMLElement");
-		// 	$json = json_encode($xml);
-		// 	$array = json_decode($json,true);
-		// 	$member = $array["params"]["param"]["value"]["struct"]["member"];
-		// 	return $member;
+		//  $xml = simplexml_load_string($data, "SimpleXMLElement");
+		//  $json = json_encode($xml);
+		//  $array = json_decode($json,true);
+		//  $member = $array["params"]["param"]["value"]["struct"]["member"];
+		//  return $member;
 		// } else {
-		// 	// karena gagal koneksi ke url api atau server itenticate sedang main tenis
-		// 	// plannya ganti mode manual dulu.
-		// 	// print curl_error($ch);
-		// 	// print curl_errno($ch);
-		// 	exit();
+		//  // karena gagal koneksi ke url api atau server itenticate sedang main tenis
+		//  // plannya ganti mode manual dulu.
+		//  // print curl_error($ch);
+		//  // print curl_errno($ch);
+		//  exit();
 		// }
 		// curl_close($ch);
 	}

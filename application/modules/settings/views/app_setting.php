@@ -91,9 +91,9 @@
 												<td><?= $account->api_username ?></td>
 												<td>
 													<?php if ($account->active == 1): ?>
-														<?= anchor(site_url("settings/api_deactivate/".$account->id),"Deactivate",array("class"=>"btn btn-xs btn-danger","style"=>"color:#ffffff;text-decoration:none;","id"=>"active_".$account->id)); ?>
+														<a href="javascript:void(0);" class="btn btn-xs btn-danger deactivate" style="color: #ffffff; text-decoration: none;" data-id="<?= $account->id ?>" id="active_<?= $account->id ?>">Deactivate</a>
 													<?php else: ?>
-														<?= anchor(site_url("settings/api_activate/".$account->id),"Activate",array("class"=>"btn btn-xs btn-primary","id"=>"active_".$account->id)) ?>
+														<a href="javascript:void(0);" class="btn btn-xs btn-primary activate" data-id="<?= $account->id ?>" id="active_<?= $account->id ?>">Activate</a>
 													<?php endif ?>
 												</td>
 												<td id="group_api_<?= $account->id ?>"><?= $account->id_group_folder_api . " - " . $account->name_group_folder_api ?></td>
