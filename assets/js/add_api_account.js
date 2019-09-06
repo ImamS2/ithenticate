@@ -60,7 +60,8 @@
 	function group_folder_list(sid) {
 		dataType = "json";
 		data = {
-			sid : sid
+			sid : sid,
+			username : username,
 		};
 		url_request = baseURL + "api/ithenticate/group_folder_check";
 		type = "POST";

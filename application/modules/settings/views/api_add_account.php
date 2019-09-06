@@ -19,7 +19,11 @@
 							</div>
 							<div class="ip_text_field">
 								<div class="ip_valid_indicator">
-									<input class="Username form-control __validateEmail:Username" id="form_api_username" name="api_username" type="text" value='<?= isset($api_username) ? $api_username : "" ?>'>
+									<?php if (ENVIRONMENT === "production"): ?>
+										<input class="Username form-control __validateEmail:Username" id="form_api_username" name="api_username" type="text" value='<?= isset($api_username) ? $api_username : "" ?>'>
+									<?php else: ?>
+										<input class="Username form-control __validateEmail:Username" id="form_api_username" name="api_username" type="text" value="denise.svane@my.jcu.edu.au">
+									<?php endif ?>
 								</div>
 							</div>
 						</div>
@@ -32,7 +36,11 @@
 							</div>
 							<div class="ip_text_field">
 								<div class="ip_valid_indicator">
-									<input class="Password form-control __validateProfile:Password" id="form_api_password" name="api_password" type="text" value='<?= isset($api_password) ? $api_password : "" ?>'>
+									<?php if (ENVIRONMENT === "production"): ?>
+										<input class="Password form-control __validateProfile:Password" id="form_api_password" name="api_password" type="text" value='<?= isset($api_password) ? $api_password : "" ?>'>
+									<?php else: ?>
+										<input class="Password form-control __validateProfile:Password" id="form_api_password" name="api_password" type="text" value="N4d!Ra2019">
+									<?php endif ?>
 								</div>
 							</div>
 						</div>

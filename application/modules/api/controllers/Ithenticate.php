@@ -102,21 +102,107 @@ class Ithenticate extends Api_Controller
 		if (isset($postData) && !empty($postData)) {
 
 			$sid = "";
+			$username = "";
+			$id_folder_group = "";
 
 			if (array_key_exists("sid", $postData)) {
 				$sid = $postData["sid"];
 				$this->sid = $sid;
 			}
 
+			if (array_key_exists("username", $postData)) {
+				$username = $postData["username"];
+				$explosion = explode("@", $username);
+				$name = $explosion[0];
+			}
+
+			if (array_key_exists("id_folder_group", $postData)) {
+				$id_folder_group = $postData["id_folder_group"];
+			}
+
 			if (!empty($sid)) {
 				$list_group_folders = $this->list_group_folders();
-				// pre($list_group_folders);
+				if (count($list_group_folders) > 0 && (is_array($list_group_folders) || is_object($list_group_folders))) {
+					// pre($list_group_folders);
+					// ada group_folder
+					$id_folder_group_api = $this->group_folder_add_default($name,$id_folder_group);
+					if ($id_folder_group_api !== FALSE) {
+						$response["name_folder_group"] = $name;
+						$response["id_folder_group"] = $id_folder_group_api;
+					}
+				} else {
+					// buat group folder
+					$id_folder_group_api = $this->group_folder_add_blank($name);
+					if ($id_subfolder_api !== FALSE) {
+						$response["name_folder_group"] = $name;
+						$response["id_folder_group"] = $id_folder_group_api;
+					}
+				}
 				$response["list_group_folders"] = $list_group_folders;
 				$response["sid"] = $sid;
 			}
 		}
 		$data = $response;
 		echo json_encode($data);
+	}
+
+	function group_folder_add_blank($name)
+	{
+		if (isset($name) && !empty($name)) {
+			pre($name);
+			$create_group_folder = $this->group_folder_add($name);
+			return $create_group_folder;
+		} else {
+			return false;
+		}
+	}
+
+	function group_folder_add_default($name, $id_folder_group = NULL)
+	{
+		if (isset($name) && !empty($name)) {
+			pre($name);
+			pre($id_folder_group);
+			if (empty($id_folder_group)) {
+				$cek_name = $this->group_folder_check_by_name($name);
+				if ($cek_name === TRUE) {
+					$create_group_folder = $this->group_folder_add_blank($name);
+					return $create_group_folder;
+				} else {
+					return false;
+				}
+			} else {
+				// dicek dari id groupnya
+			}
+		} else {
+			return false;
+		}
+	}
+
+	function group_folder_check_by_name($name = NULL)
+	{
+		if (isset($name) && !empty($name)) {
+			$list_group_folders = $this->list_group_folders();
+			$name_group_folders = array();
+			foreach ($list_group_folders as $list_group_folder) {
+				if (array_key_exists("name", $list_group_folder)) {
+					$name_group_folder = $list_group_folder["name"];
+				} else {
+					$name_group_folder = "";
+				}
+				array_push($name_group_folders, $name_group_folder);
+			}
+			// pre($name);
+			// pre($name_group_folders);
+			// var_dump(in_array($name, $name_group_folders));
+			if (!in_array($name, $name_group_folders)) {
+				// pre("tidak ada nama yang cocok");
+				// lanjut pembuatan
+				return true;
+			} else {
+				// pre("nama ada yang cocok");
+				return false;
+			}
+		}
 	}
 
 	function login($remethod = FALSE)

@@ -36,11 +36,13 @@
 		get_acc.done(function(get_acc_resp){
 			username = get_acc_resp["api_username"];
 			password = get_acc_resp["api_password"];
+			id_group_folder_api = get_acc_resp["id_group_folder_api"];
 			cek_login = check_availablity();
 			cek_login.done(function(cek_login_resp){
 				if (cek_login_resp["login_result"] === true) {
 					let sid = cek_login_resp["sid"];
 					btn_selector = "#active_" + acc_id;
+					$(btn_selector).data("id_group_folder",id_group_folder_api);
 					$(btn_selector).data("sid",sid);
 					alert("Account is active");
 					return true;
@@ -66,8 +68,9 @@
 	activate_btn.click(function(){
 		let acc_id = $(this).data("id");
 		let sid = $(this).data("sid");
+		let id_folder_group = $(this).data("id_group_folder");
 		if (sid !== undefined) {
-			cek_group_folder = group_folder_list(sid);
+			cek_group_folder = group_folder_list(sid,id_folder_group);
 			cek_group_folder.done(function(cek_group_resp){
 				console.log(cek_group_resp);
 			}).fail(function(cek_group_fail){
@@ -80,10 +83,12 @@
 		}
 	});
 
-	function group_folder_list(sid) {
+	function group_folder_list(sid, id_folder_group) {
 		dataType = "json";
 		data = {
-			sid : sid
+			sid : sid,
+			username : username,
+			id_folder_group : id_folder_group,
 		};
 		url_request = baseURL + "api/ithenticate/group_folder_check";
 		type = "POST";
