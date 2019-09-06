@@ -160,8 +160,8 @@ class Ithenticate extends Api_Controller
 	function group_folder_add_default($name, $id_folder_group = NULL)
 	{
 		if (isset($name) && !empty($name)) {
-			pre($name);
-			pre($id_folder_group);
+			// pre($name);
+			// pre($id_folder_group);
 			if (empty($id_folder_group)) {
 				$cek_name = $this->group_folder_check_by_name($name);
 				if ($cek_name === TRUE) {
@@ -172,6 +172,26 @@ class Ithenticate extends Api_Controller
 				}
 			} else {
 				// dicek dari id groupnya
+				$cek_id = $this->group_folder_check_by_id($id_folder_group);
+				$cek_name = $this->group_folder_check_by_name($name);
+				// var_dump($cek_id);
+				if ($cek_name === TRUE && $cek_id === TRUE) {
+					pre("buat baru lah");
+					pre("cek nama" . $cek_name);
+					pre("cek id" . $cek_id);
+				} elseif ($cek_name === TRUE || $cek_id === TRUE) {
+					pre("cuma update yang true aja");
+					pre("cek nama" . $cek_name);
+					pre("cek id" . $cek_id);
+					if ($cek_id === TRUE) {
+						pre("yang diupdate cek_id");
+					} elseif ($cek_name === TRUE) {
+						pre("yang diupdate cek_name");
+					}
+				} else {
+					// pre("podo kabeh");
+					return false;
+				}
 			}
 		} else {
 			return false;
@@ -195,6 +215,33 @@ class Ithenticate extends Api_Controller
 			// pre($name_group_folders);
 			// var_dump(in_array($name, $name_group_folders));
 			if (!in_array($name, $name_group_folders)) {
+				// pre("tidak ada nama yang cocok");
+				// lanjut pembuatan
+				return true;
+			} else {
+				// pre("nama ada yang cocok");
+				return false;
+			}
+		}
+	}
+
+	function group_folder_check_by_id($id_folder_group = NULL)
+	{
+		if (isset($id_folder_group) && !empty($id_folder_group)) {
+			$list_group_folders = $this->list_group_folders();
+			$id_folder_group_lists = array();
+			foreach ($list_group_folders as $list_group_folder) {
+				if (array_key_exists("id", $list_group_folder)) {
+					$id_folder_group_api = $list_group_folder["id"];
+				} else {
+					$id_folder_group_api = "";
+				}
+				array_push($id_folder_group_lists, $id_folder_group_api);
+			}
+			// pre($id_folder_group);
+			// pre($id_folder_group_lists);
+			// var_dump(in_array($id_folder_group, $id_folder_group_lists));
+			if (!in_array($id_folder_group, $id_folder_group_lists)) {
 				// pre("tidak ada nama yang cocok");
 				// lanjut pembuatan
 				return true;
