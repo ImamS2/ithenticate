@@ -262,8 +262,21 @@ class Ithenticate extends Api_Controller
 	{
 		$postData = $this->input->post();
 		if (isset($postData) && !empty($postData)) {
+
+			$sid = "";
+
+			if (array_key_exists("sid", $postData)) {
+				$sid = $postData["sid"];
+				$this->sid = $sid;
+			}
+
+			if (!empty($sid)) {
+				$list_folders = $this->list_folders();
+				$response["list_folders"] = $list_folders;
+				$response["sid"] = $sid;
+			}
 		}
-		$data = $postData;
+		$data = $response;
 		echo json_encode($data);
 	}
 

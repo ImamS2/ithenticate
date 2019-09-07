@@ -72,12 +72,12 @@
 		let id_folder_group = $(this).data("id_group_folder");
 		if (sid !== undefined) {
 			cek_group_folder = group_folder_list(sid,id_folder_group,acc_id);
-			cek_group_folder.done(function(cek_group_resp){
+			cek_group_folder.always(function(cek_group_resp){
 				// console.log(cek_group_resp);
 				sid = cek_group_resp["sid"];
 				id_group_folder_api = cek_group_resp["id_folder_group"];
 				name_group_folder_api = cek_group_resp["name_folder_group"];
-				cek_folder = folder_list();
+				cek_folder = folder_list(sid);
 				cek_folder.done(function(cek_folder_resp){
 					console.log(cek_folder_resp);
 				}).fail(function(cek_folder_fail){
@@ -94,7 +94,7 @@
 		}
 	});
 
-	function folder_list() {
+	function folder_list(sid) {
 		dataType = "json";
 		data = {
 			sid : sid,
@@ -140,12 +140,13 @@
 		return ajax_request(type,url_request,data,dataType);
 	}
 
-	function ajax_request(type,url_request,data,dataType) {
+	function ajax_request(type,url_request,data,dataType,statusCode = {}) {
 		return $.ajax({
 			type : type,
 			url : url_request,
 			data : data,
 			dataType : dataType,
+			statusCode : statusCode,
 		});
 	}
 })(jQuery);
