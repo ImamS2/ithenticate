@@ -98,7 +98,8 @@
 												</td>
 												<td id="group_api_<?= $account->id ?>"><?= $account->id_group_folder_api . " - " . $account->name_group_folder_api ?></td>
 												<td>
-													<a href="javascript:void(0);" class="cek_api btn btn-xs btn-primary" data-id="<?= $account->id ?>"> Cek API</a>
+													<a href="javascript:void(0);" class="cek_api btn btn-xs btn-primary" data-id="<?= $account->id ?>"> Cek API </a>
+													<?= anchor(site_url("en_us/settings/delete_account_api/".$account->id),"Delete Acc",array("class"=>"btn btn-xs btn-danger","style"=>"color: #ffffff; text-decoration: none;")) ?>
 												</td>
 											</tr>
 											<?php $alternate++; ?>

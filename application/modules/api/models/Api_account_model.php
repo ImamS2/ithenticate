@@ -15,10 +15,13 @@ class Api_account_model extends MY_Model
 		$this->load->database();
 	}
 
-	function get_account()
+	function add_account_data($params)
 	{
-		$this->get();
-		return $this;
+		if ($this->insert($params)) {
+			return $this->db->insert_id();
+		} else {
+			return FALSE;
+		}
 	}
 
 	function edit_account_data($id,$params)
@@ -30,8 +33,11 @@ class Api_account_model extends MY_Model
 			$edit_account_data = FALSE;
 		}
 		return $edit_account_data;
-		// return $this->db->where(array("id"=>$id))
-		// 				->update($this->table,$params);
+	}
+
+	function delete_account_data($id)
+	{
+		return $this->delete($this->pk,$id);
 	}
 
 	function curl_request($handle, $type_response)

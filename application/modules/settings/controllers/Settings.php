@@ -112,7 +112,7 @@ class Settings extends Settings_Controller
 					"main_js" => $main_js,
 					"title" => "Settings API iThenticate",
 				);
-				$api_accounts = $this->Api_account_model->get_account();
+				$api_accounts = $this->Api_account_model->get();
 				if ($api_accounts->num_rows() > 0) {
 					$api_account_lists = $api_accounts->result();
 					// pre($api_account_lists);
@@ -159,7 +159,7 @@ class Settings extends Settings_Controller
 		if (isset($id) && !empty($id)) {
 			Modules::load("Api");
 			$this->load->model("Api/Api_account_model");
-			$api_active = $this->Api_account_model->where(array("active"=>1))->get_account()->row();
+			$api_active = $this->Api_account_model->where(array("active"=>1))->get()->row();
 			if (!empty($api_active) && (is_object($api_active) || is_array($api_active))) {
 				$id_aktif_dulu = $api_active->id;
 				$nonaktifkan_api_dulu = $this->Api_account_model->edit_account_data($id_aktif_dulu,array("active"=>0));
@@ -190,6 +190,25 @@ class Settings extends Settings_Controller
 			redirect("en_us/settings/app_setting","refresh");
 		}
 		return FALSE;
+	}
+
+	public function delete_account_api($id = NULL)
+	{
+		if (isset($id) && !empty($id)) {
+			$this->load->model("Api/Api_account_model");
+			$account_data_obj = $this->Api_account_model->where(array("id"=>$id))->limit(1)->get();
+			if ($account_data_obj->num_rows() > 0) {
+				$account_data = $account_data_obj->row();
+				$id_account = $account_data->id;
+				$delete_account_data = $this->Api_account_model->delete_account_data($id);
+				if ($delete_account_data !== FALSE) {
+					$this->session->set_flashdata("message","API Account deleted successfully");
+				} else {
+					$this->session->set_flashdata("message","API Account failed deleted");
+				}
+				redirect("en_us/settings/app_setting","refresh");
+			}
+		}
 	}
 
 	public function be_manual()

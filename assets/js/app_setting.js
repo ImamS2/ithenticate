@@ -6,6 +6,7 @@
 	let username;
 	let password;
 	let id_group_folder_api;
+	let name_group_folder_api;
 	let ajax_req;
 	let get_acc;
 	let cek_login;
@@ -70,9 +71,19 @@
 		let sid = $(this).data("sid");
 		let id_folder_group = $(this).data("id_group_folder");
 		if (sid !== undefined) {
-			cek_group_folder = group_folder_list(sid,id_folder_group);
+			cek_group_folder = group_folder_list(sid,id_folder_group,acc_id);
 			cek_group_folder.done(function(cek_group_resp){
-				console.log(cek_group_resp);
+				// console.log(cek_group_resp);
+				sid = cek_group_resp["sid"];
+				id_group_folder_api = cek_group_resp["id_folder_group"];
+				name_group_folder_api = cek_group_resp["name_folder_group"];
+				cek_folder = folder_list();
+				cek_folder.done(function(cek_folder_resp){
+					console.log(cek_folder_resp);
+				}).fail(function(cek_folder_fail){
+					alert(cek_folder_fail);
+					return false;
+				});
 			}).fail(function(cek_group_fail){
 				alert(cek_group_fail);
 				return false;
@@ -83,12 +94,25 @@
 		}
 	});
 
-	function group_folder_list(sid, id_folder_group) {
+	function folder_list() {
+		dataType = "json";
+		data = {
+			sid : sid,
+			id_folder_group : id_group_folder_api,
+		};
+		url_request = baseURL + "api/ithenticate/folder_check";
+		type = "POST";
+		return ajax_request(type,url_request,data,dataType);
+	}
+
+	function group_folder_list(sid, id_folder_group, acc_id) {
 		dataType = "json";
 		data = {
 			sid : sid,
 			username : username,
+			password : password,
 			id_folder_group : id_folder_group,
+			acc_id : acc_id,
 		};
 		url_request = baseURL + "api/ithenticate/group_folder_check";
 		type = "POST";

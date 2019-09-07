@@ -24,7 +24,7 @@ class Ithenticate extends Api_Controller
 	{
 		parent::__construct();
 		$this->load->model("Api_account_model");
-		$api_active = $this->Api_account_model->where(array("active"=>1))->get_account()->row();
+		$api_active = $this->Api_account_model->where(array("active"=>1))->get()->row();
 		if (!empty($api_active) && (is_object($api_active) || is_array($api_active))) {
 			$this->id_account = $api_active->id;
 			$this->username = $api_active->api_username;
@@ -51,7 +51,7 @@ class Ithenticate extends Api_Controller
 			$result = new stdClass();
 
 			if (!empty($id)) {
-				$get_account = $this->Api_account_model->where(array("id"=>$id))->get_account();
+				$get_account = $this->Api_account_model->where(array("id"=>$id))->get();
 				if ($get_account->num_rows() > 0) {
 					$result = $get_account->row();
 				}
@@ -103,7 +103,9 @@ class Ithenticate extends Api_Controller
 
 			$sid = "";
 			$username = "";
+			$password = "";
 			$id_folder_group = "";
+			$acc_id = "";
 
 			if (array_key_exists("sid", $postData)) {
 				$sid = $postData["sid"];
@@ -120,13 +122,65 @@ class Ithenticate extends Api_Controller
 				$id_folder_group = $postData["id_folder_group"];
 			}
 
+			if (array_key_exists("password", $postData)) {
+				$password = $postData["password"];
+			}
+
+			if (array_key_exists("acc_id", $postData)) {
+				$acc_id = $postData["acc_id"];
+			}
+
 			if (!empty($sid)) {
 				$list_group_folders = $this->list_group_folders();
 				if (count($list_group_folders) > 0 && (is_array($list_group_folders) || is_object($list_group_folders))) {
 					// pre($list_group_folders);
 					// ada group_folder
-					$id_folder_group_api = $this->group_folder_add_default($name,$id_folder_group);
+					if (isset($name) && !empty($name)) {
+						// pre($name);
+						// pre($id_folder_group);
+						if (empty($id_folder_group)) {
+							$create_group_folder = $this->group_folder_add_blank($name);
+							$id_folder_group_api = $create_group_folder;
+						} else {
+							// dicek dari id groupnya
+							$cek_id = $this->group_folder_check_by_id($id_folder_group);
+							// var_dump($cek_id);
+							if ($cek_id === TRUE) {
+								// pre("buat baru lah");
+								$create_group_folder = $this->group_folder_add_blank($name);
+								// pre("cek id" . $cek_id);
+								$id_folder_group_api = $create_group_folder;
+							} else {
+								// pre("podo kabeh");
+								// cek list folder
+								$id_folder_group_api = $id_folder_group;
+							}
+						}
+					} else {
+						$id_folder_group_api = false;
+					}
+
 					if ($id_folder_group_api !== FALSE) {
+
+						$params_add = array(
+							"api_username" => $username,
+							"api_password" => $password,
+							"sid" => $sid,
+							"id_group_folder_api" => $id_folder_group_api,
+							"name_group_folder_api" => $name,
+						);
+
+						$params_edit = array(
+							"id_group_folder_api" => $id_folder_group_api,
+							"name_group_folder_api" => $name,
+						);
+
+						if (isset($acc_id) && !empty($acc_id)) {
+							$edit_account_data = $this->Api_account_model->edit_account_data($acc_id,$params_edit);
+						} else {
+							$add_account_data = $this->Api_account_model->add_account_data($params_add);
+						}
+
 						$response["name_folder_group"] = $name;
 						$response["id_folder_group"] = $id_folder_group_api;
 					}
@@ -134,6 +188,26 @@ class Ithenticate extends Api_Controller
 					// buat group folder
 					$id_folder_group_api = $this->group_folder_add_blank($name);
 					if ($id_subfolder_api !== FALSE) {
+
+						$params_add = array(
+							"api_username" => $username,
+							"api_password" => $password,
+							"sid" => $sid,
+							"id_group_folder_api" => $id_folder_group_api,
+							"name_group_folder_api" => $name,
+						);
+
+						$params_edit = array(
+							"id_group_folder_api" => $id_folder_group_api,
+							"name_group_folder_api" => $name,
+						);
+
+						if (isset($acc_id) && !empty($acc_id)) {
+							$edit_account_data = $this->Api_account_model->edit_account_data($acc_id,$params_edit);
+						} else {
+							$add_account_data = $this->Api_account_model->add_account_data($params_add);
+						}
+
 						$response["name_folder_group"] = $name;
 						$response["id_folder_group"] = $id_folder_group_api;
 					}
@@ -149,79 +223,11 @@ class Ithenticate extends Api_Controller
 	function group_folder_add_blank($name)
 	{
 		if (isset($name) && !empty($name)) {
-			pre($name);
+			// pre($name);
 			$create_group_folder = $this->group_folder_add($name);
 			return $create_group_folder;
 		} else {
 			return false;
-		}
-	}
-
-	function group_folder_add_default($name, $id_folder_group = NULL)
-	{
-		if (isset($name) && !empty($name)) {
-			// pre($name);
-			// pre($id_folder_group);
-			if (empty($id_folder_group)) {
-				$cek_name = $this->group_folder_check_by_name($name);
-				if ($cek_name === TRUE) {
-					$create_group_folder = $this->group_folder_add_blank($name);
-					return $create_group_folder;
-				} else {
-					return false;
-				}
-			} else {
-				// dicek dari id groupnya
-				$cek_id = $this->group_folder_check_by_id($id_folder_group);
-				$cek_name = $this->group_folder_check_by_name($name);
-				// var_dump($cek_id);
-				if ($cek_name === TRUE && $cek_id === TRUE) {
-					pre("buat baru lah");
-					pre("cek nama" . $cek_name);
-					pre("cek id" . $cek_id);
-				} elseif ($cek_name === TRUE || $cek_id === TRUE) {
-					pre("cuma update yang true aja");
-					pre("cek nama" . $cek_name);
-					pre("cek id" . $cek_id);
-					if ($cek_id === TRUE) {
-						pre("yang diupdate cek_id");
-					} elseif ($cek_name === TRUE) {
-						pre("yang diupdate cek_name");
-					}
-				} else {
-					// pre("podo kabeh");
-					return false;
-				}
-			}
-		} else {
-			return false;
-		}
-	}
-
-	function group_folder_check_by_name($name = NULL)
-	{
-		if (isset($name) && !empty($name)) {
-			$list_group_folders = $this->list_group_folders();
-			$name_group_folders = array();
-			foreach ($list_group_folders as $list_group_folder) {
-				if (array_key_exists("name", $list_group_folder)) {
-					$name_group_folder = $list_group_folder["name"];
-				} else {
-					$name_group_folder = "";
-				}
-				array_push($name_group_folders, $name_group_folder);
-			}
-			// pre($name);
-			// pre($name_group_folders);
-			// var_dump(in_array($name, $name_group_folders));
-			if (!in_array($name, $name_group_folders)) {
-				// pre("tidak ada nama yang cocok");
-				// lanjut pembuatan
-				return true;
-			} else {
-				// pre("nama ada yang cocok");
-				return false;
-			}
 		}
 	}
 
@@ -250,6 +256,15 @@ class Ithenticate extends Api_Controller
 				return false;
 			}
 		}
+	}
+
+	function folder_check()
+	{
+		$postData = $this->input->post();
+		if (isset($postData) && !empty($postData)) {
+		}
+		$data = $postData;
+		echo json_encode($data);
 	}
 
 	function login($remethod = FALSE)
