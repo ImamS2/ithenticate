@@ -271,8 +271,13 @@ class Ithenticate extends Api_Controller
 			}
 
 			if (!empty($sid)) {
-				$list_folders = $this->list_folders();
-				$response["list_folders"] = $list_folders;
+				$this->load->model("User/Account_campus_model");
+				$list_folders_campus = $this->Account_campus_model->get();
+				pre($list_folders_campus);
+
+				$list_folders_ithenticate = $this->list_folders();
+
+				$response["list_folders"] = $list_folders_ithenticate;
 				$response["sid"] = $sid;
 			}
 		}
