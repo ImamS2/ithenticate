@@ -69,14 +69,19 @@ class Widget_admin extends Widget_Controller
 				Modules::load("Api");
 				$this->load->model("Api/Api_account_model");
 				$api_active = $this->Api_account_model->where(array("active"=>1))->get()->row();
+				$this->data["uri_string"] = $this->uri->uri_string;
 				if (!empty($api_active) && (is_object($api_active) || is_array($api_active))) {
-					pre("ada akun, lalu cek, apa bisa konek");
+					$iThenticate = Modules::load("Api/Ithenticate");
+					$account_api = $iThenticate->account_get();
+					if (empty($account_api)) {
+						$this->data["response_msg"] = "Api Account is can't connect properly. Deactivate account?";
+						$this->data["link_process"] = "en_us/settings/api_deactivate/".$api_active->id;
+					}
 				} else {
+					$this->data["link_process"] = "en_us/settings/be_manual";
 					$this->data["response_msg"] = "Api Account is not set yet. Change to manual?";
-					$this->data["link_manual"] = "en_us/settings/be_manual";
-					$this->data["uri_string"] = $this->uri->uri_string;
-					$this->load->view("alert_api",$this->data);
 				}
+				$this->load->view("alert_api",$this->data);
 			}
 		}
 	}

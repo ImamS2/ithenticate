@@ -77,9 +77,11 @@
 				sid = cek_group_resp["sid"];
 				id_group_folder_api = cek_group_resp["id_folder_group"];
 				name_group_folder_api = cek_group_resp["name_folder_group"];
-				cek_folder = folder_list(sid);
-				cek_folder.done(function(cek_folder_resp){
-					console.log(cek_folder_resp);
+				cek_folder = folder_list(sid, acc_id);
+				cek_folder.always(function(cek_folder_resp){
+					let link = baseURL + "en_us/settings/api_activate/" + acc_id;
+					alert("Account was synchronized");
+					window.location.replace(link);
 				}).fail(function(cek_folder_fail){
 					alert(cek_folder_fail);
 					return false;
@@ -94,11 +96,12 @@
 		}
 	});
 
-	function folder_list(sid) {
+	function folder_list(sid, acc_id) {
 		dataType = "json";
 		data = {
 			sid : sid,
 			id_folder_group : id_group_folder_api,
+			acc_id : acc_id,
 		};
 		url_request = baseURL + "api/ithenticate/folder_check";
 		type = "POST";

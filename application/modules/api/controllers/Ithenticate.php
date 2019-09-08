@@ -177,8 +177,10 @@ class Ithenticate extends Api_Controller
 
 						if (isset($acc_id) && !empty($acc_id)) {
 							$edit_account_data = $this->Api_account_model->edit_account_data($acc_id,$params_edit);
+							$response["acc_id"] = $acc_id;
 						} else {
 							$add_account_data = $this->Api_account_model->add_account_data($params_add);
+							$response["acc_id"] = $add_account_data;
 						}
 
 						$response["name_folder_group"] = $name;
@@ -204,8 +206,10 @@ class Ithenticate extends Api_Controller
 
 						if (isset($acc_id) && !empty($acc_id)) {
 							$edit_account_data = $this->Api_account_model->edit_account_data($acc_id,$params_edit);
+							$response["acc_id"] = $acc_id;
 						} else {
 							$add_account_data = $this->Api_account_model->add_account_data($params_add);
+							$response["acc_id"] = $add_account_data;
 						}
 
 						$response["name_folder_group"] = $name;
@@ -264,20 +268,92 @@ class Ithenticate extends Api_Controller
 		if (isset($postData) && !empty($postData)) {
 
 			$sid = "";
+			$acc_id = "";
+			$id_folder_group = "";
 
 			if (array_key_exists("sid", $postData)) {
 				$sid = $postData["sid"];
 				$this->sid = $sid;
 			}
 
+			if (array_key_exists("acc_id", $postData)) {
+				$acc_id = $postData["acc_id"];
+			}
+
+			if (array_key_exists("id_folder_group", $postData)) {
+				$id_folder_group = $postData["id_folder_group"];
+			}
+
 			if (!empty($sid)) {
-				$this->load->model("User/Account_campus_model");
-				$list_folders_campus = $this->Account_campus_model->get();
-				pre($list_folders_campus);
 
 				$list_folders_ithenticate = $this->list_folders();
+				$list_id_folder_api_real = array();
+				if (!empty($list_folders_ithenticate)) {
+					foreach ($list_folders_ithenticate as $list_folder_ithenticate) {
+						$id_folder_api_real = $list_folder_ithenticate["id"];
+						$name_folder_api_real = $list_folder_ithenticate["name"];
+						array_push($list_id_folder_api_real, $id_folder_api_real);
+					}
+				}
 
-				$response["list_folders"] = $list_folders_ithenticate;
+				$response["list_folders_api"] = $list_id_folder_api_real;
+
+				if (!empty($acc_id)) {
+					$this->load->model("User/Group_model");
+					$this->load->model("User/Account_campus_model");
+					$campus_lists_obj = $this->Group_model->get_campus_lists();
+					$list_folders_campus_obj = $this->Account_campus_model->where(array("id_account"=>$acc_id))->get();
+					$account_data = array();
+					if ($campus_lists_obj->num_rows() > 0) {
+						$campus_data = $campus_lists_obj->result();
+						if (isset($campus_data) && !empty($campus_data)) {
+							foreach ($campus_data as $campus) {
+								$name_campus = $campus->name;
+								$id_campus = $campus->id;
+								if ($list_folders_campus_obj->num_rows() > 0) {
+									// ada account campus folder
+									$list_folder_campus = $list_folders_campus_obj->result();
+									foreach ($list_folder_campus as $folder_campus) {
+										$old_folder_api = $folder_campus->id_folder_api;
+										if (in_array($old_folder_api, $list_id_folder_api_real)) {
+											$id_folder_api = $old_folder_api;
+											$params = array(
+												"id_account" => $acc_id,
+												"id_campus" => $id_campus,
+												"id_folder_api" => $id_folder_api,
+											);
+										} else {
+											$id_folder_api = $this->folder_add($id_folder_group,$name_campus);
+											$params = array(
+												"id_account" => $acc_id,
+												"id_campus" => $id_campus,
+												"id_folder_api" => $id_folder_api,
+											);
+											$this->Account_campus_model->add_account($params);
+										}
+									}
+									if (!empty($params)) {
+										array_push($account_data, $params);
+									}
+								} else {
+									// tidak ada account campus folder
+									// auto buat
+									$id_folder_api = $this->folder_add($id_folder_group,$name_campus);
+									if (!empty($id_folder_api)) {
+										$params_add = array(
+											"id_account" => $acc_id,
+											"id_campus" => $id_campus,
+											"id_folder_api" => $id_folder_api,
+										);
+										$this->Account_campus_model->add_account($params_add);
+										array_push($account_data, $params_add);
+									}
+								}
+							}
+						}
+					}
+					$response["account_data"] = $account_data;
+				}
 				$response["sid"] = $sid;
 			}
 		}
@@ -625,7 +701,7 @@ class Ithenticate extends Api_Controller
 			$xml = $this->pre_request("folder_add",$params);
 			if (!empty($xml)) {
 				$data = $this->send_request($xml);
-				pre($data);
+				// pre($data);
 				if (isset($data) && !empty($data)) {
 					$response = $this->Api_account_model->ithenticate_response($data);
 					if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {

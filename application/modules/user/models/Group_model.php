@@ -16,6 +16,7 @@ class Group_model extends MY_Model
 
 	public function get_campus_lists($id = NULL)
 	{
+		Modules::load("Auth");
 		$this->not_like(array("id_creator" => 0));
 		$get = $this->get();
 
