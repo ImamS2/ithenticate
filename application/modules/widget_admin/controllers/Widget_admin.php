@@ -66,12 +66,12 @@ class Widget_admin extends Widget_Controller
 				$this->data["use_api"] = TRUE;
 			}
 			if ($this->data["use_api"] === TRUE) {
-				Modules::load("Api");
-				$this->load->model("Api/Api_account_model");
+				$this->load->model("api/Api_account_model");
 				$api_active = $this->Api_account_model->where(array("active"=>1))->get()->row();
 				$this->data["uri_string"] = $this->uri->uri_string;
 				if (!empty($api_active) && (is_object($api_active) || is_array($api_active))) {
-					$iThenticate = Modules::load("Api/Ithenticate");
+					$iThenticate = Modules::load("api/Ithenticate");
+					// var_dump($iThenticate);
 					$account_api = $iThenticate->account_get();
 					if (empty($account_api)) {
 						$this->data["response_msg"] = "Api Account is can't connect properly. Deactivate account?";
@@ -133,7 +133,7 @@ class Widget_admin extends Widget_Controller
 
 	public function submit_file()
 	{
-		$this->load->model("Settings_model");
+		$this->load->model("settings/Settings_model");
 		$use_api = $this->Settings_model->get_app_config("use_api")->row()->nilai;
 		if ($use_api === "0") {
 			$this->data["use_api"] = FALSE;
@@ -144,7 +144,7 @@ class Widget_admin extends Widget_Controller
 		$this->data["limit_quota"] = $userdata->quota - $userdata->usage_quota;
 		if ($this->ion_auth->in_group("cho admin")) {
 			if ($this->data["use_api"] == TRUE) {
-				$account_get = Modules::run("Api/ithenticate/account_get");
+				$account_get = Modules::run("api/Ithenticate/account_get");
 				// pre($account_get);
 				$limit_quota = 0;
 				if (is_array($account_get) || is_object($account_get)) {
@@ -183,7 +183,7 @@ class Widget_admin extends Widget_Controller
 	public function folder_info()
 	{
 		// $id_folder = $this->uri->segment(3);
-		$this->load->model("Share_folder_model");
+		$this->load->model("folder/Share_folder_model");
 		foreach ($this->uri->segments as $uri_segment) {
 			$id_folder = $uri_segment;
 		}
@@ -224,7 +224,7 @@ class Widget_admin extends Widget_Controller
 
 	public function user_add()
 	{
-		$this->load->model("User/Group_model");
+		$this->load->model("user/Group_model");
 		if ($this->ion_auth->is_admin() && $this->ion_auth->in_group("cho admin")) {
 			$this->data["active_users"] = $this->ion_auth->where(array("active"=>1))->users()->num_rows();
 		} elseif ($this->ion_auth->is_admin() && !$this->ion_auth->in_group("cho admin")) {
@@ -257,7 +257,7 @@ class Widget_admin extends Widget_Controller
 
 	public function folder_col_top()
 	{
-		$this->load->model("Group/Group_folder_model");
+		$this->load->model("group/Group_folder_model");
 		$userdata = $this->ion_auth->user()->row();
 		$this->data["userdata"] = $userdata;
 		if (isset($userdata) && !empty($userdata)) {

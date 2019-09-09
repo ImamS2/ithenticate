@@ -21,10 +21,10 @@ class Groups extends Groups_Controller
 {
 	function __construct()
 	{
-		Modules::load("auth");
+		Modules::load("Auth");
 		if ($this->ion_auth->in_group("cho admin")) {
 			parent::__construct();
-			$this->load->model(array("Group_model"));
+			$this->load->model("Group_model");
 			$this->template->set("message",$this->session->flashdata("message"));
 			$additional_js = array(
 				'js/account.js',

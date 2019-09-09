@@ -110,6 +110,14 @@ class Account extends Account_Controller
 				"class" => "user_photo",
 			);
 			$this->data["limit_quota_left"] = $this->data["limit_quota"];
+			$use_api = $this->data["use_api"];
+			if ($use_api === TRUE) {
+				$ithenticate = Modules::load("api/Ithenticate");
+				$account_get = $ithenticate->account_get();
+				if (!empty($account_get)) {
+					$this->data["expired_real"] = format_tanggal_indo($account_get->valid_until);
+				}
+			}
 			$account_js = array(
 				'js/jquery_fileuploader.js',
 				'js/upload_one.js',

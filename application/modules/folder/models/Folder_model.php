@@ -12,8 +12,8 @@ class Folder_model extends MY_Model
 	function __construct()
 	{
 		parent::__construct();
-		Modules::load("Group");
-		$this->load->model("Group_folder_model");
+		Modules::load("group");
+		$this->load->model("group/Group_folder_model");
 	}
 
 	public function get_folder_details($id_folder = NULL)

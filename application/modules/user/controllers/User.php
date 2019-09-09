@@ -393,6 +393,14 @@ class User extends User_Controller
 			$this->data["report_lists"] = $group_reporting;
 			$this->data["alternate"] = 0;
 
+			if ($this->data["use_api"] === TRUE) {
+				$ithenticate = Modules::load("api/Ithenticate");
+				$account_get = $ithenticate->account_get();
+				if (!empty($account_get)) {
+					$this->data["actual_quota"] = $account_get;
+				}
+			}
+
 			$main_css = $this->main_css;
 			$main_js = $this->main_js;
 			$_template = array(

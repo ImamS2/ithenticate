@@ -42,8 +42,8 @@ class Settings extends Settings_Controller
 		} else {
 			$main_css = $this->main_css;
 			$main_js = $this->main_js;
-			$this->load->model("Folder/Folder_model");
-			$this->load->model("Group/Group_folder_model");
+			$this->load->model("folder/Folder_model");
+			$this->load->model("group/Group_folder_model");
 			$this->template->set("body_class","template layout_3_2colh");
 			$this->data["folders"] = $this->Folder_model->get_folders_lists()->result_array();
 			// pre($this->Folder_model->get_folders_lists());
@@ -87,7 +87,7 @@ class Settings extends Settings_Controller
 	public function app_setting()
 	{
 		if ($this->ion_auth->in_group("cho admin")) {
-			Modules::load("Api/ithenticate");
+			Modules::load("api/ithenticate");
 			// $this->load->model()
 
 			$this->form_validation->set_rules("maintenance","Maintenance","trim");
@@ -112,6 +112,7 @@ class Settings extends Settings_Controller
 					"main_js" => $main_js,
 					"title" => "Settings API iThenticate",
 				);
+				$this->load->model("api/Api_account_model");
 				$api_accounts = $this->Api_account_model->get();
 				if ($api_accounts->num_rows() > 0) {
 					$api_account_lists = $api_accounts->result();
@@ -157,8 +158,7 @@ class Settings extends Settings_Controller
 	public function api_activate($id)
 	{
 		if (isset($id) && !empty($id)) {
-			Modules::load("Api");
-			$this->load->model("Api/Api_account_model");
+			$this->load->model("api/Api_account_model");
 			$api_active = $this->Api_account_model->where(array("active"=>1))->get()->row();
 			if (!empty($api_active) && (is_object($api_active) || is_array($api_active))) {
 				$id_aktif_dulu = $api_active->id;

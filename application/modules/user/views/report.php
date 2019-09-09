@@ -56,9 +56,9 @@
 							<tbody>
 								<tr>
 									<?php if (isset($actual_quota) && !empty($actual_quota) && (is_array($actual_quota) || is_object($actual_quota))): ?>
-									<td><?= format_ribuan($actual_quota['report_count']) ?></td>
-									<td><?= format_ribuan($actual_quota['report_limit']) ?></td>
-									<td><?= format_ribuan($actual_quota['report_limit'] - $actual_quota['report_count']) ?></td>
+									<td><?= format_ribuan($actual_quota->report_count) ?></td>
+									<td><?= format_ribuan($actual_quota->report_limit) ?></td>
+									<td><?= format_ribuan($actual_quota->report_limit - $actual_quota->report_count) ?></td>
 									<?php endif ?>
 								</tr>
 							</tbody>

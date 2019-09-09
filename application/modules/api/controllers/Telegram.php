@@ -16,7 +16,7 @@ class Telegram extends Api_Controller
 	{
 		parent::__construct();
 		$this->load->helper("form");
-		$this->load->config("Api/telegram");
+		$this->load->config("api/telegram");
 
 		$this->token = $this->config->item("telegram_bot_key");
 		$this->url = $this->url . $this->token . "/";

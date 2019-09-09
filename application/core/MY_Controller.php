@@ -63,7 +63,7 @@ class Admin_Controller extends MY_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$auth = Modules::load("auth");
+		$auth = Modules::load("Auth");
 		if (!empty($auth))
 		{
 			if (!$this->ion_auth->logged_in())
@@ -83,9 +83,9 @@ class Admin_Controller extends MY_Controller
 				"js/en_us.js",
 			);
 
-			Modules::load("Settings");
-			Modules::load("Widget_admin");
-			$this->load->model(array("Settings_model"));
+			Modules::load("settings");
+			Modules::load("widget_admin");
+			$this->load->model("settings/Settings_model");
 			$userdata = $this->ion_auth->user()->row();
 			$this->data["userdata"] = $userdata;
 			$this->data["announcement"] = $this->Settings_model->get_app_config("maintenance")->row()->nilai;
@@ -98,13 +98,13 @@ class Admin_Controller extends MY_Controller
 			$this->data["limit_quota"] = $userdata->quota - $userdata->usage_quota;
 
 			if (!$this->ion_auth->in_group("cho admin")) {
-				Modules::load("User");
-				$this->load->model("Group_model");
+				Modules::load("user");
+				$this->load->model("user/Group_model");
 				$universitas = $this->Group_model->get_user_campus($userdata->id)->row();
 				$this->data["universitas"] = $universitas;
 				$cek_impersonate = $this->session->has_userdata("impersonate");
 				if ($cek_impersonate === FALSE) {
-					$this->load->model("Ip_address_model");
+					$this->load->model("user/Ip_address_model");
 					$check_ip_address = $this->Ip_address_model->check_ip_address();
 					if ($check_ip_address == FALSE) {
 						redirect("en_us/logout","refresh");

@@ -10,8 +10,7 @@ class User_file_Controller extends Admin_Controller
 	{
 		parent::__construct();
 		$this->template->set_template("template" . DIRECTORY_SEPARATOR . "admin");
-		Modules::load("User");
-		$this->load->model("Group_model");
+		$this->load->model("user/Group_model");
 	}
 }
 

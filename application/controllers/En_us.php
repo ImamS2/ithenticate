@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
 * 
 */
-class En_us extends Admin_Controller
+class En_us extends MY_Controller
 {
 	function __construct()
 	{

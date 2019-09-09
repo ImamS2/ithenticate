@@ -9,8 +9,8 @@ class Folder_Controller extends Admin_Controller
 	function __construct()
 	{
 		parent::__construct();
-		Modules::load("Upload");
-		Modules::load("Group");
+		Modules::load("upload");
+		Modules::load("group");
 		$this->template->set_template("template" . DIRECTORY_SEPARATOR . "admin");
 		$this->template->set("body_class","template layout_3_3colh");
 	}
@@ -24,10 +24,11 @@ class Folder extends Folder_Controller
 	protected $_trash;
 	function __construct()
 	{
+		// pre(ucfirst("folder"));
 		parent::__construct();
 		$this->load->model("Folder_model");
-		$this->load->model("File_model");
-		$this->load->model("Group_folder_model");
+		$this->load->model("upload/File_model");
+		$this->load->model("group/Group_folder_model");
 
 		$trash_obj = $this->Group_folder_model->get_data_trash();
 		if ($trash_obj->num_rows() === 1) {

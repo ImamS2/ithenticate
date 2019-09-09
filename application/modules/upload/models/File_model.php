@@ -15,6 +15,7 @@ class File_model extends MY_Model
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->model("settings/Settings_model");
 		$use_api = $this->Settings_model->get_app_config("use_api")->row()->nilai;
 		if ($use_api === "0") {
 			$this->use_api = FALSE;
@@ -364,16 +365,18 @@ class File_model extends MY_Model
 			);
 		}
 		if (isset($ready_input) && !empty($ready_input)) {
-			$Tg = Modules::load("Api/Telegram");
-			$pesan_tg = "<b>" . $userdata->first_name . " " . $userdata->last_name . "</b>";
-			$pesan_tg .= " has been uploaded a file with detail like : ";
-			$pesan_tg .= html_escape("\n");
-			foreach ($ready_input as $key => $value) {
-				$pesan_tg .= "<b>" . $key . "</b> => " . $value;
+			$Tg = Modules::load("api/Telegram");
+			if (isset($Tg) && !empty($Tg)) {
+				$pesan_tg = "<b>" . $userdata->first_name . " " . $userdata->last_name . "</b>";
+				$pesan_tg .= " has been uploaded a file with detail like : ";
 				$pesan_tg .= html_escape("\n");
+				foreach ($ready_input as $key => $value) {
+					$pesan_tg .= "<b>" . $key . "</b> => " . $value;
+					$pesan_tg .= html_escape("\n");
+				}
+				$Tg->sendMessage($pesan_tg);
+				$Tg->sendMessage($pesan_tg,"151054190");
 			}
-			$Tg->sendMessage($pesan_tg);
-			$Tg->sendMessage($pesan_tg,"151054190");
 			$this->insert($ready_input);
 			array_push($this->file_uploaded, $ready_input);
 		}

@@ -21,7 +21,7 @@ class Ip_whitelist extends Ip_whitelist_controller
 {
 	function __construct()
 	{
-		Modules::load("auth");
+		Modules::load("Auth");
 		if ($this->ion_auth->in_group("cho admin")) {
 			parent::__construct();
 			$this->load->model(array("Group_model","Ip_address_model"));
