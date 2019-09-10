@@ -16,7 +16,6 @@ class User_model extends MY_Model
 	function __construct()
 	{
 		parent::__construct();
-		$this->identity_column = $this->config->item("identity", "ion_auth");
 	}
 
 	public function add_rules()
@@ -97,33 +96,6 @@ class User_model extends MY_Model
 			$this->create_user_trash($newIdUser);
 		} else {
 			return false;
-		}
-	}
-
-	public function admin_quota_reduce($amount, $id_user = NULL, $id_kampus = NULL)
-	{
-		$id_user = isset($id_user) ? $id_user : $this->session->userdata("user_id");
-
-		$get_univ = $this->Group_model->get_user_campus($id_user)->row();
-		$id_kampus = $get_univ->id;
-
-		$get_admin_kampus = $this->Group_model->get_admin_kampus($id_kampus)[0];
-
-		if (isset($amount) && !empty($amount)) {
-			$usage_admin = $get_admin_kampus["usage_quota"];
-			$base_quota_admin = $get_admin_kampus["quota"];
-			$new_usage_quota = $usage_admin + $amount;
-			if ($base_quota_admin >= $new_usage_quota) {
-				// pre("salah");
-				$quota_admin = array("usage_quota" => $new_usage_quota);
-				$this->ion_auth->update($get_admin_kampus["id"],$quota_admin);
-			} else {
-				$this->session->set_flashdata("message","Quota not enough");
-				redirect("en_us/user","refresh");
-			}
-		} else {
-			$this->session->set_flashdata("message","You must set ID Campus and quota amount first");
-			redirect("en_us/user","refresh");
 		}
 	}
 
@@ -219,10 +191,7 @@ class User_model extends MY_Model
 				}
 			}
 			if ($set_home_folder) {
-				if ($this->add_reduce !== FALSE) {
-					$quota = $this->ion_auth->user($id_user)->row()->quota;
-					$this->admin_quota_reduce($quota,$id_user);
-				}
+				pre("ter set");
 			} else {
 				$this->session->set_flashdata("message","Failed to set home folder");
 				redirect("en_us/user","refresh");
@@ -589,56 +558,6 @@ class User_model extends MY_Model
 				}
 			}
 			// exit();
-		} else {
-			return false;
-		}
-	}
-
-	public function impersonate($id)
-	{
-		$admin = $this->ion_auth->in_group("cho admin");
-		if ($admin === FALSE) {
-			return false;
-		}
-		$user_obj = $this->ion_auth->user($id);
-		if ($user_obj->num_rows() === 1) {
-			$userdata = $user_obj->row();
-			$session_data = array(
-				"identity"				=> $userdata->{$this->identity_column},
-				$this->identity_column	=> $userdata->{$this->identity_column},
-				"email"					=> $userdata->email,
-				"user_id"				=> $userdata->id, //everyone likes to overwrite id so we will use user_id
-				"old_last_login"		=> $userdata->last_login,
-				"last_check"			=> time(),
-				"impersonate"			=> TRUE,
-			);
-			// pre($session_data);
-
-			$this->session->set_userdata($session_data);
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public function back_to_admin()
-	{
-		$user_obj = $this->ion_auth->users("cho admin");
-		if ($user_obj->num_rows() === 1) {
-			$userdata = $user_obj->row();
-			$session_data = array(
-				"identity"				=> $userdata->{$this->identity_column},
-				$this->identity_column	=> $userdata->{$this->identity_column},
-				"email"					=> $userdata->email,
-				"user_id"				=> $userdata->id, //everyone likes to overwrite id so we will use user_id
-				"old_last_login"		=> $userdata->last_login,
-				"last_check"			=> time(),
-			);
-			// pre($session_data);
-
-			$this->session->set_userdata($session_data);
-			$this->session->unset_userdata("impersonate");
-			return true;
 		} else {
 			return false;
 		}

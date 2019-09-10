@@ -151,8 +151,7 @@ class File_model extends MY_Model
 				if($this->use_api === true) {
 					echo "gunakan api";
 				}
-				$ready_input = $this->pre_send_data($data_file);
-				$this->file_save_db($ready_input);
+				$this->pre_send_data($data_file);
 			}
 		}
 
@@ -228,22 +227,21 @@ class File_model extends MY_Model
 		);
 
 		if (isset($data_file) && !empty($data_file)) {
-			$ready_input = $this->pre_send_data($data_file);
-			$this->file_save_db($ready_input);
+			$this->pre_send_data($data_file);
 		}
 
-		$jml_file_upload = count($this->file_uploaded);
-		if ($jml_file_upload < 2) {
-			$this->session->set_flashdata("message",$jml_file_upload . " file was uploaded");
-		} else {
-			$this->session->set_flashdata("message",$jml_file_upload . " files was uploaded");
-		}
+		// $jml_file_upload = count($this->file_uploaded);
+		// if ($jml_file_upload < 2) {
+		// 	$this->session->set_flashdata("message",$jml_file_upload . " file was uploaded");
+		// } else {
+		// 	$this->session->set_flashdata("message",$jml_file_upload . " files was uploaded");
+		// }
 
-		if ($this->after_upload === TRUE) {
-			redirect("en_us/folder/".$id_folder,"refresh");
-		} else {
-			redirect("en_us/upload","refresh");
-		}
+		// if ($this->after_upload === TRUE) {
+		// 	redirect("en_us/folder/".$id_folder,"refresh");
+		// } else {
+		// 	redirect("en_us/upload","refresh");
+		// }
 	}
 
 	public function extract_zip_file($data, $upload_path = NULL)
@@ -313,8 +311,7 @@ class File_model extends MY_Model
 				if($this->use_api === TRUE) {
 					echo "gunakan api";
 				}
-				$ready_input = $this->pre_send_data($data_file);
-				$this->file_save_db($ready_input);
+				$this->pre_send_data($data_file);
 			}
 			return $response;
 		} else {
@@ -366,6 +363,7 @@ class File_model extends MY_Model
 				"ori_name" => $ori_name,
 			);
 		}
+		array_push($this->file_uploaded, $ready_input);
 		return $ready_input;
 	}
 
@@ -379,7 +377,6 @@ class File_model extends MY_Model
 				$base_quota_user = intval($userdata->quota);
 			}
 
-			// array_push($this->file_uploaded, $ready_input);
 
 			// $Tg = Modules::load("api/Telegram");
 			// if (isset($Tg) && !empty($Tg)) {

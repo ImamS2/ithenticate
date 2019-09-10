@@ -133,40 +133,13 @@ class Widget_admin extends Widget_Controller
 
 	public function submit_file()
 	{
-		$this->load->model("settings/Settings_model");
-		$use_api = $this->Settings_model->get_app_config("use_api")->row()->nilai;
-		if ($use_api === "0") {
-			$this->data["use_api"] = FALSE;
-		} elseif ($use_api === "1") {
-			$this->data["use_api"] = TRUE;
-		}
-		$userdata = $this->ion_auth->user()->row();
-		$this->data["limit_quota"] = $userdata->quota - $userdata->usage_quota;
-		if ($this->ion_auth->in_group("cho admin")) {
-			if ($this->data["use_api"] == TRUE) {
-				$account_get = Modules::run("api/Ithenticate/account_get");
-				// pre($account_get);
-				$limit_quota = 0;
-				if (is_array($account_get) || is_object($account_get)) {
-					if(array_key_exists("report_limit", $account_get) === TRUE){
-						$report_limit = $account_get->report_limit;
-					}
-					if(array_key_exists("report_count", $account_get) === TRUE){
-						$report_count = $account_get->report_count;
-					}
-					if(array_key_exists("valid_until", $account_get) === TRUE){
-						$valid_until = $account_get->valid_until;
-					}
-					if (isset($report_limit) && isset($report_count) && !empty($report_count) && !empty($report_limit)) {
-						$limit_quota = $report_limit - $report_count;
-					}
-				}
-				$this->data["limit_quota"] = $limit_quota;
-				$this->data["limit_quota_left"] = $this->data["limit_quota"];
-			}
-		} else {
-			$this->data["limit_quota_left"] = $this->data["limit_quota"];
-		}
+		$this->load->model("quota/Quota_model");
+
+		$quota_user = $this->Quota_model->get_user_quota();
+		$sisa_quota_awal = $quota_user->sisa_quota_awal;
+
+		$this->data["limit_quota_left"] = $sisa_quota_awal;
+
 		$this->data["list"] = array(
 			anchor(site_url("en_us/upload"),"<span>Upload a File</span>"),
 			anchor(site_url("en_us/upload/zip"),"<span>Zip File Upload</span>"),

@@ -26,12 +26,6 @@ class Upload extends Upload_Controller
 		$this->template->set("message",$this->session->flashdata("message"));
 		$this->template->set_template("template" . DIRECTORY_SEPARATOR . "upload");
 		$this->template->set("body_class","yui-skin-sam template layout_3_2colh");
-
-		$sisa_quota = $this->data["limit_quota"];
-		if ($sisa_quota < 1 && ! $this->ion_auth->in_group("cho admin")) {
-			$this->session->set_flashdata("message","Quota Not Enough");
-			redirect("en_us","refresh");
-		}
 	}
 
 	public function index($id = NULL)

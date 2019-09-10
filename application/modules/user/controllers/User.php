@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined("BASEPATH") OR exit("No direct script access allowed");
 
 /**
 * 
@@ -22,7 +22,8 @@ class User extends User_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model(array("User_model","Group_model"));
+		$this->load->model("User_model");
+		$this->load->model("Group_model");
 		$this->template->set("message",$this->session->flashdata("message"));
 		$additional_js = array(
 			"js/account.js",
@@ -87,8 +88,8 @@ class User extends User_Controller
 			$this->User_model->add_rules();
 
 			if ($this->form_validation->run() === TRUE) {
-				$first_name = $this->security->xss_clean($this->input->post('first_name'));
-				$last_name = $this->security->xss_clean($this->input->post('last_name'));
+				$first_name = $this->security->xss_clean($this->input->post("first_name"));
+				$last_name = $this->security->xss_clean($this->input->post("last_name"));
 				$add_user = $this->User_model->add_user();
 				if ($add_user !== FALSE) {
 					$this->session->set_flashdata("message","User ". $first_name . " " . $last_name . " successfully created");
@@ -473,7 +474,9 @@ class User extends User_Controller
 	public function impersonate($id = NULL)
 	{
 		if (isset($id) && !empty($id)) {
-			$impersonate = $this->User_model->impersonate($id);
+			$this->load->model("Impersonate_model");
+			$impersonate = $this->Impersonate_model->impersonate($id);
+			// pre($impersonate);
 			if ($impersonate === FALSE) {
 				$this->session->set_flashdata("message","Impersonate failed");
 			} else {

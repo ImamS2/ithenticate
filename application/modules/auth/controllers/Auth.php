@@ -157,8 +157,8 @@ class Auth extends Auth_Controller
 		// exit();
 
 		if ($cek_impersonate === TRUE) {
-			$this->load->model("user/User_model");
-			$this->User_model->back_to_admin();
+			$this->load->model("user/Impersonate_model");
+			$this->Impersonate_model->back_to_admin();
 			$this->session->set_flashdata("message","Welcome Back");
 			redirect("en_us/user","refresh");
 		} else {
