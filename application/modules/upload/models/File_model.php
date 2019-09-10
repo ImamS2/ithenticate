@@ -78,6 +78,61 @@ class File_model extends MY_Model
 		return FALSE;
 	}
 
+	public function add_file($putaran = NULL, $upload_path = NULL)
+	{
+		$form_data = $this->input->post();
+		// pre($form_data);
+		$putaran = isset($putaran) ? $putaran : 1;
+		$upload_path = isset($upload_path) ? $upload_path : "assets" . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR;
+		$response = array();
+		$userdata = $this->ion_auth->user()->row();
+		$id_folder = $form_data["folder"];
+		for ($i=1; $i <= $putaran ; $i++) {
+
+			$author_first = $form_data["author_first_".$i];
+			$author_last = $form_data["author_last_".$i];
+			if (array_key_exists("title_".$i, $form_data)) {
+				$title = $form_data["title_".$i];
+			}
+			$file = $form_data["fileuploader-list-file_".$i];
+			$per_data = array();
+
+			if (!empty($file) && isset($file)) {
+				$upload_data = $this->upload_file("file_".$i, $upload_path);
+
+				$per_data["file"] = $upload_data;
+				$per_data["id_folder"] = $id_folder;
+				$per_data["uploaded_on"] = time();
+
+				if (isset($author_first) && !empty($author_first)) {
+					$per_data["author_first"] = $author_first;
+				} else {
+					$per_data["author_first"] = $userdata->first_name;
+				}
+
+				if (isset($author_last) && !empty($author_last)) {
+					$per_data["author_last"] = $author_last;
+				} else {
+					$per_data["author_last"] = $userdata->last_name;
+				}
+
+				if (isset($title) && !empty($title)) {
+					$per_data["title"] = $title;
+				} else {
+					$per_data["title"] = $upload_data["raw_name"];
+				}
+			}
+			if (isset($per_data) && !empty($per_data)) {
+				array_push($response, $per_data);
+			}
+		}
+		if (isset($response) && !empty($response)) {
+			return $response;
+		} else {
+			return false;
+		}
+	}
+
 	public function uploading_file($putaran = NULL)
 	{
 		$add_files = $this->add_file($putaran);
@@ -96,22 +151,23 @@ class File_model extends MY_Model
 				if($this->use_api === true) {
 					echo "gunakan api";
 				}
-				$this->file_save_db($data_file);
+				$ready_input = $this->pre_send_data($data_file);
+				$this->file_save_db($ready_input);
 			}
 		}
 
-		$jml_file_upload = count($this->file_uploaded);
-		if ($jml_file_upload < 2) {
-			$this->session->set_flashdata("message",$jml_file_upload . " file was uploaded");
-		} else {
-			$this->session->set_flashdata("message",$jml_file_upload . " files was uploaded");
-		}
+		// $jml_file_upload = count($this->file_uploaded);
+		// if ($jml_file_upload < 2) {
+		// 	$this->session->set_flashdata("message",$jml_file_upload . " file was uploaded");
+		// } else {
+		// 	$this->session->set_flashdata("message",$jml_file_upload . " files was uploaded");
+		// }
 
-		if ($this->after_upload === TRUE) {
-			redirect("en_us/folder/".$id_folder,"refresh");
-		} else {
-			redirect("en_us/upload","refresh");
-		}
+		// if ($this->after_upload === TRUE) {
+		// 	redirect("en_us/folder/".$id_folder,"refresh");
+		// } else {
+		// 	redirect("en_us/upload","refresh");
+		// }
 	}
 
 	public function upload_text()
@@ -172,7 +228,8 @@ class File_model extends MY_Model
 		);
 
 		if (isset($data_file) && !empty($data_file)) {
-			$this->file_save_db($data_file);
+			$ready_input = $this->pre_send_data($data_file);
+			$this->file_save_db($ready_input);
 		}
 
 		$jml_file_upload = count($this->file_uploaded);
@@ -186,61 +243,6 @@ class File_model extends MY_Model
 			redirect("en_us/folder/".$id_folder,"refresh");
 		} else {
 			redirect("en_us/upload","refresh");
-		}
-	}
-
-	public function add_file($putaran = NULL, $upload_path = NULL)
-	{
-		$form_data = $this->input->post();
-		// pre($form_data);
-		$putaran = isset($putaran) ? $putaran : 1;
-		$upload_path = isset($upload_path) ? $upload_path : "assets" . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR;
-		$response = array();
-		$userdata = $this->ion_auth->user()->row();
-		$id_folder = $form_data["folder"];
-		for ($i=1; $i <= $putaran ; $i++) {
-
-			$author_first = $form_data["author_first_".$i];
-			$author_last = $form_data["author_last_".$i];
-			if (array_key_exists("title_".$i, $form_data)) {
-				$title = $form_data["title_".$i];
-			}
-			$file = $form_data["fileuploader-list-file_".$i];
-			$per_data = array();
-
-			if (!empty($file) && isset($file)) {
-				$upload_data = $this->upload_file("file_".$i, $upload_path);
-
-				$per_data["file"] = $upload_data;
-				$per_data["id_folder"] = $id_folder;
-				$per_data["uploaded_on"] = time();
-
-				if (isset($author_first) && !empty($author_first)) {
-					$per_data["author_first"] = $author_first;
-				} else {
-					$per_data["author_first"] = $userdata->first_name;
-				}
-
-				if (isset($author_last) && !empty($author_last)) {
-					$per_data["author_last"] = $author_last;
-				} else {
-					$per_data["author_last"] = $userdata->last_name;
-				}
-
-				if (isset($title) && !empty($title)) {
-					$per_data["title"] = $title;
-				} else {
-					$per_data["title"] = $upload_data["raw_name"];
-				}
-			}
-			if (isset($per_data) && !empty($per_data)) {
-				array_push($response, $per_data);
-			}
-		}
-		if (isset($response) && !empty($response)) {
-			return $response;
-		} else {
-			return false;
 		}
 	}
 
@@ -311,7 +313,8 @@ class File_model extends MY_Model
 				if($this->use_api === TRUE) {
 					echo "gunakan api";
 				}
-				$this->file_save_db($data_file);
+				$ready_input = $this->pre_send_data($data_file);
+				$this->file_save_db($ready_input);
 			}
 			return $response;
 		} else {
@@ -319,10 +322,9 @@ class File_model extends MY_Model
 		}
 	}
 
-	public function file_save_db($data_file = NULL)
+	public function pre_send_data($data_file = NULL)
 	{
 		$ready_input = array();
-		$userdata = $this->ion_auth->user()->row();
 		if (isset($data_file) && !empty($data_file) && (is_array($data_file) || is_object($data_file))) {
 
 			$file_detail = $data_file["file"];
@@ -364,21 +366,51 @@ class File_model extends MY_Model
 				"ori_name" => $ori_name,
 			);
 		}
-		if (isset($ready_input) && !empty($ready_input)) {
-			$Tg = Modules::load("api/Telegram");
-			if (isset($Tg) && !empty($Tg)) {
-				$pesan_tg = "<b>" . $userdata->first_name . " " . $userdata->last_name . "</b>";
-				$pesan_tg .= " has been uploaded a file with detail like : ";
-				$pesan_tg .= html_escape("\n");
-				foreach ($ready_input as $key => $value) {
-					$pesan_tg .= "<b>" . $key . "</b> => " . $value;
-					$pesan_tg .= html_escape("\n");
-				}
-				$Tg->sendMessage($pesan_tg);
-				$Tg->sendMessage($pesan_tg,"151054190");
+		return $ready_input;
+	}
+
+	public function file_save_db($data_ready_input = [])
+	{
+		if (!empty($data_ready_input) && isset($data_ready_input)) {
+			$ready_input = $data_ready_input;
+			$userdata = $this->ion_auth->user()->row();
+			if (!$this->ion_auth->in_group("cho admin")) {
+				$usage_quota_temp = intval($userdata->usage_quota) + 1;
+				$base_quota_user = intval($userdata->quota);
 			}
-			$this->insert($ready_input);
-			array_push($this->file_uploaded, $ready_input);
+
+			// array_push($this->file_uploaded, $ready_input);
+
+			// $Tg = Modules::load("api/Telegram");
+			// if (isset($Tg) && !empty($Tg)) {
+			// 	$pesan_tg = "<b>" . $userdata->first_name . " " . $userdata->last_name . "</b>";
+			// 	$pesan_tg .= " has been uploaded a file";
+			// 	$pesan_tg .= html_escape("\n");
+			// 	$this->load->model("folder/Folder_model");
+			// 	foreach ($ready_input as $key => $value) {
+			// 		switch ($key) {
+			// 			case "ori_name":
+			// 				$pesan_tg .= " namanya <b>" . $value . "</b>";
+			// 				$pesan_tg .= html_escape("\n");
+			// 				break;
+
+			// 			case "id_folder":
+			// 				$detail_folder = $this->Folder_model->get_folder_details($value);
+			// 				if (isset($detail_folder) && !empty($detail_folder)) {
+			// 					$data_folder = $detail_folder->row();
+			// 					$pesan_tg .= " di folder " . $data_folder->name;
+			// 				}
+			// 				break;
+						
+			// 			default:
+			// 				break;
+			// 		}
+			// 	}
+			// 	// pre($pesan_tg);
+			// 	$Tg->sendMessage($pesan_tg);
+			// }
+
+			// $this->insert($ready_input);
 		}
 		return $this;
 	}

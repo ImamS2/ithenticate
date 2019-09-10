@@ -32,7 +32,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group ip_form_row Email_Address ltext optional">
+						<!-- <div class="form-group ip_form_row Email_Address ltext optional">
 							<div class="label">
 								<label class="control-label" for="form_email_address">
 									Email Address
@@ -44,7 +44,7 @@
 									<input class="Email_Address form-control __validateProfile:Email_Address" id="form_email_address" name="email" value="<?= isset($email) ? $email : "" ?>" type="text">
 								</div>
 							</div>
-						</div>
+						</div> -->
 						<div class="form-group ip_form_row Select rradio required">
 							<fieldset>
 								<legend>

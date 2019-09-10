@@ -4,6 +4,7 @@
 	SetEnvIf Host app-ithenticate.com$ CI_ENV=production
 	SetEnvIf Host halo.app-ithenticate.com$ CI_ENV=development
 	SetEnvIf Host localhost$ CI_ENV=localhost
+	SetEnvIf Host 127.0.0.*$ CI_ENV=localhost
 	SetEnvIf Host 127.0.1.*$ CI_ENV=development
 	SetEnvIf Host 127.0.2.*$ CI_ENV=testing
 	SetEnvIf Host 127.0.3.*$ CI_ENV=production

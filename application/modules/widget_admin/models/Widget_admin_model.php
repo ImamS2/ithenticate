@@ -18,8 +18,8 @@ class Widget_admin_model extends MY_Model
 	public function primary_browse_folder($id = NULL)
 	{
 		$id = isset($id) ? $id : $this->session->userdata("user_id");
-		$this->load->model("Group/Group_folder_model");
-		$this->load->model("Folder_model");
+		$this->load->model("group/Group_folder_model");
+		$this->load->model("folder/Folder_model");
 		$group_folders_lists = $this->Group_folder_model->get_group_folders()->result_array();
 		foreach ($group_folders_lists as $folders) {
 			if ($folders["name"] !== $this->trash) {
@@ -33,7 +33,7 @@ class Widget_admin_model extends MY_Model
 	public function user_browse_folder($id = NULL)
 	{
 		$id = isset($id) ? $id : $this->session->userdata("user_id");
-		$this->load->model("User/Group_model");
+		$this->load->model("user/Group_model");
 		$campus_lists = $this->Group_model->get_campus_lists()->result();
 		foreach ($campus_lists as $folders) {
 			$user_on_campus = $this->ion_auth->users($folders->id);

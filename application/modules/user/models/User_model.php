@@ -130,6 +130,7 @@ class User_model extends MY_Model
 	public function create_user_trash($id_user = NULL)
 	{
 		$id_user = isset($id_user) ? $id_user : $this->session->userdata("user_id");
+		$this->load->model("group/Group_folder_model");
 		$user_trash = $this->Group_folder_model->get_data_trash($id_user);
 		$count_user_trash = $user_trash->num_rows();
 		if ($count_user_trash < 1) {
@@ -150,6 +151,7 @@ class User_model extends MY_Model
 	public function create_group_home_folder($id_user = NULL)
 	{
 		$id_user = isset($id_user) ? $id_user : $this->session->userdata("user_id");
+		$this->load->model("group/Group_folder_model");
 		$group_folders = $this->Group_folder_model->get_group_folders(0,$id_user);
 		$count_group_folders = $group_folders->num_rows();
 		if ($count_group_folders < 1) {
@@ -169,6 +171,8 @@ class User_model extends MY_Model
 	public function create_home_folder($id_document, $id_user = NULL)
 	{
 		$id_user = isset($id_user) ? $id_user : $this->session->userdata("user_id");
+		$this->load->model("group/Group_folder_model");
+		$this->load->model("folder/Folder_model");
 		if (isset($id_document) && !empty($id_document)) {
 			$folders = $this->Group_folder_model->get_group_folders($id_document,$id_user);
 			$count_folders = $folders->num_rows();
@@ -193,6 +197,7 @@ class User_model extends MY_Model
 	public function set_home_folder($id_folder, $id_user = NULL, $photo = NULL, $list = NULL)
 	{
 		$photo = isset($photo) ? $photo : $this->photo;
+		$this->load->model("Group_model");
 		$id_user = isset($id_user) ? $id_user : $this->session->userdata("user_id");
 		if (isset($id_folder) && !empty($id_folder)) {
 			$user_data = array();
@@ -231,6 +236,7 @@ class User_model extends MY_Model
 	public function edit_restriction($id, $user = NULL)
 	{
 		$user = isset($user) ? $user : $this->ion_auth->user($id);
+		$this->load->model("Group_model");
 		if ($user->num_rows() < 1) {
 			$this->session->set_flashdata("message","ID User Not Found");
 			redirect("en_us/user","refresh");
@@ -618,7 +624,7 @@ class User_model extends MY_Model
 	public function back_to_admin()
 	{
 		$user_obj = $this->ion_auth->users("cho admin");
-		if ($user_obj->num_rows()  === 1) {
+		if ($user_obj->num_rows() === 1) {
 			$userdata = $user_obj->row();
 			$session_data = array(
 				"identity"				=> $userdata->{$this->identity_column},

@@ -21,7 +21,19 @@ class Telegram extends Api_Controller
 		$this->token = $this->config->item("telegram_bot_key");
 		$this->url = $this->url . $this->token . "/";
 		$this->debug = TRUE;
-		$this->id_chat_base = $this->config->item("creator");
+		$this->load->model("settings/Settings_model");
+		$setting_tele_obj = $this->Settings_model->get_app_config("telegram_notif_admin");
+		if ($setting_tele_obj->num_rows() > 0) {
+			$set_tele = $setting_tele_obj->row();
+			$id_tele = $set_tele->nilai;
+		} else {
+			if (!empty($this->config->item("creator"))) {
+				$id_tele = $this->config->item("creator");
+			} else {
+				$id_tele = NULL;
+			}
+		}
+		$this->id_chat_base = $id_tele;
 		$this->parse_mode = $this->config->item("parse_mode");
 	}
 
@@ -72,10 +84,7 @@ class Telegram extends Api_Controller
 	public function sendMessage($pesan = NULL, $idchat = NULL, $mark_html = NULL, $idpesan = NULL)
 	{
 		if (empty($idchat)) {
-			if (empty($this->id_chat_base)) {
-			} else {
-				$idchat = $this->id_chat_base;
-			}
+			$idchat = $this->id_chat_base;
 		}
 		if (!empty($mark_html)) {
 			$parse_mode = $mark_html;
