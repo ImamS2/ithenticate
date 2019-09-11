@@ -85,32 +85,6 @@
 									</div>
 								</div>
 							</div>
-							<!-- <div class="form-group ip_form_row ScryptPassword ltext required">
-								<div class="label">
-									<label class="control-label" for="form930password">
-										Password
-										<img class="is_required" alt="(required)" src="<?= site_url('assets/images/asterick.gif')?>">
-									</label>
-								</div>
-								<div class="ip_password_field">
-									<div class="ip_valid_indicator">
-										<input name="password" autocomplete="new-password" class="ScryptPassword form-control __required __validateProfile:ScryptPassword password" type="text" id="form930password" value="<?= $default_password ?>">
-									</div>
-								</div>
-							</div>
-							<div class="form-group ip_form_row EnterPassword ltext required">
-								<div class="label">
-									<label class="control-label" for="form930password_chk">
-										Confirm Password
-										<img class="is_required" alt="(required)" src="<?= site_url('assets/images/asterick.gif')?>">
-									</label>
-								</div>
-								<div class="ip_password_field">
-									<div class="ip_valid_indicator">
-										<input name="password_chk" autocomplete="new-password" type="text" class="EnterPassword form-control __required __validateProfile:EnterPassword password" id="form930password_chk" value="<?= $default_password ?>">
-									</div>
-								</div>
-							</div> -->
 							<?php if (isset($groups) && count($groups) > 0): ?>
 								<?php if ($this->ion_auth->in_group("cho admin")): ?>
 									<div class="form-group ip_form_row Select ltext required">

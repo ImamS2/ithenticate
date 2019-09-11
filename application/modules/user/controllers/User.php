@@ -203,13 +203,6 @@ class User extends User_Controller
 									$total_quota_users += intval($quota_user);
 									break;
 
-								case "password":
-									$password = $nilai["value"];
-									if (strlen($password) < $this->config->item("min_password_length", "ion_auth")) {
-										$nilai["false"] = TRUE;
-									}
-									break;
-
 								case "email":
 									$email = $nilai["value"];
 									if (!filter_var($email,FILTER_VALIDATE_EMAIL)) {
@@ -271,7 +264,7 @@ class User extends User_Controller
 			if (!empty($id) && isset($id)) {
 
 				$user = $this->ion_auth->user($id);
-				$user_object = $user->row();
+				$user_data = $user->row();
 				$this->User_model->edit_restriction($id);
 				$this->data["id"] = $id;
 				$this->User_model->edit_rules();
@@ -303,8 +296,8 @@ class User extends User_Controller
 					);
 					$this->main_css = array_push_values($this->main_css,$additional_css);
 					$this->main_js = array_push_values($this->main_js,$additional_js);
-					$this->data["user"] = $user_object;
-					$this->data["limit_left"] = $user_object->quota - $user_object->usage_quota;
+					$this->data["user"] = $user_data;
+					$this->data["limit_left"] = $user_data->quota - $user_data->usage_quota;
 					$this->data["user_is_admin"] = $this->ion_auth->is_admin($id);
 					$universitas_user = $this->Group_model->get_user_campus($id)->row();
 
@@ -318,7 +311,7 @@ class User extends User_Controller
 					$_template = array(
 						"main_css" => $main_css,
 						"main_js" => $main_js,
-						"title" => "Update User ". $user_object->first_name . " " . $user_object->last_name,
+						"title" => "Update User ". $user_data->first_name . " " . $user_data->last_name,
 					);
 
 					$this->User_model->render_page("user_edit",$this->data,$_template);
@@ -336,11 +329,11 @@ class User extends User_Controller
 			if (isset($id) && !empty($id)) {
 
 				$user = $this->ion_auth->user($id);
-				$user_object = $user->row();
+				$user_data = $user->row();
 
 				$delete_user = $this->User_model->delete_user($id);
-				$first_name = $user_object->first_name;
-				$last_name = $user_object->last_name;
+				$first_name = $user_data->first_name;
+				$last_name = $user_data->last_name;
 
 				if ($delete_user) {
 					$this->session->set_flashdata("message",$first_name . " " . $last_name . " was successfully deleted");
@@ -423,11 +416,11 @@ class User extends User_Controller
 			if (isset($id) && !empty($id)) {
 
 				$user = $this->ion_auth->user($id);
-				$user_object = $user->row();
+				$user_data = $user->row();
 
 				$banned_user = $this->User_model->banned_user($id);
-				$first_name = $user_object->first_name;
-				$last_name = $user_object->last_name;
+				$first_name = $user_data->first_name;
+				$last_name = $user_data->last_name;
 
 				if ($banned_user) {
 					$this->session->set_flashdata("message",$first_name . " " . $last_name . " was successfully banned");
@@ -450,11 +443,11 @@ class User extends User_Controller
 			if (isset($id) && !empty($id)) {
 
 				$user = $this->ion_auth->user($id);
-				$user_object = $user->row();
+				$user_data = $user->row();
 
 				$activated_user = $this->User_model->activated_user($id);
-				$first_name = $user_object->first_name;
-				$last_name = $user_object->last_name;
+				$first_name = $user_data->first_name;
+				$last_name = $user_data->last_name;
 
 				if ($activated_user) {
 					$this->session->set_flashdata("message",$first_name . " " . $last_name . " was successfully activated");

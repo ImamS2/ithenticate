@@ -27,8 +27,6 @@ class User_model extends MY_Model
 		$this->form_validation->set_rules("expireduser","Expired User","required|is_natural_no_zero");
 		$this->form_validation->set_rules("quota","Quota","required|numeric");
 		$this->form_validation->set_rules("group_campus","Reporting Group","required");
-		// $this->form_validation->set_rules("password","Password","required|matches[password_chk]|min_length[" . $this->config->item("min_password_length", "ion_auth") . "]");
-		// $this->form_validation->set_rules("password_chk","Password Confirm","required|matches[password]|min_length[" . $this->config->item("min_password_length", "ion_auth") . "]");
 	}
 
 	public function add_user()
@@ -44,7 +42,6 @@ class User_model extends MY_Model
 		$set_administrator = $this->security->xss_clean($this->input->post("set_administrator"));
 		$group_campus = $this->security->xss_clean($this->input->post("group_campus"));
 		$phone = $this->security->xss_clean($this->input->post("phone"));
-		// $password = $this->security->xss_clean($this->input->post("password"));
 		$password_length = $this->config->item("min_password_length", "ion_auth");
 		$password = generateRandomString($password_length);
 
@@ -64,20 +61,6 @@ class User_model extends MY_Model
 
 			array_push($groups, $id_group_members);
 			$this->add_reduce = TRUE;
-			// pre($groups);
-			// $admin_campus = $this->Group_model->get_admin_kampus($group_campus)[0];
-			// $usage_quota = $admin_campus["usage_quota"];
-			// $kuota_awal = $admin_campus["quota"];
-			// $new_usage_quota = $usage_quota + $quota;
-			// // var_dump($new_usage_quota > $kuota_awal);
-
-			// if ($new_usage_quota > $kuota_awal) {
-			// 	// pre("salah");
-			// 	return false;
-			// } else {
-			// 	$quota_admin = array("usage_quota" => $new_usage_quota);
-			// 	$this->ion_auth->update($admin_campus["id"],$quota_admin);
-			// }
 		}
 
 		$user_data = array(
@@ -88,14 +71,85 @@ class User_model extends MY_Model
 			"quota" => $quota,
 			"phone" => ((empty($phone) || $phone == "") ? NULL : $phone),
 		);
-		// pre($user_data);
-		// exit();
 
-		// make new user
 		$this->photo = TRUE;
 		$newIdUser = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
 		if ($newIdUser) {
 			$this->create_user_trash($newIdUser);
+		} else {
+			return false;
+		}
+	}
+
+	public function user_import_list($data)
+	{
+		$this->add_reduce = TRUE;
+		$filename = "import_name_".$data["userdata"]->id;
+		$upload_path = "assets" . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR;
+		$this->upload_path_file = $upload_path;
+		$lib_excel_reader = APPPATH."modules" . DIRECTORY_SEPARATOR . "user" . DIRECTORY_SEPARATOR . "third_party" . DIRECTORY_SEPARATOR . "PHPExcel" . DIRECTORY_SEPARATOR . "PHPExcel.php";
+		$sheet = excel_reader($lib_excel_reader, $upload_path, $filename);
+		$header_row = $sheet[1];
+		$count_cols = count($header_row);
+		$jumlah_data = count($sheet) - 1;
+		$header_text = array();
+		$this->list = TRUE;
+
+		foreach ($header_row as $header) {
+			$get_require = explode("*", $header);
+			array_push($header_text, $get_require[0]);
+		}
+
+		if ($jumlah_data > 0) {
+			$usage_quota = $data["userdata"]->usage_quota;
+			for ($i=2; $i <= $jumlah_data + 1 ; $i++) { 
+				$row_user_data = $sheet[$i];
+				$user_data = array();
+				$groups = array();
+				foreach ($row_user_data as $key => $value) {
+					$index = alphabet_to_number($key) - 1;
+					$key_user = underscore($header_text[$index]);
+					switch ($key_user) {
+						case "expired":
+							$time_expired_user = 0;
+							if (!empty($value)) {
+								$time_expired_user = strtotime("+ ".$value." month");
+							}
+							$user_data["expired_at"] = $time_expired_user;
+							break;
+
+						case "user_id":
+							$cek_user = $this->ion_auth->user($value)->num_rows();
+							if ($cek_user > 0) {
+								$user_data["id"] = NULL;
+							} else {
+								$user_data["id"] = $value;
+							}
+							break;
+
+						default:
+							$user_data[$key_user] = $value;
+							break;
+					}
+				}
+				$id_group_members = $this->ion_auth->where(["name" => $this->config->item("default_group", "ion_auth")])->groups()->row()->id;
+				array_push($groups, $id_group_members);
+
+				$get_univ = $this->Group_model->get_user_campus()->row();
+				if (isset($get_univ) && !empty($get_univ) && (is_array($get_univ) || is_object($get_univ))) {
+					$id_univ = $get_univ->id;
+					array_push($groups, $id_univ);
+				}
+				$email = $user_data["email"];
+				$password_length = $this->config->item("min_password_length", "ion_auth");
+				$password = generateRandomString($password_length);
+				$newIdUser = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
+				if ($newIdUser) {
+					$this->create_user_trash($newIdUser);
+				} else {
+					return false;
+				}
+			}
 		} else {
 			return false;
 		}
@@ -108,7 +162,6 @@ class User_model extends MY_Model
 		$user_trash = $this->Group_folder_model->get_data_trash($id_user);
 		$count_user_trash = $user_trash->num_rows();
 		if ($count_user_trash < 1) {
-			// make trash folder first
 			$make_trash = $this->Group_folder_model->add_group_folder("Trash",$id_user);
 			if ($make_trash) {
 				$this->create_group_home_folder($id_user);
@@ -279,76 +332,44 @@ class User_model extends MY_Model
 						$quota = $user_edit->quota;
 						$expireduser = $user_edit->expired_at;
 					}
-					// pre($selisih);
-					// pre("ini bukan administrator dan lakukan update quota");
 					$get_univ = $this->Group_model->get_user_campus($id)->row();
 					$id_univ = $get_univ->id;
 					$get_admin_kampus = $this->Group_model->get_admin_kampus($id_univ)[0];
-					// pre($get_admin_kampus);
 					$usage_admin = $get_admin_kampus["usage_quota"];
 					$base_quota_admin = $get_admin_kampus["quota"];
 					$user_usage_quota = $user_edit->usage_quota;
-					// var_dump($user_edit->id === $get_admin_kampus["id"]);
-					// pre($selisih);
 					if ($user_edit->id === $get_admin_kampus["id"]) {
-						// pre("ini admin kampus");
 						if ($selisih >= 1) {
-							// pre("ada penambahan quota");
-							// pre("proses penambahan base quota admin");
 							$user_data["quota"] = $quota;
 						} elseif ($selisih < 0) {
-							// pre("ada pengurangan quota");
-							// var_dump($usage_admin <= $quota);
 							if ($usage_admin <= $quota) {
-								// pre("masih bisa dikurangi");
-								// pre("proses pengurangan base quota admin");
 								$user_data["quota"] = $quota;
 							} else {
-								// pre("tidak bisa dikurangi");
 								$this->session->set_flashdata("message","Quota cannot be reduced");
 								redirect("en_us/user","refresh");
 							}
 						}
 					} else {
-						// pre("ini member kampus");
 						$new_usage_quota = $usage_admin + $selisih;
 						if ($selisih >= 1) {
-							// pre("ada penambahan quota");
 							if ($new_usage_quota <= $base_quota_admin) {
-								// pre("masih bisa ditambah");
-								// pre("proses tambah base quota user");
 								$user_data["quota"] = $quota;
-								// pre("proses penambahan usage_admin");
-								// pre($new_usage_quota);
 								$this->ion_auth->update($get_admin_kampus["id"],array("usage_quota"=>$new_usage_quota));
 							} else {
-								// pre("tidak bisa ditambah");
 								$this->session->set_flashdata("message","Quota cannot be added");
 								redirect("en_us/user","refresh");
 							}
 						} elseif ($selisih < 0) {
-							// pre("ada pengurangan quota");
 							if ($user_usage_quota <= $quota) {
-								// pre("masih bisa dikurangi");
-								// pre("proses pengurangan base quota user");
 								$user_data["quota"] = $quota;
-								// pre("proses pengurangan usage_admin");
-								// pre($new_usage_quota);
 								$this->ion_auth->update($get_admin_kampus["id"],array("usage_quota"=>$new_usage_quota));
 							} else {
-								// pre("tidak bisa dikurangi");
 								$this->session->set_flashdata("message","Quota cannot be reduced");
 								redirect("en_us/user","refresh");
 							}
 						}
 					}
 				}
-				// pre($expireduser);
-				// pre(strtotime($expireduser));
-				// pre(strtotime(date("Y-m-d H:i:s")));
-				// var_dump(strtotime(date("Y-m-d H:i:s")) > strtotime($expireduser));
-				// var_dump(strtotime(date("Y-m-d H:i:s")) >= $expireduser);
-				// var_dump((strtotime(date("Y-m-d H:i:s")) > strtotime($expireduser)) && (strtotime(date("Y-m-d H:i:s")) >= $expireduser));
 
 				if((strtotime(date("Y-m-d H:i:s")) > strtotime($expireduser)) && (strtotime(date("Y-m-d H:i:s")) >= $expireduser)) {
 					$user_data["active"] = 0;
@@ -362,10 +383,7 @@ class User_model extends MY_Model
 				$user_data["profile_pic"] = $upload_photo;
 			}
 
-			// pre($user_data);
-			// exit();
 			if (isset($user_data) && !empty($user_data)) {
-				// pre("masuk tahapan update");
 				$update_user = $this->ion_auth->update($id,$user_data);
 				if ($update_user) {
 					return true;
@@ -482,87 +500,5 @@ class User_model extends MY_Model
 			return $upload_users;
 		}
 		return FALSE;
-	}
-
-	public function user_import_list($data)
-	{
-		$this->add_reduce = TRUE;
-		$filename = "import_name_".$data["userdata"]->id;
-		$upload_path = "assets" . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR;
-		$this->upload_path_file = $upload_path;
-		$lib_excel_reader = APPPATH."modules" . DIRECTORY_SEPARATOR . "user" . DIRECTORY_SEPARATOR . "third_party" . DIRECTORY_SEPARATOR . "PHPExcel" . DIRECTORY_SEPARATOR . "PHPExcel.php";
-		$sheet = excel_reader($lib_excel_reader, $upload_path, $filename);
-		$header_row = $sheet[1];
-		$count_cols = count($header_row);
-		$jumlah_data = count($sheet) - 1;
-		$header_text = array();
-		$this->list = TRUE;
-
-		foreach ($header_row as $header) {
-			$get_require = explode("*", $header);
-			array_push($header_text, $get_require[0]);
-		}
-
-		if ($jumlah_data > 0) {
-			$usage_quota = $data["userdata"]->usage_quota;
-			// pre($usage_quota);
-			for ($i=2; $i <= $jumlah_data + 1 ; $i++) { 
-				$row_user_data = $sheet[$i];
-				$user_data = array();
-				$groups = array();
-				foreach ($row_user_data as $key => $value) {
-					$index = alphabet_to_number($key) - 1;
-					$key_user = underscore($header_text[$index]);
-					switch ($key_user) {
-						case "expired":
-							$time_expired_user = 0;
-							if (!empty($value)) {
-								// pre($value);
-								$time_expired_user = strtotime("+ ".$value." month");
-								// pre(date("Y-m-d",$time_expired_user));
-							}
-							$user_data["expired_at"] = $time_expired_user;
-							break;
-
-						case "user_id":
-							$cek_user = $this->ion_auth->user($value)->num_rows();
-							if ($cek_user > 0) {
-								$user_data["id"] = NULL;
-							} else {
-								$user_data["id"] = $value;
-							}
-							break;
-
-						default:
-							$user_data[$key_user] = $value;
-							break;
-					}
-				}
-				// pre($user_data);
-				$id_group_members = $this->ion_auth->where(["name" => $this->config->item("default_group", "ion_auth")])->groups()->row()->id;
-				array_push($groups, $id_group_members);
-
-				$get_univ = $this->Group_model->get_user_campus()->row();
-				if (isset($get_univ) && !empty($get_univ) && (is_array($get_univ) || is_object($get_univ))) {
-					$id_univ = $get_univ->id;
-					array_push($groups, $id_univ);
-				}
-				// pre($groups);
-				$email = $user_data["email"];
-				$password_length = $this->config->item("min_password_length", "ion_auth");
-				$password = generateRandomString($password_length);
-				// pre($email);
-				// pre($password);
-				$newIdUser = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
-				if ($newIdUser) {
-					$this->create_user_trash($newIdUser);
-				} else {
-					return false;
-				}
-			}
-			// exit();
-		} else {
-			return false;
-		}
 	}
 }
