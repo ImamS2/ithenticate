@@ -27,8 +27,8 @@ class User_model extends MY_Model
 		$this->form_validation->set_rules("expireduser","Expired User","required|is_natural_no_zero");
 		$this->form_validation->set_rules("quota","Quota","required|numeric");
 		$this->form_validation->set_rules("group_campus","Reporting Group","required");
-		$this->form_validation->set_rules("password","Password","required|matches[password_chk]|min_length[" . $this->config->item("min_password_length", "ion_auth") . "]");
-		$this->form_validation->set_rules("password_chk","Password Confirm","required|matches[password]|min_length[" . $this->config->item("min_password_length", "ion_auth") . "]");
+		// $this->form_validation->set_rules("password","Password","required|matches[password_chk]|min_length[" . $this->config->item("min_password_length", "ion_auth") . "]");
+		// $this->form_validation->set_rules("password_chk","Password Confirm","required|matches[password]|min_length[" . $this->config->item("min_password_length", "ion_auth") . "]");
 	}
 
 	public function add_user()
@@ -44,7 +44,9 @@ class User_model extends MY_Model
 		$set_administrator = $this->security->xss_clean($this->input->post("set_administrator"));
 		$group_campus = $this->security->xss_clean($this->input->post("group_campus"));
 		$phone = $this->security->xss_clean($this->input->post("phone"));
-		$password = $this->security->xss_clean($this->input->post("password"));
+		// $password = $this->security->xss_clean($this->input->post("password"));
+		$password_length = $this->config->item("min_password_length", "ion_auth");
+		$password = generateRandomString($password_length);
 
 		$expireduser = strtotime(date("Y-m-d",strtotime("+ ".$qty_expired." month")));
 
@@ -547,7 +549,8 @@ class User_model extends MY_Model
 				}
 				// pre($groups);
 				$email = $user_data["email"];
-				$password = $user_data["password"];
+				$password_length = $this->config->item("min_password_length", "ion_auth");
+				$password = generateRandomString($password_length);
 				// pre($email);
 				// pre($password);
 				$newIdUser = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
