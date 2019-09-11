@@ -69,21 +69,7 @@ class User_model extends MY_Model
 		$this->upload_path_file = $upload_path;
 		$lib_excel_reader = APPPATH."modules" . DIRECTORY_SEPARATOR . "user" . DIRECTORY_SEPARATOR . "third_party" . DIRECTORY_SEPARATOR . "PHPExcel" . DIRECTORY_SEPARATOR . "PHPExcel.php";
 		$sheet = excel_reader($lib_excel_reader, $upload_path, $filename);
-		$header_row = $sheet[1];
-		$count_cols = count($header_row);
-		$jumlah_data = count($sheet) - 1;
-		$header_text = array();
-
-		foreach ($header_row as $header) {
-			$get_require = explode("*", $header);
-			array_push($header_text, $get_require[0]);
-		}
-
-		if ($jumlah_data > 0) {
-			$this->User_extend_model->add_list_users($sheet);
-		} else {
-			return false;
-		}
+		$this->User_extend_model->add_list_users($sheet);
 	}
 
 	public function edit_user($id = NULL)
@@ -208,7 +194,6 @@ class User_model extends MY_Model
 
 				if ($id === $get_admin_kampus["id"]) {
 					if ($this->ion_auth->in_group("cho admin")) {
-						// pre("ini admin kampus");
 						if ($this->ion_auth->users($id_univ)->num_rows() > 1) {
 							$this->session->set_flashdata("message","Delete the members first");
 							redirect("en_us/user","refresh");
@@ -218,19 +203,14 @@ class User_model extends MY_Model
 						redirect("en_us/user","refresh");
 					}
 				} else {
-					// pre("ini member kampus");
-					// pre($limit_left_user_object);
 					if ($limit_left_user_object > 0) {
-						// pre($get_admin_kampus);
 						$new_usage_admin = $usage_admin - $limit_left_user_object;
-						// pre($new_usage_admin);
 						$quota_admin = array("usage_quota" => $new_usage_admin);
 						$update_quota_admin = $this->ion_auth->update($get_admin_kampus["id"],$quota_admin);
 					}
 				}
 
 				$group_folders = $this->Group_folder_model->get_group_folders(0,$id,TRUE,"user");
-				// pre($group_folders);
 				$count_group_folders = $group_folders->num_rows();
 				if ($count_group_folders > 0) {
 					$folders = $group_folders->result();
@@ -240,7 +220,6 @@ class User_model extends MY_Model
 						$edit_folder = $this->Group_folder_model->edit_group_folder($id_folder, $name_folder, 0);
 					}
 				}
-				// exit();
 
 				if($this->ion_auth->delete_user($id)) {
 					return true;

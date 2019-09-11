@@ -58,54 +58,68 @@ class User_extend_model extends MY_Model
 
 	public function add_list_users($sheet)
 	{
-		$usage_quota = $data["userdata"]->usage_quota;
-		for ($i=2; $i <= $jumlah_data + 1 ; $i++) { 
-			$row_user_data = $sheet[$i];
-			$user_data = array();
-			$groups = array();
-			foreach ($row_user_data as $key => $value) {
-				$index = alphabet_to_number($key) - 1;
-				$key_user = underscore($header_text[$index]);
-				switch ($key_user) {
-					case "expired":
-						$time_expired_user = 0;
-						if (!empty($value)) {
-							$time_expired_user = strtotime("+ ".$value." month");
-						}
-						$user_data["expired_at"] = $time_expired_user;
-						break;
+		$header_row = $sheet[1];
+		$count_cols = count($header_row);
+		$jumlah_data = count($sheet) - 1;
+		$header_text = array();
 
-					case "user_id":
-						$cek_user = $this->ion_auth->user($value)->num_rows();
-						if ($cek_user > 0) {
-							$user_data["id"] = NULL;
-						} else {
-							$user_data["id"] = $value;
-						}
-						break;
+		foreach ($header_row as $header) {
+			$get_require = explode("*", $header);
+			array_push($header_text, $get_require[0]);
+		}
 
-					default:
-						$user_data[$key_user] = $value;
-						break;
+		if ($jumlah_data > 0) {
+			$usage_quota = $data["userdata"]->usage_quota;
+			for ($i=2; $i <= $jumlah_data + 1 ; $i++) { 
+				$row_user_data = $sheet[$i];
+				$user_data = array();
+				$groups = array();
+				foreach ($row_user_data as $key => $value) {
+					$index = alphabet_to_number($key) - 1;
+					$key_user = underscore($header_text[$index]);
+					switch ($key_user) {
+						case "expired":
+							$time_expired_user = 0;
+							if (!empty($value)) {
+								$time_expired_user = strtotime("+ ".$value." month");
+							}
+							$user_data["expired_at"] = $time_expired_user;
+							break;
+
+						case "user_id":
+							$cek_user = $this->ion_auth->user($value)->num_rows();
+							if ($cek_user > 0) {
+								$user_data["id"] = NULL;
+							} else {
+								$user_data["id"] = $value;
+							}
+							break;
+
+						default:
+							$user_data[$key_user] = $value;
+							break;
+					}
+				}
+				$id_group_members = $this->ion_auth->where(["name" => $this->config->item("default_group", "ion_auth")])->groups()->row()->id;
+				array_push($groups, $id_group_members);
+
+				$get_univ = $this->Group_model->get_user_campus()->row();
+				if (isset($get_univ) && !empty($get_univ) && (is_array($get_univ) || is_object($get_univ))) {
+					$id_univ = $get_univ->id;
+					array_push($groups, $id_univ);
+				}
+				$email = $user_data["email"];
+				$password_length = $this->config->item("min_password_length", "ion_auth");
+				$password = generateRandomString($password_length);
+				$newIdUser = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
+				if ($newIdUser) {
+					$this->create_user_trash($newIdUser);
+				} else {
+					return false;
 				}
 			}
-			$id_group_members = $this->ion_auth->where(["name" => $this->config->item("default_group", "ion_auth")])->groups()->row()->id;
-			array_push($groups, $id_group_members);
-
-			$get_univ = $this->Group_model->get_user_campus()->row();
-			if (isset($get_univ) && !empty($get_univ) && (is_array($get_univ) || is_object($get_univ))) {
-				$id_univ = $get_univ->id;
-				array_push($groups, $id_univ);
-			}
-			$email = $user_data["email"];
-			$password_length = $this->config->item("min_password_length", "ion_auth");
-			$password = generateRandomString($password_length);
-			$newIdUser = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
-			if ($newIdUser) {
-				$this->create_user_trash($newIdUser);
-			} else {
-				return false;
-			}
+		} else {
+			return false;
 		}
 	}
 
@@ -187,7 +201,13 @@ class User_extend_model extends MY_Model
 			$base_user_quota = $regisuserdata->quota;
 			if ($set_home_folder) {
 				$this->load->model("quota/Quota_model");
-				$this->Quota_model->add_user($base_user_quota,$id_user);
+				$upd_usage_admin = $this->Quota_model->add_usage_admin($base_user_quota,$id_user);
+				if ($upd_usage_admin === FALSE) {
+					$this->session->set_flashdata("message","Error, cannot reduced admin quota");
+					redirect("en_us/user","refresh");
+				} else {
+					// update foto kah
+				}
 			} else {
 				$this->session->set_flashdata("message","Failed to set home folder");
 				redirect("en_us/user","refresh");

@@ -93,7 +93,7 @@ class Quota_model extends MY_Model
 		}
 	}
 
-	public function add_user($amount = NULL, $id_new_user = NULL, $id_admin = NULL)
+	public function add_usage_admin($amount = NULL, $id_new_user = NULL, $id_admin = NULL)
 	{
 		if (isset($amount) && isset($id_new_user) && !empty($amount) !empty($id_new_user)) {
 			$this->load->model("user/Group_model");
@@ -101,6 +101,14 @@ class Quota_model extends MY_Model
 			$admin_kampus = $this->Group_model->get_admin_kampus($user_campus->id);
 			$id_admin = isset($id_admin) ? $id_admin : $admin_kampus["id"];
 			$usage_admin = $admin_kampus["usage_quota"];
+			if ($amount <= $usage_admin) {
+				$new_usage_admin = $usage_admin + $amount;
+				$params_edit = array("usage_quota"=>$new_usage_admin);
+				$this->ion_auth->update($id_admin,$params_edit);
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
