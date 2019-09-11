@@ -86,6 +86,8 @@ class User extends User_Controller
 		if ($this->access_user() === TRUE) {
 
 			$this->User_model->add_rules();
+			$length_password = 8;
+			$this->data["default_password"] = generateRandomString($length_password);
 
 			if ($this->form_validation->run() === TRUE) {
 				$first_name = $this->security->xss_clean($this->input->post("first_name"));

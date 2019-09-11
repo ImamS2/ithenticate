@@ -94,7 +94,7 @@
 								</div>
 								<div class="ip_password_field">
 									<div class="ip_valid_indicator">
-										<input name="password" autocomplete="new-password" class="ScryptPassword form-control __required __validateProfile:ScryptPassword password" type="text" id="form930password">
+										<input name="password" autocomplete="new-password" class="ScryptPassword form-control __required __validateProfile:ScryptPassword password" type="text" id="form930password" value="<?= $default_password ?>">
 									</div>
 								</div>
 							</div>
@@ -107,7 +107,7 @@
 								</div>
 								<div class="ip_password_field">
 									<div class="ip_valid_indicator">
-										<input name="password_chk" autocomplete="new-password" type="text" class="EnterPassword form-control __required __validateProfile:EnterPassword password" id="form930password_chk">
+										<input name="password_chk" autocomplete="new-password" type="text" class="EnterPassword form-control __required __validateProfile:EnterPassword password" id="form930password_chk" value="<?= $default_password ?>">
 									</div>
 								</div>
 							</div>

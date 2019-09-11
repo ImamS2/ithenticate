@@ -39,6 +39,29 @@ if (!function_exists("run_javascript")) {
 |
 |----------------------------------------------------------------
 |
+| Generate Random String
+|
+|----------------------------------------------------------------
+|
+*/
+
+if (!function_exists("generateRandomString")) {
+	function generateRandomString($length) {
+		$include_chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		// $include_chars .= "[{(!@#$%^/&*_+;?\:)}]";
+		$charlength = strlen($include_chars);
+		$randomstring = "";
+		for ($i=0; $i < $length; $i++) { 
+			$randomstring .= $include_chars[rand(0,$charlength - 1)];
+		}
+		return $randomstring;
+	}
+}
+
+/*
+|
+|----------------------------------------------------------------
+|
 | Array PUSH Values
 |
 |----------------------------------------------------------------

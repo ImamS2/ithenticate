@@ -56,6 +56,18 @@ class Quota_model extends MY_Model
 	private function kurangi_quota($amount = NULL, $id = NULL)
 	{
 		if (isset($amount) && !empty($amount)) {
+			$id = isset($id) ? $id : $this->session->userdata("user_id");
+			$userdata = $this->ion_auth->user($id)->row();
+			$usage_quota_awal = $userdata->usage_quota;
+			$base_quota = $userdata->quota;
+			$usage_quota_akhir = $usage_quota_awal + $amount;
+			if ($base_quota >= $usage_quota_akhir) {
+				$params_edit = array("usage_quota"=>$usage_quota_akhir);
+				$this->ion_auth->update($id,$params_edit);
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
@@ -64,6 +76,18 @@ class Quota_model extends MY_Model
 	private function tambah_quota($amount = NULL, $id = NULL)
 	{
 		if (isset($amount) && !empty($amount)) {
+			$id = isset($id) ? $id : $this->session->userdata("user_id");
+			$userdata = $this->ion_auth->user($id)->row();
+			$usage_quota_awal = $userdata->usage_quota;
+			$base_quota = $userdata->quota;
+			$usage_quota_akhir = $usage_quota_awal - $amount;
+			if ($usage_quota_akhir >= 0) {
+				$params_edit = array("usage_quota"=>$usage_quota_akhir);
+				$this->ion_auth->update($id,$params_edit);
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
