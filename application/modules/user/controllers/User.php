@@ -23,6 +23,7 @@ class User extends User_Controller
 	{
 		parent::__construct();
 		$this->load->model("User_model");
+		$this->load->model("User_extend_model");
 		$this->load->model("Group_model");
 		$this->template->set("message",$this->session->flashdata("message"));
 		$additional_js = array(
@@ -85,7 +86,7 @@ class User extends User_Controller
 	{
 		if ($this->access_user() === TRUE) {
 
-			$this->User_model->add_rules();
+			$this->User_extend_model->add_rules();
 
 			if ($this->form_validation->run() === TRUE) {
 				$first_name = $this->security->xss_clean($this->input->post("first_name"));
@@ -265,9 +266,9 @@ class User extends User_Controller
 
 				$user = $this->ion_auth->user($id);
 				$user_data = $user->row();
-				$this->User_model->edit_restriction($id);
+				$this->User_extend_model->edit_restriction($id);
 				$this->data["id"] = $id;
-				$this->User_model->edit_rules();
+				$this->User_extend_model->edit_rules();
 
 				if ($this->form_validation->run() === TRUE) {
 

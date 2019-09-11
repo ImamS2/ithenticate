@@ -24,4 +24,9 @@ class Account_campus_model extends MY_Model
 			}
 		}
 	}
+
+	public function get_account_campus($id_user = NULL)
+	{
+		$id_user = isset($id_user) ? $id_user : $this->session->userdata("user_id");
+	}
 }

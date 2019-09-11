@@ -92,4 +92,16 @@ class Quota_model extends MY_Model
 			return false;
 		}
 	}
+
+	public function add_user($amount = NULL, $id_new_user = NULL, $id_admin = NULL)
+	{
+		if (isset($amount) && isset($id_new_user) && !empty($amount) !empty($id_new_user)) {
+			$this->load->model("user/Group_model");
+			$user_campus = $this->Group_model->get_user_campus($id_new_user)->row();
+			$admin_kampus = $this->Group_model->get_admin_kampus($user_campus->id);
+			$id_admin = isset($id_admin) ? $id_admin : $admin_kampus["id"];
+		} else {
+			return false;
+		}
+	}
 }
