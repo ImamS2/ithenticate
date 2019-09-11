@@ -100,6 +100,7 @@ class Quota_model extends MY_Model
 			$user_campus = $this->Group_model->get_user_campus($id_new_user)->row();
 			$admin_kampus = $this->Group_model->get_admin_kampus($user_campus->id);
 			$id_admin = isset($id_admin) ? $id_admin : $admin_kampus["id"];
+			$usage_admin = $admin_kampus["usage_quota"];
 		} else {
 			return false;
 		}

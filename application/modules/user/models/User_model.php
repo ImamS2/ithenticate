@@ -8,10 +8,7 @@ class User_model extends MY_Model
 {
 	protected $table = "users";
 	protected $pk = "id";
-	protected $photo;
-	protected $list;
 	protected $upload_path_file;
-	protected $add_reduce;
 
 	function __construct()
 	{
@@ -43,14 +40,9 @@ class User_model extends MY_Model
 		$id_group_admin = $this->ion_auth->where(["name" => $this->config->item("admin_group", "ion_auth")])->groups()->row()->id;
 
 		if ($set_administrator == 1) {
-
 			array_push($groups, $id_group_admin);
-			$this->add_reduce = FALSE;
-
 		} else {
-
 			array_push($groups, $id_group_members);
-			$this->add_reduce = TRUE;
 		}
 
 		$user_data = array(
@@ -62,7 +54,6 @@ class User_model extends MY_Model
 			"phone" => ((empty($phone) || $phone == "") ? NULL : $phone),
 		);
 
-		$this->photo = TRUE;
 		$newIdUser = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
 		if ($newIdUser) {
 			$this->User_extend_model->create_user_trash($newIdUser);
@@ -73,7 +64,6 @@ class User_model extends MY_Model
 
 	public function user_import_list($data)
 	{
-		$this->add_reduce = TRUE;
 		$filename = "import_name_".$data["userdata"]->id;
 		$upload_path = "assets" . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . "files" . DIRECTORY_SEPARATOR;
 		$this->upload_path_file = $upload_path;
@@ -83,7 +73,6 @@ class User_model extends MY_Model
 		$count_cols = count($header_row);
 		$jumlah_data = count($sheet) - 1;
 		$header_text = array();
-		$this->list = TRUE;
 
 		foreach ($header_row as $header) {
 			$get_require = explode("*", $header);
@@ -91,55 +80,7 @@ class User_model extends MY_Model
 		}
 
 		if ($jumlah_data > 0) {
-			$usage_quota = $data["userdata"]->usage_quota;
-			for ($i=2; $i <= $jumlah_data + 1 ; $i++) { 
-				$row_user_data = $sheet[$i];
-				$user_data = array();
-				$groups = array();
-				foreach ($row_user_data as $key => $value) {
-					$index = alphabet_to_number($key) - 1;
-					$key_user = underscore($header_text[$index]);
-					switch ($key_user) {
-						case "expired":
-							$time_expired_user = 0;
-							if (!empty($value)) {
-								$time_expired_user = strtotime("+ ".$value." month");
-							}
-							$user_data["expired_at"] = $time_expired_user;
-							break;
-
-						case "user_id":
-							$cek_user = $this->ion_auth->user($value)->num_rows();
-							if ($cek_user > 0) {
-								$user_data["id"] = NULL;
-							} else {
-								$user_data["id"] = $value;
-							}
-							break;
-
-						default:
-							$user_data[$key_user] = $value;
-							break;
-					}
-				}
-				$id_group_members = $this->ion_auth->where(["name" => $this->config->item("default_group", "ion_auth")])->groups()->row()->id;
-				array_push($groups, $id_group_members);
-
-				$get_univ = $this->Group_model->get_user_campus()->row();
-				if (isset($get_univ) && !empty($get_univ) && (is_array($get_univ) || is_object($get_univ))) {
-					$id_univ = $get_univ->id;
-					array_push($groups, $id_univ);
-				}
-				$email = $user_data["email"];
-				$password_length = $this->config->item("min_password_length", "ion_auth");
-				$password = generateRandomString($password_length);
-				$newIdUser = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
-				if ($newIdUser) {
-					$this->User_extend_model->create_user_trash($newIdUser);
-				} else {
-					return false;
-				}
-			}
+			$this->User_extend_model->add_list_users($sheet);
 		} else {
 			return false;
 		}
