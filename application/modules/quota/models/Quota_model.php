@@ -53,7 +53,7 @@ class Quota_model extends MY_Model
 		return $quota_user;
 	}
 
-	private function kurangi_quota($amount = NULL, $id = NULL)
+	public function kurangi_quota($amount = NULL, $id = NULL)
 	{
 		if (isset($amount) && !empty($amount)) {
 			$id = isset($id) ? $id : $this->session->userdata("user_id");
@@ -73,7 +73,7 @@ class Quota_model extends MY_Model
 		}
 	}
 
-	private function tambah_quota($amount = NULL, $id = NULL)
+	public function tambah_quota($amount = NULL, $id = NULL)
 	{
 		if (isset($amount) && !empty($amount)) {
 			$id = isset($id) ? $id : $this->session->userdata("user_id");
@@ -93,7 +93,7 @@ class Quota_model extends MY_Model
 		}
 	}
 
-	public function add_usage_admin($amount = NULL, $id_new_user = NULL, $id_admin = NULL)
+	public function tambah_usage_admin($amount = NULL, $id_new_user = NULL, $id_admin = NULL)
 	{
 		if (isset($amount) && isset($id_new_user) && !empty($amount) !empty($id_new_user)) {
 			$this->load->model("user/Group_model");
@@ -103,8 +103,27 @@ class Quota_model extends MY_Model
 			$usage_admin = $admin_kampus["usage_quota"];
 			if ($amount <= $usage_admin) {
 				$new_usage_admin = $usage_admin + $amount;
-				$params_edit = array("usage_quota"=>$new_usage_admin);
-				$this->ion_auth->update($id_admin,$params_edit);
+				$this->kurangi_quota($new_usage_admin,$id_admin);
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	public function kurangi_usage_admin($amount = NULL, $id_new_user = NULL, $id_admin = NULL)
+	{
+		if (isset($amount) && isset($id_new_user) && !empty($amount) !empty($id_new_user)) {
+			$this->load->model("user/Group_model");
+			$user_campus = $this->Group_model->get_user_campus($id_new_user)->row();
+			$admin_kampus = $this->Group_model->get_admin_kampus($user_campus->id);
+			$id_admin = isset($id_admin) ? $id_admin : $admin_kampus["id"];
+			$usage_admin = $admin_kampus["usage_quota"];
+			if ($amount >= 0) {
+				$new_usage_admin = $usage_admin - $amount;
+				$this->tambah_quota($new_usage_admin,$id_admin);
 				return true;
 			} else {
 				return false;

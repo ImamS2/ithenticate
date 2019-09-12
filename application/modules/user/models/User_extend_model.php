@@ -111,12 +111,6 @@ class User_extend_model extends MY_Model
 				$email = $user_data["email"];
 				$password_length = $this->config->item("min_password_length", "ion_auth");
 				$password = generateRandomString($password_length);
-				$newIdUser = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
-				if ($newIdUser) {
-					$this->create_user_trash($newIdUser);
-				} else {
-					return false;
-				}
 			}
 		} else {
 			return false;
@@ -201,7 +195,7 @@ class User_extend_model extends MY_Model
 			$base_user_quota = $regisuserdata->quota;
 			if ($set_home_folder) {
 				$this->load->model("quota/Quota_model");
-				$upd_usage_admin = $this->Quota_model->add_usage_admin($base_user_quota,$id_user);
+				$upd_usage_admin = $this->Quota_model->tambah_usage_admin($base_user_quota,$id_user);
 				if ($upd_usage_admin === FALSE) {
 					$this->session->set_flashdata("message","Error, cannot reduced admin quota");
 					redirect("en_us/user","refresh");
