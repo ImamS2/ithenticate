@@ -45,6 +45,8 @@ class User_model extends MY_Model
 			array_push($groups, $id_group_members);
 		}
 
+		// upload foto
+
 		$user_data = array(
 			"id" => $user_id,
 			"first_name" => $first_name,
