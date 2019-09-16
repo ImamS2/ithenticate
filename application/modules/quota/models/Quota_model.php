@@ -53,81 +53,20 @@ class Quota_model extends MY_Model
 		return $quota_user;
 	}
 
-	public function kurangi_quota($amount = NULL, $id = NULL)
+	public function add_check_user($user_data = [])
 	{
-		if (isset($amount) && !empty($amount)) {
-			$id = isset($id) ? $id : $this->session->userdata("user_id");
-			$userdata = $this->ion_auth->user($id)->row();
-			$usage_quota_awal = $userdata->usage_quota;
-			$base_quota = $userdata->quota;
-			$usage_quota_akhir = $usage_quota_awal + $amount;
-			if ($base_quota >= $usage_quota_akhir) {
-				$params_edit = array("usage_quota"=>$usage_quota_akhir);
-				$this->ion_auth->update($id,$params_edit);
-				return true;
-			} else {
-				return false;
+		if (isset($user_data) && !empty($user_data)) {
+			$usage_amount = 0;
+			foreach ($user_data as $pre_user) {
+				if (!empty($pre_user)) {
+					pre($pre_user);
+					if (array_key_exists("quota", $pre_user)) {
+						$quota_per_user = $pre_user["quota"];
+						$usage_amount += $quota_per_user;
+					}
+				}
 			}
-		} else {
-			return false;
-		}
-	}
-
-	public function tambah_quota($amount = NULL, $id = NULL)
-	{
-		if (isset($amount) && !empty($amount)) {
-			$id = isset($id) ? $id : $this->session->userdata("user_id");
-			$userdata = $this->ion_auth->user($id)->row();
-			$usage_quota_awal = $userdata->usage_quota;
-			$base_quota = $userdata->quota;
-			$usage_quota_akhir = $usage_quota_awal - $amount;
-			if ($usage_quota_akhir >= 0) {
-				$params_edit = array("usage_quota"=>$usage_quota_akhir);
-				$this->ion_auth->update($id,$params_edit);
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
-
-	public function tambah_usage_admin($amount = NULL, $id_new_user = NULL, $id_admin = NULL)
-	{
-		if (isset($amount) && isset($id_new_user) && !empty($amount) && !empty($id_new_user)) {
-			$this->load->model("user/Group_model");
-			$user_campus = $this->Group_model->get_user_campus($id_new_user)->row();
-			$admin_kampus = $this->Group_model->get_admin_kampus($user_campus->id);
-			$id_admin = isset($id_admin) ? $id_admin : $admin_kampus["id"];
-			$usage_admin = $admin_kampus["usage_quota"];
-			if ($amount <= $usage_admin) {
-				$new_usage_admin = $usage_admin + $amount;
-				$this->kurangi_quota($new_usage_admin,$id_admin);
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
-
-	public function kurangi_usage_admin($amount = NULL, $id_new_user = NULL, $id_admin = NULL)
-	{
-		if (isset($amount) && isset($id_new_user) && !empty($amount) && !empty($id_new_user)) {
-			$this->load->model("user/Group_model");
-			$user_campus = $this->Group_model->get_user_campus($id_new_user)->row();
-			$admin_kampus = $this->Group_model->get_admin_kampus($user_campus->id);
-			$id_admin = isset($id_admin) ? $id_admin : $admin_kampus["id"];
-			$usage_admin = $admin_kampus["usage_quota"];
-			if ($amount >= 0) {
-				$new_usage_admin = $usage_admin - $amount;
-				$this->tambah_quota($new_usage_admin,$id_admin);
-				return true;
-			} else {
-				return false;
-			}
+			pre($usage_amount);
 		} else {
 			return false;
 		}

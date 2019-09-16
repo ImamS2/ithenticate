@@ -6,6 +6,7 @@ defined("BASEPATH") OR exit("No direct script access allowed");
 */
 class User_extend_model extends MY_Model
 {
+	protected $pre_user_data = array();
 	function __construct()
 	{
 		parent::__construct();
@@ -56,6 +57,54 @@ class User_extend_model extends MY_Model
 		}
 	}
 
+	public function add_single_user()
+	{
+		$pre_user_data = array();
+		$groups = array();
+
+		$user_id = $this->security->xss_clean($this->input->post("user_id"));
+		$email = $this->security->xss_clean($this->input->post("email"));
+		$first_name = $this->security->xss_clean($this->input->post("first_name"));
+		$last_name = $this->security->xss_clean($this->input->post("last_name"));
+		$qty_expired = $this->security->xss_clean($this->input->post("expireduser"));
+		$quota = $this->security->xss_clean($this->input->post("quota"));
+		$set_administrator = $this->security->xss_clean($this->input->post("set_administrator"));
+		$group_campus = $this->security->xss_clean($this->input->post("group_campus"));
+		$phone = $this->security->xss_clean($this->input->post("phone"));
+		$password_length = $this->config->item("min_password_length", "ion_auth");
+		$password = generateRandomString($password_length);
+
+		$expireduser = strtotime(date("Y-m-d",strtotime("+ ".$qty_expired." month")));
+
+		array_push($groups, $group_campus);
+
+		$id_group_members = $this->ion_auth->where(["name" => $this->config->item("default_group", "ion_auth")])->groups()->row()->id;
+		$id_group_admin = $this->ion_auth->where(["name" => $this->config->item("admin_group", "ion_auth")])->groups()->row()->id;
+
+		if ($set_administrator == 1) {
+			array_push($groups, $id_group_admin);
+		} else {
+			array_push($groups, $id_group_members);
+		}
+
+		$user_data = array(
+			"id" => $user_id,
+			"first_name" => $first_name,
+			"last_name" => $last_name,
+			"expired_at" => $expireduser,
+			"quota" => $quota,
+			"phone" => ((empty($phone) || $phone == "") ? NULL : $phone),
+		);
+
+		$pre_user_data = $user_data;
+		$pre_user_data["groups"] = $groups;
+
+		$this->load->model("quota/Quota_model");
+		array_push($this->pre_user_data, $pre_user_data);
+		array_push($this->pre_user_data, $pre_user_data);
+		$this->Quota_model->add_check_user($this->pre_user_data);
+	}
+
 	public function add_list_users($sheet)
 	{
 		$header_row = $sheet[1];
@@ -69,9 +118,9 @@ class User_extend_model extends MY_Model
 		}
 
 		if ($jumlah_data > 0) {
-			$usage_quota = $data["userdata"]->usage_quota;
 			for ($i=2; $i <= $jumlah_data + 1 ; $i++) { 
 				$row_user_data = $sheet[$i];
+				$pre_user_data = array();
 				$user_data = array();
 				$groups = array();
 				foreach ($row_user_data as $key => $value) {
@@ -111,7 +160,14 @@ class User_extend_model extends MY_Model
 				$email = $user_data["email"];
 				$password_length = $this->config->item("min_password_length", "ion_auth");
 				$password = generateRandomString($password_length);
+				$user_data["password"] = $password;
+				$pre_user_data = $user_data;
+				$pre_user_data["groups"] = $groups;
+				array_push($this->pre_user_data, $pre_user_data);
 			}
+			pre($this->pre_user_data);
+			$this->load->model("quota/Quota_model");
+			$this->Quota_model->add_check_user($this->pre_user_data);
 		} else {
 			return false;
 		}
@@ -194,14 +250,7 @@ class User_extend_model extends MY_Model
 			$regisuserdata = $this->ion_auth->user($id_user)->row();
 			$base_user_quota = $regisuserdata->quota;
 			if ($set_home_folder) {
-				$this->load->model("quota/Quota_model");
-				$upd_usage_admin = $this->Quota_model->tambah_usage_admin($base_user_quota,$id_user);
-				if ($upd_usage_admin === FALSE) {
-					$this->session->set_flashdata("message","Error, cannot reduced admin quota");
-					redirect("en_us/user","refresh");
-				} else {
-					// update foto kah
-				}
+				// entah
 			} else {
 				$this->session->set_flashdata("message","Failed to set home folder");
 				redirect("en_us/user","refresh");

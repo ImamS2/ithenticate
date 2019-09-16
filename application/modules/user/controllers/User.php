@@ -92,12 +92,13 @@ class User extends User_Controller
 				$first_name = $this->security->xss_clean($this->input->post("first_name"));
 				$last_name = $this->security->xss_clean($this->input->post("last_name"));
 				$add_user = $this->User_model->add_user();
-				if ($add_user !== FALSE) {
-					$this->session->set_flashdata("message","User ". $first_name . " " . $last_name . " successfully created");
-				} else {
-					$this->session->set_flashdata("message","User ". $first_name . " " . $last_name . " failed created");
-				}
-				redirect("en_us/user","refresh");
+				pre($add_user);
+				// if ($add_user !== FALSE) {
+				// 	$this->session->set_flashdata("message","User ". $first_name . " " . $last_name . " successfully created");
+				// } else {
+				// 	$this->session->set_flashdata("message","User ". $first_name . " " . $last_name . " failed created");
+				// }
+				// redirect("en_us/user","refresh");
 			} else {
 				if ($this->ion_auth->in_group("cho admin")) {
 					$universitas = $this->Group_model->get_campus_lists();

@@ -18,50 +18,7 @@ class User_model extends MY_Model
 
 	public function add_user()
 	{
-		$groups = [];
-
-		$user_id = $this->security->xss_clean($this->input->post("user_id"));
-		$email = $this->security->xss_clean($this->input->post("email"));
-		$first_name = $this->security->xss_clean($this->input->post("first_name"));
-		$last_name = $this->security->xss_clean($this->input->post("last_name"));
-		$qty_expired = $this->security->xss_clean($this->input->post("expireduser"));
-		$quota = $this->security->xss_clean($this->input->post("quota"));
-		$set_administrator = $this->security->xss_clean($this->input->post("set_administrator"));
-		$group_campus = $this->security->xss_clean($this->input->post("group_campus"));
-		$phone = $this->security->xss_clean($this->input->post("phone"));
-		$password_length = $this->config->item("min_password_length", "ion_auth");
-		$password = generateRandomString($password_length);
-
-		$expireduser = strtotime(date("Y-m-d",strtotime("+ ".$qty_expired." month")));
-
-		array_push($groups, $group_campus);
-
-		$id_group_members = $this->ion_auth->where(["name" => $this->config->item("default_group", "ion_auth")])->groups()->row()->id;
-		$id_group_admin = $this->ion_auth->where(["name" => $this->config->item("admin_group", "ion_auth")])->groups()->row()->id;
-
-		if ($set_administrator == 1) {
-			array_push($groups, $id_group_admin);
-		} else {
-			array_push($groups, $id_group_members);
-		}
-
-		// upload foto
-
-		$user_data = array(
-			"id" => $user_id,
-			"first_name" => $first_name,
-			"last_name" => $last_name,
-			"expired_at" => $expireduser,
-			"quota" => $quota,
-			"phone" => ((empty($phone) || $phone == "") ? NULL : $phone),
-		);
-
-		// $newIdUser = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
-		// if ($newIdUser) {
-		// 	$this->User_extend_model->create_user_trash($newIdUser);
-		// } else {
-		// 	return false;
-		// }
+		$this->User_extend_model->add_single_user();
 	}
 
 	public function user_import_list($data)
