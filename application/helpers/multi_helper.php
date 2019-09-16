@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined("BASEPATH") OR exit("No direct script access allowed");
 
 /*
 |
@@ -13,7 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 if (!function_exists("pre"))
 {
-	function pre($value='')
+	function pre($value="")
 	{
 		if (ENVIRONMENT !== "production") {
 			echo "<pre>";
@@ -62,6 +62,62 @@ if (!function_exists("generateRandomString")) {
 |
 |----------------------------------------------------------------
 |
+| Send email helper default
+|
+|----------------------------------------------------------------
+|
+*/
+
+if (!function_exists("ngirim_email"))
+{
+	function ngirim_email($to, $subject, $msg, $email_sender = NULL, $name_sender = NULL)
+	{
+		$CI = &get_instance();
+		$CI->load->config("email",TRUE);
+		$config = $CI->config->item("email");
+		$CI->load->library("email", $config);
+		$CI->email->set_newline("\r\n");
+		// $CI->email->clear();
+		if (isset($email_sender) && !empty($email_sender) && isset($name_sender) && isset($name_sender)) {
+			$CI->email->from($email_sender, $name_sender);
+		} else {
+			$CI->email->from("postmaster@localhost", "admin_local");
+		}
+		$CI->email->to($to);
+		$CI->email->subject($subject);
+		$CI->email->message($msg);
+		// pre($CI->email);
+		if (ENVIRONMENT !== "localhost") {
+			$CI->email->send();
+		}
+	}
+}
+
+/*
+|
+|----------------------------------------------------------------
+|
+| Send email helper -> iThenticate
+|
+|----------------------------------------------------------------
+|
+*/
+
+if (!function_exists("email_ithen"))
+{
+	function email_ithen($to, $subject, $msg)
+	{
+		$CI = &get_instance();
+		$email_sender = $CI->config->item("admin_email","ion_auth");
+		$name_sender = $CI->config->item("site_title","ion_auth");
+		ngirim_email($to, $subject, $msg, $email_sender, $name_sender);
+	}
+}
+
+/*
+|
+|----------------------------------------------------------------
+|
 | Array PUSH Values
 |
 |----------------------------------------------------------------
@@ -98,7 +154,7 @@ if (!function_exists("ip_range")) {
 		$range = array_map("long2ip",range($start,$end));
 		// pre($range);
 		return $range;
-		// return array_map('long2ip', range($start, $end));
+		// return array_map("long2ip", range($start, $end));
 	}
 }
 

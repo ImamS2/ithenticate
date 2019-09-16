@@ -53,10 +53,11 @@ class Quota_model extends MY_Model
 		return $quota_user;
 	}
 
-	public function add_check_user($user_data = [])
+	public function add_check_user($user_data = [], $bool_reduce = TRUE)
 	{
 		if (isset($user_data) && !empty($user_data)) {
 			$usage_amount = 0;
+			$this->load->model("user/Group_model");
 			foreach ($user_data as $pre_user) {
 				if (!empty($pre_user)) {
 					pre($pre_user);
@@ -67,6 +68,12 @@ class Quota_model extends MY_Model
 				}
 			}
 			pre($usage_amount);
+			if ($bool_reduce === TRUE) {
+				pre("kurangi admin");
+			} else {
+				pre("ora kurangi admin");
+				return true;
+			}
 		} else {
 			return false;
 		}

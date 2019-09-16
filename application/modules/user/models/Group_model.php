@@ -49,6 +49,16 @@ class Group_model extends MY_Model
 		return $this;
 	}
 
+	public function get_group($id_group = NULL)
+	{
+		if (empty($id_group)) {
+			return false;
+		}
+		$this->where(array("id"=>$id_group));
+		$this->get();
+		return $this;
+	}
+
 	public function get_admin_kampus($id_kampus = NULL)
 	{
 		if (empty($id_kampus)) {

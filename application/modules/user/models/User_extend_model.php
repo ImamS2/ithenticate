@@ -83,8 +83,10 @@ class User_extend_model extends MY_Model
 
 		if ($set_administrator == 1) {
 			array_push($groups, $id_group_admin);
+			$bool_reduce = FALSE;
 		} else {
 			array_push($groups, $id_group_members);
+			$bool_reduce = TRUE;
 		}
 
 		$user_data = array(
@@ -101,8 +103,12 @@ class User_extend_model extends MY_Model
 
 		$this->load->model("quota/Quota_model");
 		array_push($this->pre_user_data, $pre_user_data);
-		array_push($this->pre_user_data, $pre_user_data);
-		$this->Quota_model->add_check_user($this->pre_user_data);
+		$cek_user = $this->Quota_model->add_check_user($this->pre_user_data,$bool_reduce);
+		if ($cek_user === TRUE) {
+			pre("lakukan registrasi");
+			$regis = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
+			pre($regis);
+		}
 	}
 
 	public function add_list_users($sheet)

@@ -60,7 +60,11 @@
 								</div>
 								<div class="ip_text_field">
 									<div class="ip_valid_indicator">
-										<input class="Email form-control __required __validateProfile:Email" id="form492email" name="email" type="text">
+										<?php if (ENVIRONMENT === "localhost"): ?>
+											<input class="Email form-control __required __validateProfile:Email" id="form492email" name="email" value="sudiyatmoimam@gmail.com" type="text">
+										<?php else: ?>
+											<input class="Email form-control __required __validateProfile:Email" id="form492email" name="email" type="text">
+										<?php endif ?>
 									</div>
 								</div>
 							</div>
