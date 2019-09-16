@@ -56,12 +56,12 @@ class User_model extends MY_Model
 			"phone" => ((empty($phone) || $phone == "") ? NULL : $phone),
 		);
 
-		$newIdUser = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
-		if ($newIdUser) {
-			$this->User_extend_model->create_user_trash($newIdUser);
-		} else {
-			return false;
-		}
+		// $newIdUser = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
+		// if ($newIdUser) {
+		// 	$this->User_extend_model->create_user_trash($newIdUser);
+		// } else {
+		// 	return false;
+		// }
 	}
 
 	public function user_import_list($data)
