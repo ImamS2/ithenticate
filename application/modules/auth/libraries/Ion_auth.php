@@ -278,15 +278,15 @@ class Ion_auth
 				return FALSE;
 			}
 
-			$activation_code = $this->ion_auth_model->activation_code;
-			$identity        = $this->config->item('identity', 'ion_auth');
-			$user            = $this->ion_auth_model->user($id)->row();
+			$activation_code	= $this->ion_auth_model->activation_code;
+			$identity			= $this->config->item('identity', 'ion_auth');
+			$user				= $this->ion_auth_model->user($id)->row();
 
 			$data = [
-				'identity'   => $user->{$identity},
-				'id'         => $user->id,
-				'email'      => $email,
-				'activation' => $activation_code,
+				'identity'		=> $user->{$identity},
+				'id'			=> $user->id,
+				'email'			=> $email,
+				'activation'	=> $activation_code,
 			];
 			if(!$this->config->item('use_ci_email', 'ion_auth'))
 			{

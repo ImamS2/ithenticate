@@ -90,6 +90,7 @@ if (!function_exists("ngirim_email"))
 		if (ENVIRONMENT !== "localhost") {
 			$CI->email->send();
 		}
+		$CI->email->send();
 	}
 }
 

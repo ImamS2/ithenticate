@@ -106,8 +106,12 @@ class User_extend_model extends MY_Model
 		$cek_user = $this->Quota_model->add_check_user($this->pre_user_data,$bool_reduce);
 		if ($cek_user === TRUE) {
 			pre("lakukan registrasi");
-			$regis = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
-			pre($regis);
+			$reg_data = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
+			// pre($regis_data);
+			$to = $email;
+			$subject = $this->config->item("site_title", "ion_auth") . " - " . $this->lang->line("email_activation_subject");
+			$msg = $this->load->view("activate", $reg_data, TRUE);
+			email_ithen($to, $subject, $msg);
 		}
 	}
 
