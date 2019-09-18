@@ -1,6 +1,6 @@
 <html>
 	<body>
-		Hello <?= $userdata["first_name"] . " " . $userdata["last_name"]; ?>
+		Hello, <?= $userdata["first_name"] . " " . $userdata["last_name"]; ?>
 
 		Welcome to <?= APPNAME ?>!  Your new account has been created.
 

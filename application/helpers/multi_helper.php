@@ -105,10 +105,14 @@ if (!function_exists("ngirim_email"))
 
 if (!function_exists("email_ithen"))
 {
-	function email_ithen($to, $subject, $msg)
+	function email_ithen($to, $subject, $msg, $notify = TRUE)
 	{
 		$CI = &get_instance();
-		$email_sender = $CI->config->item("admin_email","ion_auth");
+		if ($notify === TRUE) {
+			$email_sender = $CI->config->item("notify_email","ion_auth");
+		} else {
+			$email_sender = $CI->config->item("admin_email","ion_auth");
+		}
 		$name_sender = $CI->config->item("site_title","ion_auth");
 		ngirim_email($to, $subject, $msg, $email_sender, $name_sender);
 	}

@@ -103,6 +103,15 @@ class User_extend_model extends MY_Model
 			"password" => $password,
 		);
 
+		$field_upload = "photo";
+		$upload_path = "assets" . DIRECTORY_SEPARATOR . "images" . DIRECTORY_SEPARATOR . "users";
+		$upload_user_photo = $this->upload_image($field_upload,$upload_path);
+		if ($upload_user_photo === FALSE) {
+			$user_data["profile_pic"] = "no_photo_large.png";
+		} else {
+			$user_data["profile_pic"] = $upload_user_photo;
+		}
+
 		$pre_user_data = $user_data;
 		$pre_user_data["groups"] = $groups;
 
@@ -205,20 +214,18 @@ class User_extend_model extends MY_Model
 					unset($pre_add_user["groups"]);
 				}
 				pre($pre_add_user);
-				$reg_data = $this->ion_auth->register($email,$password,$email,$pre_user_data,$groups);
-				pre($regis_data);
-				if (!empty($reg_data)) {
-					$this->email_to = $email;
-					$new_IdUser = $reg_data["id"];
-					$new_userdata = $this->ion_auth->user($new_IdUser)->row_array();
-					$reg_data["userdata"] = $new_userdata;
-					$this->email_subject = "noreply - " . $this->config->item("site_title", "ion_auth");
-					$this->email_msg = $this->load->view("activate", $reg_data, TRUE);
-					pre($this->email_msg);
-					$this->create_user_trash($new_IdUser);
-				} else {
-					return false;
-				}
+				// $reg_data = $this->ion_auth->register($email,$password,$email,$pre_user_data,$groups);
+				// pre($regis_data);
+				// if (!empty($reg_data)) {
+				// 	$this->email_to = $email;
+				// 	$new_IdUser = $reg_data["id"];
+				// 	$new_userdata = $this->ion_auth->user($new_IdUser)->row_array();
+				// 	$reg_data["userdata"] = $new_userdata;
+				// 	$this->email_subject = "Welcome to " . APPNAME;
+				// 	$this->email_msg = $this->load->view("activate", $reg_data, TRUE);
+				// 	pre($this->email_msg);
+				// 	$this->create_user_trash($new_IdUser);
+				// }
 			}
 		} else {
 			return false;
@@ -300,7 +307,7 @@ class User_extend_model extends MY_Model
 			$user_data["home_folder"] = $id_folder;
 			$set_home_folder = $this->ion_auth->update($id_user, $user_data);
 			if ($set_home_folder) {
-				// email_ithen($this->email_to, $this->email_subject, $this->email_msg);
+				email_ithen($this->email_to, $this->email_subject, $this->email_msg);
 			} else {
 				$this->session->set_flashdata("message","Failed to set home folder");
 				redirect("en_us/user","refresh");
