@@ -9,8 +9,8 @@
 		Please login using the following temporary password. You will be prompted to change this password when you first login.
 
 		Login page:
-		<?= anchor(site_url("en_us/login_first/".$activation),site_url("en_us/login_first/".$)); ?>
-activation
+		<?= anchor(site_url("en_us/login_first/".$activation),site_url("en_us/login_first/".$activation)); ?>
+
 			Login email: <?= $userdata["email"]; ?>
 			Password: <?= $userdata["password"]; ?>
 

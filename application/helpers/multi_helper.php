@@ -88,8 +88,9 @@ if (!function_exists("ngirim_email"))
 		$CI->email->message($msg);
 		if (ENVIRONMENT !== "localhost") {
 			$CI->email->send();
+		} else {
+			pre($CI->email);
 		}
-		// pre($CI->email);
 	}
 }
 

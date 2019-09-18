@@ -72,6 +72,7 @@ class User_model extends MY_Model
 						$quota = $user_edit->quota;
 						$expireduser = $user_edit->expired_at;
 					}
+					$this->load->model("user/Group_model");
 					$get_univ = $this->Group_model->get_user_campus($id)->row();
 					$id_univ = $get_univ->id;
 					$get_admin_kampus = $this->Group_model->get_admin_kampus($id_univ)[0];
@@ -144,6 +145,7 @@ class User_model extends MY_Model
 				$user_base_quota = $user_object->quota;
 				$limit_left_user_object = $user_base_quota - $user_usage_quota;
 
+				$this->load->model("user/Group_model");
 				$get_univ = $this->Group_model->get_user_campus($id)->row();
 				$id_univ = $get_univ->id;
 				$get_admin_kampus = $this->Group_model->get_admin_kampus($id_univ)[0];
@@ -168,8 +170,8 @@ class User_model extends MY_Model
 						$update_quota_admin = $this->ion_auth->update($get_admin_kampus["id"],$quota_admin);
 					}
 				}
-
-				$group_folders = $this->Group_folder_model->get_group_folders(0,$id,TRUE,"user");
+				$this->load->model("group/Group_folder_model");
+				$group_folders = $this->Group_folder_model->get_group_folders(0,$id,TRUE,FALSE,"user");
 				$count_group_folders = $group_folders->num_rows();
 				if ($count_group_folders > 0) {
 					$folders = $group_folders->result();

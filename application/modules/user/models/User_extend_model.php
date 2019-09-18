@@ -10,6 +10,7 @@ class User_extend_model extends MY_Model
 	protected $email_to;
 	protected $email_subject;
 	protected $email_msg;
+
 	function __construct()
 	{
 		parent::__construct();
@@ -137,7 +138,7 @@ class User_extend_model extends MY_Model
 		}
 
 		if ($jumlah_data > 0) {
-			for ($i=2; $i <= $jumlah_data + 1 ; $i++) { 
+			for ($i=2; $i <= $jumlah_data + 1 ; $i++) {
 				$row_user_data = $sheet[$i];
 				$pre_user_data = array();
 				$user_data = array();
@@ -186,7 +187,10 @@ class User_extend_model extends MY_Model
 			}
 			pre($this->pre_user_data);
 			$this->load->model("quota/Quota_model");
-			$this->Quota_model->add_check_user($this->pre_user_data);
+			$cek_user = $this->Quota_model->add_check_user($this->pre_user_data);
+			if ($cek_user === TRUE) {
+				$this->add_user_process($this->pre_user_data);
+			}
 		} else {
 			return false;
 		}
@@ -214,8 +218,9 @@ class User_extend_model extends MY_Model
 					unset($pre_add_user["groups"]);
 				}
 				pre($pre_add_user);
-				// $reg_data = $this->ion_auth->register($email,$password,$email,$pre_user_data,$groups);
-				// pre($regis_data);
+				email_ithen($email,"Halo Dunia","Ini saya");
+				// $reg_data = $this->ion_auth->register($email,$password,$email,$pre_add_user,$groups);
+				// pre($reg_data);
 				// if (!empty($reg_data)) {
 				// 	$this->email_to = $email;
 				// 	$new_IdUser = $reg_data["id"];
