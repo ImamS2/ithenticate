@@ -57,7 +57,6 @@ class Quota_model extends MY_Model
 	{
 		if (isset($user_data) && !empty($user_data)) {
 			$usage_amount = 0;
-			$this->load->model("user/Group_model");
 			foreach ($user_data as $pre_user) {
 				if (!empty($pre_user)) {
 					pre($pre_user);
@@ -69,6 +68,7 @@ class Quota_model extends MY_Model
 			}
 			pre($usage_amount);
 			if ($bool_reduce === TRUE) {
+				pre("cek dulu cukup tidak untuk dikurangi dari kuota admin");
 				pre("kurangi admin");
 			} else {
 				pre("ora kurangi admin");

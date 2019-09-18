@@ -86,11 +86,10 @@ if (!function_exists("ngirim_email"))
 		$CI->email->to($to);
 		$CI->email->subject($subject);
 		$CI->email->message($msg);
-		// pre($CI->email);
 		if (ENVIRONMENT !== "localhost") {
 			$CI->email->send();
 		}
-		$CI->email->send();
+		// pre($CI->email);
 	}
 }
 

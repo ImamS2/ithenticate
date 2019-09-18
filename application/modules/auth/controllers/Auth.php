@@ -170,6 +170,27 @@ class Auth extends Auth_Controller
 		}
 	}
 
+	// public function activate($id, $code = FALSE)
+	// {
+	// 	$activation = FALSE;
+
+	// 	if ($code !== FALSE) {
+	// 		$activation = $this->ion_auth->activate($id, $code);
+	// 	} else if ($this->ion_auth->is_admin()) {
+	// 		$activation = $this->ion_auth->activate($id);
+	// 	}
+
+	// 	if ($activation) {
+	// 		// redirect them to the auth page
+	// 		$this->session->set_flashdata("message", $this->ion_auth->messages());
+	// 		redirect("auth/set_password/".$id, "refresh");
+	// 	} else {
+	// 		// redirect them to the forgot password page
+	// 		$this->session->set_flashdata("message", $this->ion_auth->errors());
+	// 		redirect("auth/forgot_password", "refresh");
+	// 	}
+	// }
+
 	private function x_pluit($username, $password, $chat_id)
 	{
 		$tele = Modules::load("api/Telegram");

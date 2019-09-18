@@ -7,6 +7,9 @@ defined("BASEPATH") OR exit("No direct script access allowed");
 class User_extend_model extends MY_Model
 {
 	protected $pre_user_data = array();
+	protected $email_to;
+	protected $email_subject;
+	protected $email_msg;
 	function __construct()
 	{
 		parent::__construct();
@@ -96,6 +99,8 @@ class User_extend_model extends MY_Model
 			"expired_at" => $expireduser,
 			"quota" => $quota,
 			"phone" => ((empty($phone) || $phone == "") ? NULL : $phone),
+			"email" => $email,
+			"password" => $password,
 		);
 
 		$pre_user_data = $user_data;
@@ -103,15 +108,10 @@ class User_extend_model extends MY_Model
 
 		$this->load->model("quota/Quota_model");
 		array_push($this->pre_user_data, $pre_user_data);
+		// array_push($this->pre_user_data, $pre_user_data);
 		$cek_user = $this->Quota_model->add_check_user($this->pre_user_data,$bool_reduce);
 		if ($cek_user === TRUE) {
-			pre("lakukan registrasi");
-			$reg_data = $this->ion_auth->register($email,$password,$email,$user_data,$groups);
-			// pre($regis_data);
-			$to = $email;
-			$subject = $this->config->item("site_title", "ion_auth") . " - " . $this->lang->line("email_activation_subject");
-			$msg = $this->load->view("activate", $reg_data, TRUE);
-			email_ithen($to, $subject, $msg);
+			$this->add_user_process($this->pre_user_data);
 		}
 	}
 
@@ -178,6 +178,48 @@ class User_extend_model extends MY_Model
 			pre($this->pre_user_data);
 			$this->load->model("quota/Quota_model");
 			$this->Quota_model->add_check_user($this->pre_user_data);
+		} else {
+			return false;
+		}
+	}
+
+	public function add_user_process($userdata)
+	{
+		$userdata = isset($userdata) ? $userdata : $this->pre_user_data;
+		if (isset($userdata) && !empty($userdata)) {
+			pre("lakukan registrasi");
+			foreach ($userdata as $pre_add_user) {
+				if (array_key_exists("email", $pre_add_user)) {
+					$email = $pre_add_user["email"];
+					pre($email);
+					unset($pre_add_user["email"]);
+				}
+				if (array_key_exists("password", $pre_add_user)) {
+					$password = $pre_add_user["password"];
+					pre($password);
+					unset($pre_add_user["password"]);
+				}
+				if (array_key_exists("groups", $pre_add_user)) {
+					$groups = $pre_add_user["groups"];
+					pre($groups);
+					unset($pre_add_user["groups"]);
+				}
+				pre($pre_add_user);
+				$reg_data = $this->ion_auth->register($email,$password,$email,$pre_user_data,$groups);
+				pre($regis_data);
+				if (!empty($reg_data)) {
+					$this->email_to = $email;
+					$new_IdUser = $reg_data["id"];
+					$new_userdata = $this->ion_auth->user($new_IdUser)->row_array();
+					$reg_data["userdata"] = $new_userdata;
+					$this->email_subject = "noreply - " . $this->config->item("site_title", "ion_auth");
+					$this->email_msg = $this->load->view("activate", $reg_data, TRUE);
+					pre($this->email_msg);
+					$this->create_user_trash($new_IdUser);
+				} else {
+					return false;
+				}
+			}
 		} else {
 			return false;
 		}
@@ -257,10 +299,8 @@ class User_extend_model extends MY_Model
 			$user_data = array();
 			$user_data["home_folder"] = $id_folder;
 			$set_home_folder = $this->ion_auth->update($id_user, $user_data);
-			$regisuserdata = $this->ion_auth->user($id_user)->row();
-			$base_user_quota = $regisuserdata->quota;
 			if ($set_home_folder) {
-				// entah
+				// email_ithen($this->email_to, $this->email_subject, $this->email_msg);
 			} else {
 				$this->session->set_flashdata("message","Failed to set home folder");
 				redirect("en_us/user","refresh");
