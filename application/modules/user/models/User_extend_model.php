@@ -208,8 +208,8 @@ class User_extend_model extends MY_Model
 					unset($pre_add_user["email"]);
 				}
 				if (array_key_exists("password", $pre_add_user)) {
-					$password = $pre_add_user["password"];
-					pre($password);
+					$password_nohash = $pre_add_user["password"];
+					pre($password_nohash);
 					unset($pre_add_user["password"]);
 				}
 				if (array_key_exists("groups", $pre_add_user)) {
@@ -218,19 +218,24 @@ class User_extend_model extends MY_Model
 					unset($pre_add_user["groups"]);
 				}
 				pre($pre_add_user);
-				email_ithen($email,"Halo Dunia","Ini saya");
-				// $reg_data = $this->ion_auth->register($email,$password,$email,$pre_add_user,$groups);
-				// pre($reg_data);
-				// if (!empty($reg_data)) {
-				// 	$this->email_to = $email;
-				// 	$new_IdUser = $reg_data["id"];
-				// 	$new_userdata = $this->ion_auth->user($new_IdUser)->row_array();
-				// 	$reg_data["userdata"] = $new_userdata;
-				// 	$this->email_subject = "Welcome to " . APPNAME;
-				// 	$this->email_msg = $this->load->view("activate", $reg_data, TRUE);
-				// 	pre($this->email_msg);
-				// 	$this->create_user_trash($new_IdUser);
-				// }
+				// email_ithen($email,"Halo Dunia","Ini saya");
+				$reg_data = $this->ion_auth->register($email,$password_nohash,$email,$pre_add_user,$groups);
+				pre($reg_data);
+				if (!empty($reg_data)) {
+					$this->email_to = $email;
+					$new_IdUser = $reg_data["id"];
+					$new_userdata = $this->ion_auth->user($new_IdUser)->row_array();
+					if (array_key_exists("password", $new_userdata)) {
+						unset($new_userdata["password"]);
+						$new_userdata["password"] = $password_nohash;
+					}
+					$reg_data["userdata"] = $new_userdata;
+					$this->email_subject = "Welcome to " . APPNAME;
+					$this->email_msg = $this->load->view("activate", $reg_data, TRUE);
+					$this->ion_auth->update($new_IdUser,array("active"=>TRUE));
+					pre($this->email_msg);
+					$this->create_user_trash($new_IdUser);
+				}
 			}
 		} else {
 			return false;

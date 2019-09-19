@@ -78,11 +78,11 @@ if (!function_exists("ngirim_email"))
 		$CI->load->library("email", $config);
 		$CI->email->set_newline("\r\n");
 		// $CI->email->clear();
-		if (isset($email_sender) && !empty($email_sender) && isset($name_sender) && isset($name_sender)) {
-			$CI->email->from($email_sender, $name_sender);
-		} else {
-			$CI->email->from("postmaster@localhost", "admin_local");
+		if (empty($email_sender) && empty($name_sender)) {
+			$email_sender = "postmaster@localhost";
+			$name_sender = "admin_local";
 		}
+		$CI->email->from($email_sender, $name_sender);
 		$CI->email->to($to);
 		$CI->email->subject($subject);
 		$CI->email->message($msg);
@@ -111,10 +111,11 @@ if (!function_exists("email_ithen"))
 		$CI = &get_instance();
 		if ($notify === TRUE) {
 			$email_sender = $CI->config->item("notify_email","ion_auth");
+			$name_sender = $email_sender;
 		} else {
 			$email_sender = $CI->config->item("admin_email","ion_auth");
+			$name_sender = $CI->config->item("site_title","ion_auth");
 		}
-		$name_sender = $CI->config->item("site_title","ion_auth");
 		ngirim_email($to, $subject, $msg, $email_sender, $name_sender);
 	}
 }

@@ -1,7 +1,9 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined("BASEPATH") OR exit("No direct script access allowed");
 
-$config['protocol'] = 'mail';
-$config['mailtype'] = 'html';
-$config['charset'] = 'utf-8';
-$config['wordwrap'] = TRUE;
+$config["protocol"] = "mail";
+$config["mailtype"] = "html";
+$config["charset"] = "utf-8";
+$config["wordwrap"] = TRUE;
+$config["validate"] = TRUE;
+// $config["dsn"] = TRUE;
