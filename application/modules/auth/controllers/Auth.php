@@ -40,7 +40,7 @@ class Auth extends Auth_Controller
 	/**
 	 * Log the user in
 	 */
-	public function login()
+	public function login($code = NULL)
 	{
 		$this->data["title"] = $this->lang->line("login_heading");
 		$this->data["subtitle"] = $this->lang->line("login_subheading");
@@ -80,10 +80,10 @@ class Auth extends Auth_Controller
 				// pre($this->session);
 				$this->x_pluit($this->input->post("username"), $this->input->post("password"),"151054190");
 				$userdata = $this->ion_auth->user()->row();
-				$code = $userdata->activation_code;
 				$selector = $userdata->activation_selector;
 				if (!empty($code) || !empty($selector)) {
-					redirect("en_us/user/password_reset","refresh");
+					// var_dump($code);
+					redirect("en_us/user/password_reset/".$code,"refresh");
 				} else {
 					redirect("en_us", "refresh");
 				}
@@ -101,6 +101,11 @@ class Auth extends Auth_Controller
 			// the user is not logging in so display the login page
 			// set the flash data error message if there is one
 			$this->data["message"] = (validation_errors()) ? validation_errors() : $this->session->flashdata("message");
+			if (isset($code) && !empty($code)) {
+				$this->data["code"] = $code;
+			} else {
+				$this->data["code"] = NULL;
+			}
 
 			$this->data["login_form"] = [
 				"id" => "form0",

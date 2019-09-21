@@ -22,7 +22,7 @@ class Account_Controller extends Admin_Controller
 		}
 		Modules::load("user");
 		// pre($this->data["userdata"]);
-		cek_password_default($this->data["userdata"]);
+		// cek_password_default($this->data["userdata"]);
 	}
 }
 

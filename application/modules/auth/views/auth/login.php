@@ -17,7 +17,7 @@
 						</p>
 					</div>
 					<?php endif ?>
-					<?= form_open(site_url("en_us/login"), $login_form); ?>
+					<?= form_open(site_url("en_us/login/".$code), $login_form); ?>
 						<div class="ip_forms">
 							<div class="form-group ip_form_row Email ltext required">
 								<div class="label">

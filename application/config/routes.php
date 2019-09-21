@@ -55,6 +55,7 @@ $route["404_override"] = "error_not_found";
 $route["translate_uri_dashes"] = FALSE;
 
 $route["en_us/login"] = "Auth/login";
+$route["en_us/login/(:any)"] = "Auth/login/$1";
 $route["en_us/logout"] = "Auth/logout";
 
 $route["en_us/folder/(:num)"] = "folder/index/$1";

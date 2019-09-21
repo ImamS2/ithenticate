@@ -11,6 +11,8 @@ class User_Controller extends Admin_Controller
 		parent::__construct();
 		$this->template->set_template("template" . DIRECTORY_SEPARATOR . "admin");
 		$this->template->set("body_class","template layout_3_2colh");
+		// pre($this->data["userdata"]);
+		// cek_password_default($this->data["userdata"]);
 	}
 }
 
@@ -35,18 +37,47 @@ class User extends User_Controller
 		$this->main_js = array_push_values($this->main_js,$additional_js);
 	}
 
-	public function password_reset($id = NULL)
+	public function password_reset($code = NULL, $id = NULL)
 	{
 		$id = isset($id) ? $id : $this->session->userdata("user_id");
 		$this->data["id"] = $id;
-		$main_css = $this->main_css;
-		$main_js = $this->main_js;
-		$_template = array(
-			"main_css" => $main_css,
-			"main_js" => $main_js,
-			"title" => "User Management",
-		);
-		$this->User_model->render_page("password_reset",$this->data,$_template);
+		if (empty($code)) {
+			redirect("en_us/logout","refresh");
+		}
+		$this->data["code"] = $code;
+		$userdata = $this->ion_auth->user($id)->row();
+		if (!empty($userdata->activation_code) || !empty($userdata->activation_selector)) {
+			$this->form_validation->set_rules("old_password","Old Password","required");
+			$this->form_validation->set_rules("password","Password","required|matches[password_chk]|min_length[" . $this->config->item("min_password_length", "ion_auth") . "]");
+			$this->form_validation->set_rules("password_chk","Password Confirm","required");
+			if ($this->form_validation->run() === TRUE) {
+				$old_pass = $this->security->xss_clean($this->input->post("old_password"));
+				$new_pass = $this->security->xss_clean($this->input->post("password"));
+				$new_pass_chk = $this->security->xss_clean($this->input->post("password_chk"));
+				$identity = $this->session->userdata("identity");
+				$ubah_pass = $this->ion_auth->change_password($identity,$old_pass,$new_pass);
+				if ($ubah_pass) {
+					$this->ion_auth->activate($id,$code);
+					$this->session->set_flashdata("message","Successfully changed password");
+					redirect("en_us","refresh");
+				} else {
+					$this->session->set_flashdata("message","Password doesn't match, please check again");
+					redirect("en_us/user/password_reset","refresh");
+				}
+			} else {
+				$main_css = $this->main_css;
+				$main_js = $this->main_js;
+				$_template = array(
+					"main_css" => $main_css,
+					"main_js" => $main_js,
+					"title" => "Password Reset",
+				);
+				$this->User_model->render_page("password_reset",$this->data,$_template);
+			}
+		} else {
+			$this->session->set_flashdata("message","You are old user");
+			redirect("en_us","refresh");
+		}
 	}
 
 	public function access_user()

@@ -5,15 +5,15 @@
 			<div class="clear"></div>
 		</div>
 		<div id="col1_bot">
-			<p>
+			<!-- <p>
 				Your password must be changed before you can continue.
-			</p>
-			<form method="post" accept-charset="utf-8" id="form0" class="__validate" action="<?= site_url("en_us/user/password_reset/".$id) ?>">
+			</p> -->
+			<form method="post" accept-charset="utf-8" id="form0" class="__validate" action="<?= site_url("en_us/user/password_reset/".$code) ?>">
 				<div><input value="DFD03254-D9B3-11E9-A83D-C565BBF6F4D5" type="hidden" name="_token"></div>
 				<?= Modules::run("widget_admin/error_form"); ?>
 				<div class="ip_forms">
 					<fieldset>
-						<!-- <div class="form-group ip_form_row EnterPassword ltext required">
+						<div class="form-group ip_form_row EnterPassword ltext required">
 							<div class="comment">Enter your existing password</div>
 							<div class="label">
 								<label class="control-label" for="form618old_password">
@@ -26,7 +26,7 @@
 									<input name="old_password" type="password" id="form618old_password" class="EnterPassword form-control __required __validateProfile:EnterPassword">
 								</div>
 							</div>
-						</div> -->
+						</div>
 						<div class="form-group ip_form_row ScryptPassword ltext required">
 							<div class="comment">Pick a new password</div>
 							<div class="label">
