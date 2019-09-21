@@ -21,6 +21,8 @@ class Account_Controller extends Admin_Controller
 			unset($account_lang);
 		}
 		Modules::load("user");
+		// pre($this->data["userdata"]);
+		cek_password_default($this->data["userdata"]);
 	}
 }
 

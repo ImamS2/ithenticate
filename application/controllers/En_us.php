@@ -15,6 +15,14 @@ class En_us extends MY_Controller
 	{
 		$this->load->library("session");
 		$this->session->set_flashdata("message",$this->session->userdata("message"));
-		redirect("en_us/folder","refresh");
+		// Modules::load("Auth");
+		// $userdata = $this->ion_auth->user()->row();
+		// $act_code = $userdata->activation_code;
+		// $act_sel = $userdata->activation_selector;
+		// if (!empty($act_code) || !empty($act_sel)) {
+		// 	redirect("en_us/user/password_reset","refresh");
+		// } else {
+			redirect("en_us/folder","refresh");
+		// }
 	}
 }

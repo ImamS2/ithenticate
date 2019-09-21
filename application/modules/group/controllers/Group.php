@@ -11,6 +11,8 @@ class Group_Controller extends Admin_Controller
 		parent::__construct();
 		$this->template->set_template("template" . DIRECTORY_SEPARATOR . "admin");
 		$this->template->set("body_class","template layout_3_3colh");
+		// pre($this->data["userdata"]);
+		cek_password_default($this->data["userdata"]);
 	}
 }
 

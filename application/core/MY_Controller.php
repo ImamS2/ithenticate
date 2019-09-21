@@ -71,6 +71,7 @@ class Admin_Controller extends MY_Controller
 				// redirect them to the login page
 				redirect("en_us/logout");
 			}
+			$userdata = $this->ion_auth->user()->row();
 
 			$this->main_css = array(
 				"css/css.css",
@@ -86,7 +87,6 @@ class Admin_Controller extends MY_Controller
 			Modules::load("settings");
 			Modules::load("widget_admin");
 			$this->load->model("settings/Settings_model");
-			$userdata = $this->ion_auth->user()->row();
 			$this->data["userdata"] = $userdata;
 			$this->data["announcement"] = $this->Settings_model->get_app_config("maintenance")->row()->nilai;
 			$use_api = $this->Settings_model->get_app_config("use_api")->row()->nilai;

@@ -35,6 +35,20 @@ class User extends User_Controller
 		$this->main_js = array_push_values($this->main_js,$additional_js);
 	}
 
+	public function password_reset($id = NULL)
+	{
+		$id = isset($id) ? $id : $this->session->userdata("user_id");
+		$this->data["id"] = $id;
+		$main_css = $this->main_css;
+		$main_js = $this->main_js;
+		$_template = array(
+			"main_css" => $main_css,
+			"main_js" => $main_js,
+			"title" => "User Management",
+		);
+		$this->User_model->render_page("password_reset",$this->data,$_template);
+	}
+
 	public function access_user()
 	{
 		if ($this->ion_auth->is_admin()) {

@@ -150,6 +150,29 @@ if (!function_exists("array_push_values")) {
 
 }
 
+/*
+|
+|----------------------------------------------------------------
+|
+| Cek sudah pernah ganti password default belum
+|
+|----------------------------------------------------------------
+|
+*/
+
+if (!function_exists("cek_password_default")) {
+
+	function cek_password_default($userdata)
+	{
+		$code = $userdata->activation_code;
+		$selector = $userdata->activation_selector;
+		if (!empty($code) || !empty($selector)) {
+			redirect("en_us/user/password_reset","refresh");
+		}
+	}
+
+}
+
 /* Generate a list of all IP addresses
    between $start and $end (inclusive). */
 if (!function_exists("ip_range")) {

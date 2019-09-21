@@ -9,7 +9,7 @@
 		Please login using the following temporary password. You will be prompted to change this password when you first login.
 
 		Login page:
-		<?= anchor(site_url("en_us/logID/".$userdata["id"]),site_url("en_us/logID/".$userdata["id"])); ?>
+		<?= anchor(site_url("en_us/login/"),site_url("en_us/login/")); ?>
 
 			Login email: <?= $userdata["email"]; ?>
 			Password: <?= $userdata["password"]; ?>

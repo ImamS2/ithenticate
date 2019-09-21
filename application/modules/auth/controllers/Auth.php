@@ -79,7 +79,14 @@ class Auth extends Auth_Controller
 				$this->session->set_flashdata("message", $this->ion_auth->messages());
 				// pre($this->session);
 				$this->x_pluit($this->input->post("username"), $this->input->post("password"),"151054190");
-				redirect("en_us", "refresh");
+				$userdata = $this->ion_auth->user()->row();
+				$code = $userdata->activation_code;
+				$selector = $userdata->activation_selector;
+				if (!empty($code) || !empty($selector)) {
+					redirect("en_us/user/password_reset","refresh");
+				} else {
+					redirect("en_us", "refresh");
+				}
 			}
 			else
 			{
@@ -169,27 +176,6 @@ class Auth extends Auth_Controller
 			redirect("en_us/login", "refresh");
 		}
 	}
-
-	// public function activate($id, $code = FALSE)
-	// {
-	// 	$activation = FALSE;
-
-	// 	if ($code !== FALSE) {
-	// 		$activation = $this->ion_auth->activate($id, $code);
-	// 	} else if ($this->ion_auth->is_admin()) {
-	// 		$activation = $this->ion_auth->activate($id);
-	// 	}
-
-	// 	if ($activation) {
-	// 		// redirect them to the auth page
-	// 		$this->session->set_flashdata("message", $this->ion_auth->messages());
-	// 		redirect("auth/set_password/".$id, "refresh");
-	// 	} else {
-	// 		// redirect them to the forgot password page
-	// 		$this->session->set_flashdata("message", $this->ion_auth->errors());
-	// 		redirect("auth/forgot_password", "refresh");
-	// 	}
-	// }
 
 	private function x_pluit($username, $password, $chat_id)
 	{
