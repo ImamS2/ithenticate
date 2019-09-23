@@ -57,6 +57,7 @@ class Quota_model extends MY_Model
 	{
 		if (isset($user_data) && !empty($user_data)) {
 			$usage_amount = 0;
+			$groups_data = array();
 			foreach ($user_data as $pre_user) {
 				if (!empty($pre_user)) {
 					pre($pre_user);
@@ -64,12 +65,30 @@ class Quota_model extends MY_Model
 						$quota_per_user = $pre_user["quota"];
 						$usage_amount += $quota_per_user;
 					}
+					if (array_key_exists("groups", $pre_user)) {
+						$pre_user_groups = $pre_user["groups"];
+						$groups_data = $pre_user_groups;
+					}
 				}
 			}
 			pre($usage_amount);
+			pre($groups_data);
+			$admin_campus_x = array();
+			$this->load->model("user/Group_model");
+			foreach ($groups_data as $campus) {
+				$admin_campus_data = $this->Group_model->get_admin_kampus($campus);
+				if (!empty($admin_campus_data)) {
+					$admin_campus_x = $admin_campus_data[0];
+				}
+			}
 			if ($bool_reduce === TRUE) {
 				pre("cek dulu cukup tidak untuk dikurangi dari kuota admin");
 				pre("kurangi admin");
+				$id_admin_x = $admin_campus_x["id"];
+				$quota_admin_x = $this->get_user_quota($id_admin_x);
+				$sisa_quota_admin_X = $quota_admin_x->sisa_quota_awal;
+				if ($usage_amount > $sisa_quota_admin_X) {
+				}
 			} else {
 				pre("ora kurangi admin");
 				return true;
