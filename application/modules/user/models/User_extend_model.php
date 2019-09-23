@@ -121,8 +121,9 @@ class User_extend_model extends MY_Model
 		// array_push($this->pre_user_data, $pre_user_data);
 		$cek_user = $this->Quota_model->add_check_user($this->pre_user_data,$bool_reduce);
 		if ($cek_user === TRUE) {
-			$this->add_user_process($this->pre_user_data);
+			return $this->add_user_process($this->pre_user_data);
 		}
+		return false;
 	}
 
 	public function add_list_users($sheet)
@@ -185,42 +186,41 @@ class User_extend_model extends MY_Model
 				$pre_user_data["groups"] = $groups;
 				array_push($this->pre_user_data, $pre_user_data);
 			}
-			pre($this->pre_user_data);
+			// pre($this->pre_user_data);
 			$this->load->model("quota/Quota_model");
 			$cek_user = $this->Quota_model->add_check_user($this->pre_user_data);
 			if ($cek_user === TRUE) {
-				$this->add_user_process($this->pre_user_data);
+				return $this->add_user_process($this->pre_user_data);
 			}
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	public function add_user_process($userdata)
 	{
 		$userdata = isset($userdata) ? $userdata : $this->pre_user_data;
 		if (isset($userdata) && !empty($userdata)) {
-			pre("lakukan registrasi");
+			// pre("lakukan registrasi");
 			foreach ($userdata as $pre_add_user) {
 				if (array_key_exists("email", $pre_add_user)) {
 					$email = $pre_add_user["email"];
-					pre($email);
+					// pre($email);
 					unset($pre_add_user["email"]);
 				}
 				if (array_key_exists("password", $pre_add_user)) {
 					$password_nohash = $pre_add_user["password"];
-					pre($password_nohash);
+					// pre($password_nohash);
 					unset($pre_add_user["password"]);
 				}
 				if (array_key_exists("groups", $pre_add_user)) {
 					$groups = $pre_add_user["groups"];
-					pre($groups);
+					// pre($groups);
 					unset($pre_add_user["groups"]);
 				}
-				pre($pre_add_user);
+				// pre($pre_add_user);
 				// email_ithen($email,"Halo Dunia","Ini saya");
 				$reg_data = $this->ion_auth->register($email,$password_nohash,$email,$pre_add_user,$groups);
-				pre($reg_data);
+				// pre($reg_data);
 				if (!empty($reg_data)) {
 					$this->email_to = $email;
 					$new_IdUser = $reg_data["id"];
@@ -233,13 +233,21 @@ class User_extend_model extends MY_Model
 					$this->email_subject = "Welcome to " . APPNAME;
 					$this->email_msg = $this->load->view("activate", $reg_data, TRUE);
 					$this->ion_auth->update($new_IdUser,array("active"=>TRUE));
-					pre($this->email_msg);
+					// pre($this->email_msg);
 					$this->create_user_trash($new_IdUser);
+					$userdata["result"] = TRUE;
+				} else {
+					$userdata["result"] = FALSE;
 				}
 			}
-		} else {
-			return false;
+			if (array_key_exists("result", $userdata)) {
+				$result = $userdata["result"];
+				if ($result === TRUE) {
+					return true;
+				}
+			}
 		}
+		return false;
 	}
 
 	public function create_user_trash($id_user = NULL)
@@ -318,6 +326,7 @@ class User_extend_model extends MY_Model
 			$set_home_folder = $this->ion_auth->update($id_user, $user_data);
 			if ($set_home_folder) {
 				email_ithen($this->email_to, $this->email_subject, $this->email_msg);
+				return true;
 			} else {
 				$this->session->set_flashdata("message","Failed to set home folder");
 				redirect("en_us/user","refresh");

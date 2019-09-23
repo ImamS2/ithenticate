@@ -18,7 +18,7 @@ class User_model extends MY_Model
 
 	public function add_user()
 	{
-		$this->User_extend_model->add_single_user();
+		return $this->User_extend_model->add_single_user();
 	}
 
 	public function user_import_list($data)
@@ -28,7 +28,7 @@ class User_model extends MY_Model
 		$this->upload_path_file = $upload_path;
 		$lib_excel_reader = APPPATH."modules" . DIRECTORY_SEPARATOR . "user" . DIRECTORY_SEPARATOR . "third_party" . DIRECTORY_SEPARATOR . "PHPExcel" . DIRECTORY_SEPARATOR . "PHPExcel.php";
 		$sheet = excel_reader($lib_excel_reader, $upload_path, $filename);
-		$this->User_extend_model->add_list_users($sheet);
+		return $this->User_extend_model->add_list_users($sheet);
 	}
 
 	public function edit_user($id = NULL)
@@ -63,7 +63,6 @@ class User_model extends MY_Model
 			}
 
 			if (!$this->ion_auth->in_group("cho admin",$id)) {
-
 				if ($quota !== $user_edit->quota) {
 					if ($this->ion_auth->user()->row() != $user_edit) {
 						$selisih = $quota - $user_edit->quota;
@@ -111,7 +110,6 @@ class User_model extends MY_Model
 						}
 					}
 				}
-
 				if((strtotime(date("Y-m-d H:i:s")) > strtotime($expireduser)) && (strtotime(date("Y-m-d H:i:s")) >= $expireduser)) {
 					$user_data["active"] = 0;
 				} else {

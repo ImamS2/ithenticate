@@ -111,7 +111,7 @@
 						<?php if (!$this->ion_auth->in_group("cho admin") && isset($universitas)): ?>
 							<li><?= $universitas->name ?></li>
 						<?php endif ?>
-						<li>User ID: <?= $userdata->id ?></li>
+						<li>User ID: <?= jadi_digit(5,$userdata->id) ?></li>
 						<?php if ($this->ion_auth->in_group("cho admin")): ?>
 							<?php if ($use_api === TRUE): ?>
 								<li><?= isset($expired_real) ? "Expiry date: " . $expired_real : "" ?></li>

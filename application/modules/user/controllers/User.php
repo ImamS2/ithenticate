@@ -137,13 +137,13 @@ class User extends User_Controller
 				$first_name = $this->security->xss_clean($this->input->post("first_name"));
 				$last_name = $this->security->xss_clean($this->input->post("last_name"));
 				$add_user = $this->User_model->add_user();
-				pre($add_user);
-				// if ($add_user !== FALSE) {
-				// 	$this->session->set_flashdata("message","User ". $first_name . " " . $last_name . " successfully created");
-				// } else {
-				// 	$this->session->set_flashdata("message","User ". $first_name . " " . $last_name . " failed created");
-				// }
-				// redirect("en_us/user","refresh");
+				// pre($add_user);
+				if ($add_user !== FALSE) {
+					$this->session->set_flashdata("message","User ". $first_name . " " . $last_name . " successfully created");
+				} else {
+					$this->session->set_flashdata("message","User ". $first_name . " " . $last_name . " failed created");
+				}
+				redirect("en_us/user","refresh");
 			} else {
 				if ($this->ion_auth->in_group("cho admin")) {
 					$universitas = $this->Group_model->get_campus_lists();
@@ -296,6 +296,7 @@ class User extends User_Controller
 				redirect("en_us/user","refresh");
 			}
 			$user_import = $this->User_model->user_import_list($this->data);
+			// pre($user_import);
 			if ($user_import !== FALSE) {
 				$this->session->set_flashdata("message","Users successfully created");
 			} else {
@@ -317,19 +318,15 @@ class User extends User_Controller
 				$this->User_extend_model->edit_rules();
 
 				if ($this->form_validation->run() === TRUE) {
-
 					$first_name = $this->security->xss_clean($this->input->post("first_name"));
 					$last_name = $this->security->xss_clean($this->input->post("last_name"));
 					$edit_user = $this->User_model->edit_user($id);
-
 					if ($edit_user) {
 						$this->session->set_flashdata("message","User ". $first_name . " " . $last_name . " successfully updated");
 					} else {
 						$this->session->set_flashdata("message","User ". $first_name . " " . $last_name . " failed updated");
 					}
-
 					redirect("en_us/user","refresh");
-
 				} else {
 
 					$additional_js = array(
