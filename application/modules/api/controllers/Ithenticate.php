@@ -845,6 +845,28 @@ class Ithenticate extends Api_Controller
 		return false;
 	}
 
+	function get_folder($id_folder)
+	{
+		if (isset($id_folder) && !empty($id_folder)) {
+			$params = array(
+				"id" => $id_folder,
+			);
+			$xml = $this->pre_request("get_folder",$params);
+			if (!empty($xml)) {
+				$data = $this->send_request($xml);
+				// pre($data);
+				if (isset($data) && !empty($data)) {
+					$response = $this->Api_account_model->ithenticate_response($data);
+					if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
+						pre($response);
+					}
+				}
+			}
+		} else {
+			return false;
+		}
+	}
+
 	private function pre_request($method,$params=[])
 	{
 		$xml = "";
@@ -900,6 +922,14 @@ class Ithenticate extends Api_Controller
 					$xml = "<methodCall><methodName>document.add</methodName><params><param><value><struct><member><name>sid</name><value><string>" . $this->sid . "</string></value></member><member><name>uploads</name><value><array><data><value><struct><member><name>filename</name><value><string>" . $params["filename"] . "</string></value></member><member><name>author_last</name><value><string>" . $params["last_name"] . "</string></value></member><member><name>upload</name><value><base64>" . base64_encode($params["upload"]) . "</base64></value></member><member><name>title</name><value><string>" . $params["title"] . "</string></value></member><member><name>author_first</name><value><string>" . $params["first_name"] . "</string></value></member></struct></value></data></array></value></member><member><name>submit_to</name><value><int>" . $params["submit_to"] . "</int></value></member><member><name>folder</name><value><int>" . $params["id_subfolder_api"] . "</int></value></member></struct></value></param></params></methodCall>";
 				} else {
 					$this->login("file_add");
+				}
+				break;
+
+			case "get_folder":
+				if (!empty($this->sid)) {
+					$xml = "<methodCall><methodName>folder.get</methodName><params><param><value><struct><member><name>sid</name><value><string>" . $this->sid . "</string></value></member><member><name>id</name><value><int>" . $params["id"] . "</int></value></member></struct></value></param></params></methodCall>";
+				} else {
+					$this->login("get_folder");
 				}
 				break;
 
