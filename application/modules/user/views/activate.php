@@ -38,12 +38,12 @@
 
 
 		<footer>
-		--
-		<br>
-		<?= APPNAME ?> Support Team
-		<br>
-		<?= $this->config->item("admin_email","ion_auth"); ?>
-		<br>
+			--
+			<br>
+			<?= APPNAME ?> Support Team
+			<br>
+			<?= $this->config->item("admin_email","ion_auth"); ?>
+			<br>
 		</footer>
 	</body>
 </html>

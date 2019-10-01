@@ -109,12 +109,12 @@ class User_file extends User_file_Controller
 
 				if ($this->form_validation->run() === TRUE) {
 					$edit_file = $this->User_file_model->edit_file($id);
-					if ($edit_file !== FALSE) {
-						$this->session->set_flashdata("message","File " . $file_detail->title . " has been updated");
-					} else {
-						$this->session->set_flashdata("message","File " . $file_detail->title . " failed to updated");
-					}
-					redirect("en_us/user_file","refresh");
+					// if ($edit_file !== FALSE) {
+					// 	$this->session->set_flashdata("message","File " . $file_detail->title . " has been updated");
+					// } else {
+					// 	$this->session->set_flashdata("message","File " . $file_detail->title . " failed to updated");
+					// }
+					// redirect("en_us/user_file","refresh");
 				} else {
 					$this->User_file_model->render_page("edit",$this->data,$_template);
 				}

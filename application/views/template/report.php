@@ -17,15 +17,16 @@
 			-moz-binding: url('/mozxml/ellipsis.xml'); /* http://mattsnider.com/css/css-string-truncation-with-ellipsis/ */
 		}
 		</style>
-		<link rel="apple-touch-icon" href="../../assets/images/sproutcore-logo.png" />
-		<link rel="apple-touch-startup-image" media="screen and (orientation:portrait)" href="assets/images/sproutcore-startup-portrait.png" />
-		<link rel="apple-touch-startup-image" media="screen and (orientation:landscape)" href="assets/images/sproutcore-startup-landscape.png" />
+		<link rel="apple-touch-icon" href="<?= base_url("assets/images/sproutcore-logo.png"); ?>">
+		<link rel="apple-touch-startup-image" media="screen and (orientation:portrait)" href="<?= base_url("assets/images/sproutcore-startup-portrait.png"); ?>" />
+		<link rel="apple-touch-startup-image" media="screen and (orientation:landscape)" href="<?= base_url("assets/images/sproutcore-startup-landscape.png") ?>" />
 
 		<title><?= (isset($title) && !empty($title)) ? APPNAME . " | " . $title : "" ; ?></title>
 
-		<link href="../../assets/css/stylesheet-packed.css" rel="stylesheet" type="text/css" />
-		<link href="../../assets/css/stylesheet.css" rel="stylesheet" type="text/css" />
-		<link href="../../assets/css/r-stylesheet.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="<?= base_url("assets/css/stylesheet-packed.css"); ?>">
+		<link rel="stylesheet" type="text/css" href="<?= base_url("assets/css/stylesheet.css"); ?>">
+		<link rel="stylesheet" type="text/css" href="<?= base_url("assets/css/r-stylesheet.css"); ?>">
+
 	</head>
 
 	<body class="sc-theme focus box-shadow border-rad safari windows en_us sc-focus" cz-shortcut-listen="true">

@@ -5,7 +5,7 @@
 				<h2 class="document_header">Document Properties</h2>
 				<ul class="navtab">
 					<li class="active">
-						<a href="<?= site_url("en_us/document/edit/".$id) ?>">
+						<a href="<?= site_url("en_us/user_file/edit/".$id) ?>">
 							<span>Properties</span>
 						</a>
 					</li>

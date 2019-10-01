@@ -29,7 +29,7 @@ class Account_campus_model extends MY_Model
 	{
 		$id_user = isset($id_user) ? $id_user : $this->session->userdata("user_id");
 		$this->load->model("user/Group_model");
-		$user_campus = $this->Group_model->get_user_campus($id_new_user)->row();
+		$user_campus = $this->Group_model->get_user_campus($id_user)->row();
 		$id_campus = $user_campus->id;
 		$this->load->model("api/Api_account_model");
 		$acc_active = $this->Api_account_model->where(array("active"=>1))->limit(1)->get();

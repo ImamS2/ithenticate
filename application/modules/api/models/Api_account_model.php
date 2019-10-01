@@ -165,6 +165,56 @@ class Api_account_model extends MY_Model
 						}
 						break;
 
+					case "uploaded":
+						$uploaded = new stdClass();
+						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
+							$uploaded_val = $resp["value"]["array"]["data"]["value"];
+							if (array_key_exists("struct", $uploaded_val)) {
+								$uploaded_file = new stdClass();
+								$detail_upload_val = $uploaded_val["struct"]["member"];
+								foreach ($detail_upload_val as $data_detail_upload) {
+									switch ($data_detail_upload["name"]) {
+										case "filename":
+											$uploaded->filename = $data_detail_upload["value"]["string"];
+											break;
+
+										case "id":
+											$uploaded->id = $data_detail_upload["value"]["int"];
+											break;
+
+										case "mime_type":
+											$uploaded->mime_type = $data_detail_upload["value"]["string"];
+											break;
+
+										case "folder":
+											$folder_api = $data_detail_upload["value"]["struct"]["member"];
+											$folder_data = new stdClass();
+											foreach ($folder_api as $data_folder_api) {
+												switch ($data_folder_api["name"]) {
+													case "name":
+														$folder_data->name = $data_folder_api["value"]["string"];
+														break;
+
+													case "id":
+														$folder_data->id = $data_folder_api["value"]["int"];
+														break;
+													
+													default:
+														break;
+												}
+											}
+											$uploaded->folder = $folder_data;
+											break;
+										
+										default:
+											break;
+									}
+								}
+							}
+						}
+						$return->uploaded = $uploaded;
+						break;
+
 					case "folders":
 						$folders = array();
 						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {

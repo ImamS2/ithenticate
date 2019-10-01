@@ -54,16 +54,63 @@ class User_file_model extends MY_Model
 		$status = $this->security->xss_clean($this->input->post("status"));
 		$words = $this->security->xss_clean($this->input->post("words"));
 		$is_pending = $this->security->xss_clean($this->input->post("is_pending"));
+		$file_detail_obj = $this->get_file($id);
+		if ($file_detail_obj->num_rows() > 0) {
+			$file_detail = $file_detail_obj->row();
+			$this->load->model("folder/Folder_model");
+			$folder_detail_obj = $this->Folder_model->get_folder_details($file_detail->id_folder);
+			if ($folder_detail_obj->num_rows() > 0) {
+				$folder_detail = $folder_detail_obj->row();
+				$userdata = $this->ion_auth->user($folder_detail->id_user)->row();
+			}
+		} else {
+			$userdata = $this->ion_auth->user()->row();
+		}
+
 		if (isset($id) && !empty($id)) {
-			// $upload_path = "assets" . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR;
-			// $pdf_report = $this->upload("file_pdf", $upload_path . "pdf" . DIRECTORY_SEPARATOR);
-			// $html_report = $this->upload("file_html", $upload_path . "html" . DIRECTORY_SEPARATOR);
+			$upload_path = "assets" . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . "report";
+			$upload_pdf_path = $upload_path . DIRECTORY_SEPARATOR . "pdf" . DIRECTORY_SEPARATOR . "_" . $userdata->id;
+			$upload_html_path = $upload_path . DIRECTORY_SEPARATOR . "html" . DIRECTORY_SEPARATOR . "_" . $userdata->id;
+			if (!file_exists($upload_pdf_path)) {
+				mkdir($upload_pdf_path);
+			}
+			if (!file_exists($upload_html_path)) {
+				mkdir($upload_html_path);
+			}
+			$pdf_report = $this->upload("file_pdf", $upload_pdf_path,"pdf");
+			pre($pdf_report);
+			$html_report = $this->upload("file_html", $upload_html_path,"html");
+			pre($html_report);
 			$params = array(
 				"is_pending" => $is_pending,
 				"percent_match" => $percent_match,
 				"words" => $words,
 				"status" => $status,
 			);
+			if ($pdf_report !== false || $html_report !== false) {
+				if (array_key_exists("file_pdf", $pdf_report)) {
+					$file_pdf_report = $pdf_report["file_pdf"];
+					if (array_key_exists("file_name", $file_pdf_report)) {
+						$report_pdf_name = $file_pdf_report["file_name"];
+					}
+				}
+				if (array_key_exists("file_html", $html_report)) {
+					$file_html_report = $html_report["file_html"];
+					if (array_key_exists("file_name", $file_html_report)) {
+						$report_html_name = $file_html_report["file_name"];
+					}
+				}
+				if (isset($file_pdf_report) && !empty($file_pdf_report)) {
+					if (isset($report_pdf_name) && !empty($report_pdf_name)) {
+						$params["report_name_pdf"] = $report_pdf_name;
+					}
+				}
+				if (isset($file_html_report) && !empty($file_html_report)) {
+					if (isset($report_html_name) && !empty($report_html_name)) {
+						$params["report_name_html"] = $report_html_name;
+					}
+				}
+			}
 			$this->where(array($this->pk=>$id));
 			return $this->update($params);
 		} else {

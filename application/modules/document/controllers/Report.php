@@ -24,7 +24,8 @@ class Report extends Admin_Controller
 				if ($use_api === TRUE) {
 					$this->_api($id);
 				} else {
-					$this->_manual($id);
+					$this->_show_pdf_report($id);
+					// $this->_manual($id);
 				}
 			} else {
 				$this->session->set_flashdata("message","ID File not found");
@@ -46,6 +47,27 @@ class Report extends Admin_Controller
 			"title" => "Document Viewer",
 		);
 		$this->Document_model->render_page("report",$this->data,$_template);
+	}
+
+	private function _show_pdf_report($id)
+	{
+		$rep_path = "assets" . DIRECTORY_SEPARATOR . "uploads" . DIRECTORY_SEPARATOR . "report";
+		$file_obj = $this->Document_model->get_file($id);
+		if ($file_obj->num_rows() === 1) {
+			$file_detail = $file_obj->row();
+			$this->load->model("folder/Folder_model");
+			$folder_detail_obj = $this->Folder_model->get_folder_details($file_detail->id_folder);
+			if ($folder_detail_obj->num_rows() > 0) {
+				$folder_detail = $folder_detail_obj->row();
+				$userdata = $this->ion_auth->user($folder_detail->id_user)->row();
+			} else {
+				$userdata = $this->ion_auth->user()->row();
+			}
+			$pdf_report = $file_detail->report_name_pdf;
+			$pdf_rep_path = $rep_path . DIRECTORY_SEPARATOR . "pdf" . DIRECTORY_SEPARATOR . "_" . $userdata->id . DIRECTORY_SEPARATOR;
+			$report_file = $pdf_rep_path . $pdf_report;
+			redirect($report_file);
+		}
 	}
 
 	private function _manual($id)

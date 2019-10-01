@@ -46,7 +46,7 @@
 										<em></em>
 									<?php endif ?>
 								</td>
-								<?php if ($file["is_pending"] == TRUE): ?>
+								<!-- <?php if ($file["is_pending"] == TRUE): ?>
 									<td class="rpt">
 										Processed
 									</td>
@@ -70,6 +70,40 @@
 											<a href="<?= site_url("en_us/upload/uploadlog/".$file["uploaded_on"]) ?>">Failed</a>
 										</td>
 									<?php endif ?>
+								<?php endif ?> -->
+								<?php if (isset($file["status"])): ?>
+									<?php switch ($file["status"]) {
+										case "0":
+											echo "<td class=\"rpt\">";
+											echo "Processed";
+											echo "</td>";
+											break;
+
+										case "1":
+											echo "<td class=\"rpt\">";
+											if (!empty($file["processed_time"]) || !empty($file["percent_match"])) {
+												if (isset($score_change) && intval($file["percent_match"]) >= $score_change) {
+													echo "<a target=\"_blank\" class=\"btn btn-primary\" href="?><?= site_url("en_us/report/".$file["id"]) ?><?= ">";
+												} else {
+													echo "<a target=\"_blank\" class=\"btn btn-default-alt\" href="?><?= site_url("en_us/report/".$file["id"]) ?><?= ">";
+												}
+													echo intval($file["percent_match"]) . "%";
+													echo "</a>";
+											} else {
+												echo "Savings";
+											}
+											echo "</td>";
+											break;
+
+										case "-1":
+											echo "<td class=\"rpt td_noreport\">";
+											echo anchor(site_url("en_us/upload/uploadlog/".$file["uploaded_on"]),"Failed");
+											echo "</td>";
+											break;
+										
+										default:
+											break;
+									} ?>
 								<?php endif ?>
 								<td class="td_author">
 									<?php if (!empty($file["author_first"]) && !empty($file["author_last"])): ?>

@@ -133,34 +133,80 @@ class File_model extends MY_Model
 		}
 	}
 
+	public function upload_with_api($data_file)
+	{
+		// echo "gunakan api\n";
+		// echo "get_data_folder_id_kampus\n";
+		if (!empty($data_file)) {
+			// pre($data_file);
+			$file = $data_file["file"];
+			$author_first = $data_file["author_first"];
+			$author_last = $data_file["author_last"];
+			$title = $data_file["title"];
+
+			$this->load->model("user/Account_campus_model");
+			$get_account_campus_obj = $this->Account_campus_model->limit(1)->get_account_campus();
+			if ($get_account_campus_obj->num_rows() > 0) {
+				$get_account_campus = $get_account_campus_obj->row();
+				// pre($get_account_campus);
+				if (!empty($get_account_campus)) {
+					$id_folder_api = $get_account_campus->id_folder_api;
+					if (!empty($file)) {
+						$ithen_upload_api = Modules::load("api/Ithenticate");
+						$path_file = read_file($file["full_path"]);
+						$filename = $file["file_name"];
+						// pre($path_file);
+						// pre($file);
+						$upload_param = array(
+							"path_file" => $path_file,
+							"first_name" => $author_first,
+							"last_name" => $author_last,
+							"title" => $title,
+							"filename" => $filename,
+						);
+						$id_file_upload = $ithen_upload_api->file_add($id_folder_api,$upload_param);
+						if ($id_file_upload !== FALSE) {
+							return $id_file_upload;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	public function uploading_file($putaran = NULL)
 	{
 		$add_files = $this->add_file($putaran);
 		$id_folder = $this->input->post("folder");
 		foreach ($add_files as $data_file) {
 			$file = $data_file["file"];
-			$author_first = $data_file["author_first"];
-			$author_last = $data_file["author_last"];
-			$title = $data_file["title"];
 			$file_type = $file["file_type"];
 			$zip_type = $this->output->mimes["zip"];
 			// pre($data_file);
 			if(in_array($file_type, $zip_type)) {
-				$extract_zip = $this->extract_zip_file($data_file);
+				$this->extract_zip_file($data_file);
 			} else {
 				if($this->use_api === true) {
-					echo "gunakan api";
+					$id_file_upload = $this->upload_with_api($data_file);
+					if ($id_file_upload !== FALSE) {
+						$data_file["id_file_upload"] = $id_file_upload;
+					}
 				}
 				$this->pre_send_data($data_file);
 			}
 		}
 
-		// $jml_file_upload = count($this->file_uploaded);
-		// if ($jml_file_upload < 2) {
-		// 	$this->session->set_flashdata("message",$jml_file_upload . " file was uploaded");
-		// } else {
-		// 	$this->session->set_flashdata("message",$jml_file_upload . " files was uploaded");
-		// }
+		$jml_file_upload = count($this->file_uploaded);
+		if ($jml_file_upload > 0) {
+			$this->file_save_db($this->file_uploaded);
+			// if ($jml_file_upload < 2) {
+			// 	$this->session->set_flashdata("message",$jml_file_upload . " file was uploaded");
+			// } else {
+			// 	$this->session->set_flashdata("message",$jml_file_upload . " files was uploaded");
+			// }
+		}
+
 
 		// if ($this->after_upload === TRUE) {
 		// 	redirect("en_us/folder/".$id_folder,"refresh");
@@ -213,6 +259,7 @@ class File_model extends MY_Model
 				"file_type" => $file_type,
 				"file_path" => $upload_path,
 				"raw_name" => $file_raw,
+				"full_path" => $path_file,
 				"size_file" => $size_file,
 			);
 		}
@@ -227,15 +274,24 @@ class File_model extends MY_Model
 		);
 
 		if (isset($data_file) && !empty($data_file)) {
+			if ($this->use_api === TRUE) {
+				$id_file_upload = $this->upload_with_api($data_file);
+				if ($id_file_upload !== FALSE) {
+					$data_file["id_file_upload"] = $id_file_upload;
+				}
+			}
 			$this->pre_send_data($data_file);
 		}
 
-		// $jml_file_upload = count($this->file_uploaded);
-		// if ($jml_file_upload < 2) {
-		// 	$this->session->set_flashdata("message",$jml_file_upload . " file was uploaded");
-		// } else {
-		// 	$this->session->set_flashdata("message",$jml_file_upload . " files was uploaded");
-		// }
+		$jml_file_upload = count($this->file_uploaded);
+		if ($jml_file_upload > 0) {
+			$this->file_save_db($this->file_uploaded);
+			// if ($jml_file_upload < 2) {
+			// 	$this->session->set_flashdata("message",$jml_file_upload . " file was uploaded");
+			// } else {
+			// 	$this->session->set_flashdata("message",$jml_file_upload . " files was uploaded");
+			// }
+		}
 
 		// if ($this->after_upload === TRUE) {
 		// 	redirect("en_us/folder/".$id_folder,"refresh");
@@ -309,7 +365,10 @@ class File_model extends MY_Model
 		if (isset($response) && !empty($response)) {
 			foreach ($response as $data_file) {
 				if($this->use_api === TRUE) {
-					echo "gunakan api";
+					$id_file_upload = $this->upload_with_api($data_file);
+					if ($id_file_upload !== FALSE) {
+						$data_file["id_file_upload"] = $id_file_upload;
+					}
 				}
 				$this->pre_send_data($data_file);
 			}
@@ -335,6 +394,12 @@ class File_model extends MY_Model
 				$title = $file_detail["file_name"];
 			}
 
+			if (array_key_exists("id_file_upload", $file_detail)) {
+				$id_file_upload = $file_detail["id_file_upload"];
+			} else {
+				$id_file_upload = NULL;
+			}
+
 			$file_path = $file_detail["file_path"];
 			$file_type = $file_detail["file_type"];
 			$id_folder = $data_file["id_folder"];
@@ -351,13 +416,14 @@ class File_model extends MY_Model
 			$ready_input = array(
 				"id_folder" => $id_folder,
 				"id_folder_awal" => $id_folder,
+				"id_upload" => $id_file_upload,
 				"uploaded_on" => $uploaded_on,
 				"author_first" => $author_first,
 				"author_last" => $author_last,
 				"title" => $title,
 				"zip_name" => $zip_name,
 				"mime/type" => $file_type,
-				"is_pending" => 1,
+				"status" => 0,
 				"path_folder" => $file_path,
 				"data_name" => $file_name,
 				"ori_name" => $ori_name,
@@ -367,47 +433,56 @@ class File_model extends MY_Model
 		return $ready_input;
 	}
 
-	public function file_save_db($data_ready_input = [])
+	public function file_save_db($ready_input = [])
 	{
-		if (!empty($data_ready_input) && isset($data_ready_input)) {
-			$ready_input = $data_ready_input;
+		if (!empty($ready_input) && isset($ready_input)) {
 			$userdata = $this->ion_auth->user()->row();
-			if (!$this->ion_auth->in_group("cho admin")) {
-				$usage_quota_temp = intval($userdata->usage_quota) + 1;
-				$base_quota_user = intval($userdata->quota);
+			$this->load->model("quota/Quota_model");
+			$this->Quota_model->reduce_quota_user(count($ready_input));
+
+			$Tg = Modules::load("api/Telegram");
+			if (isset($Tg) && !empty($Tg)) {
+				$this->load->model("folder/Folder_model");
+				foreach ($ready_input as $siap_input) {
+					$pesan_tg = "<b>" . $userdata->first_name . " " . $userdata->last_name . "</b>";
+					$pesan_tg .= " has been uploaded a file";
+					$pesan_tg .= html_escape("\n");
+					foreach ($siap_input as $key => $value) {
+						switch ($key) {
+							case "ori_name":
+								$pesan_tg .= " namanya <b>" . $value . "</b>";
+								$pesan_tg .= html_escape("\n");
+								break;
+
+							case "id_folder":
+								$detail_folder = $this->Folder_model->get_folder_details($value);
+								if (isset($detail_folder) && !empty($detail_folder)) {
+									$data_folder = $detail_folder->row();
+									$pesan_tg .= " di folder " . $data_folder->name;
+									$pesan_tg .= html_escape("\n");
+								}
+								break;
+
+							case "id_upload":
+								if (!empty($value)) {
+									$pesan_tg .= " dengan id upload di iThenticate : <b>" . $value ."</b>";
+									$pesan_tg .= html_escape("\n");
+								}
+								break;
+							
+							default:
+								break;
+						}
+					}
+					if (ENVIRONMENT !== "localhost") {
+						$Tg->sendMessage($pesan_tg);
+					} else {
+						pre($pesan_tg);
+					}
+				}
 			}
 
-
-			// $Tg = Modules::load("api/Telegram");
-			// if (isset($Tg) && !empty($Tg)) {
-			// 	$pesan_tg = "<b>" . $userdata->first_name . " " . $userdata->last_name . "</b>";
-			// 	$pesan_tg .= " has been uploaded a file";
-			// 	$pesan_tg .= html_escape("\n");
-			// 	$this->load->model("folder/Folder_model");
-			// 	foreach ($ready_input as $key => $value) {
-			// 		switch ($key) {
-			// 			case "ori_name":
-			// 				$pesan_tg .= " namanya <b>" . $value . "</b>";
-			// 				$pesan_tg .= html_escape("\n");
-			// 				break;
-
-			// 			case "id_folder":
-			// 				$detail_folder = $this->Folder_model->get_folder_details($value);
-			// 				if (isset($detail_folder) && !empty($detail_folder)) {
-			// 					$data_folder = $detail_folder->row();
-			// 					$pesan_tg .= " di folder " . $data_folder->name;
-			// 				}
-			// 				break;
-						
-			// 			default:
-			// 				break;
-			// 		}
-			// 	}
-			// 	// pre($pesan_tg);
-			// 	$Tg->sendMessage($pesan_tg);
-			// }
-
-			// $this->insert($ready_input);
+			$this->insert_batch($ready_input);
 		}
 		return $this;
 	}

@@ -94,7 +94,8 @@ class Folder extends Folder_Controller
 			$this->data["pagination"] = $this->Folder_model->pagination($this->data["count_file"]);
 
 			if ($this->data["count_file"] > 0) {
-				$this->data["files_list"] = $this->File_model->limit($this->data["userdata"]->document_per_page)->offset($start)->get_files_by_folder($this->data["id"])->result_array();
+				$files_list = $this->File_model->limit($this->data["userdata"]->document_per_page)->offset($start)->get_files_by_folder($this->data["id"])->result_array();
+				$this->data["files_list"] = $files_list;
 			}
 
 			$this->data["score_change"] = $this->data["userdata"]->score_change;

@@ -19,6 +19,8 @@ class Ithenticate extends Api_Controller
 	protected $id_folder_group;
 	protected $name_folder;
 	protected $description;
+	protected $id_subfolder_api;
+	protected $upload_param;
 
 	function __construct()
 	{
@@ -299,8 +301,8 @@ class Ithenticate extends Api_Controller
 				$response["list_folders_api"] = $list_id_folder_api_real;
 
 				if (!empty($acc_id)) {
-					$this->load->model("User/Group_model");
-					$this->load->model("User/Account_campus_model");
+					$this->load->model("user/Group_model");
+					$this->load->model("user/Account_campus_model");
 					$campus_lists_obj = $this->Group_model->get_campus_lists();
 					$list_folders_campus_obj = $this->Account_campus_model->where(array("id_account"=>$acc_id))->get();
 					$account_data = array();
@@ -451,6 +453,10 @@ class Ithenticate extends Api_Controller
 
 					case "folder_add":
 						return $this->folder_add($this->id_folder_group, $this->name_folder, $this->description);
+						break;
+
+					case "file_add":
+						return $this->file_add($this->id_subfolder_api, $this->upload_param);
 						break;
 
 					default:
@@ -758,6 +764,87 @@ class Ithenticate extends Api_Controller
 		}
 	}
 
+	function file_add($id_subfolder_api,$upload_param)
+	{
+		if (isset($id_subfolder_api) && !empty($id_subfolder_api) && isset($upload_param) && !empty($upload_param)) {
+			$submit_to = 1;
+			$this->id_subfolder_api = $id_subfolder_api;
+			$this->upload_param = $upload_param;
+			$params = array(
+				"id_subfolder_api" => $id_subfolder_api,
+				"submit_to" => $submit_to,
+				"title" => $upload_param["title"],
+				"first_name" => $upload_param["first_name"],
+				"last_name" => $upload_param["last_name"],
+				"filename" => $upload_param["filename"],
+				"upload" => $upload_param["path_file"],
+			);
+			$xml = $this->pre_request("file_add",$params);
+			if (!empty($xml)) {
+				$data = $this->send_request($xml);
+				pre($data);
+				if (isset($data) && !empty($data)) {
+					$response = $this->Api_account_model->ithenticate_response($data);
+					if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
+						pre($response);
+						if (array_key_exists("status", $response)) {
+							$status = $response->status;
+						}
+						if (array_key_exists("api_status", $response)) {
+							$api_status = $response->api_status;
+						}
+						if (array_key_exists("response_timestamp", $response)) {
+							$response_timestamp = $response->response_timestamp;
+						}
+						if (isset($api_status) && !empty($api_status) && isset($status) && !empty($status)) {
+							switch ($api_status) {
+								case "200":
+									if (array_key_exists("uploaded", $response)) {
+										$uploaded = $response->uploaded;
+										if (array_key_exists("id", $uploaded)) {
+											$id_upload = $uploaded->id;
+										} else {
+											$id_upload = 0;
+										}
+									} else {
+										$id_upload = 0;
+									}
+									if (array_key_exists("messages", $response)) {
+										$messages = $response->messages;
+									}
+									$this->messages = $messages;
+									$this->api_status = $api_status;
+									return $id_upload;
+									break;
+
+								case "401":
+									if (array_key_exists("messages", $response)) {
+										$messages = $response->messages;
+									}
+									switch ($messages) {
+										case "Failed to provide authenticated sid":
+											// pre($messages);
+											return $this->login("folder_add");
+											break;
+										
+										default:
+											break;
+									}
+									$this->api_status = $api_status;
+									return $messages;
+									break;
+								
+								default:
+									break;
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+
 	private function pre_request($method,$params=[])
 	{
 		$xml = "";
@@ -810,7 +897,7 @@ class Ithenticate extends Api_Controller
 
 			case "file_add":
 				if (!empty($this->sid)) {
-					$xml = "<methodCall><methodName>document.add</methodName><params><param><value><struct><member><name>sid</name><value><string>" . $this->sid . "</string></value></member><member><name>uploads</name><value><array><data><value><struct><member><name>filename</name><value><string>" . $params["filename"] . "</string></value></member><member><name>author_last</name><value><string>" . $params["last_name"] . "</string></value></member><member><name>upload</name><value><base64>" . $params["upload"] . "</base64></value></member><member><name>title</name><value><string>" . $params["title"] . "</string></value></member><member><name>author_first</name><value><string>" . $params["first_name"] . "</string></value></member></struct></value></data></array></value></member><member><name>submit_to</name><value><int>" . $params["submit_to"] . "</int></value></member><member><name>folder</name><value><int>" . $params["id_subfolder_api"] . "</int></value></member></struct></value></param></params></methodCall>";
+					$xml = "<methodCall><methodName>document.add</methodName><params><param><value><struct><member><name>sid</name><value><string>" . $this->sid . "</string></value></member><member><name>uploads</name><value><array><data><value><struct><member><name>filename</name><value><string>" . $params["filename"] . "</string></value></member><member><name>author_last</name><value><string>" . $params["last_name"] . "</string></value></member><member><name>upload</name><value><base64>" . base64_encode($params["upload"]) . "</base64></value></member><member><name>title</name><value><string>" . $params["title"] . "</string></value></member><member><name>author_first</name><value><string>" . $params["first_name"] . "</string></value></member></struct></value></data></array></value></member><member><name>submit_to</name><value><int>" . $params["submit_to"] . "</int></value></member><member><name>folder</name><value><int>" . $params["id_subfolder_api"] . "</int></value></member></struct></value></param></params></methodCall>";
 				} else {
 					$this->login("file_add");
 				}

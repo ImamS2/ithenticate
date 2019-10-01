@@ -22,14 +22,28 @@ class Upload extends Upload_Controller
 	{
 		parent::__construct();
 		$this->load->model("File_model");
-		$this->load->model("Folder/Folder_model");
+		$this->load->model("folder/Folder_model");
 		$this->template->set("message",$this->session->flashdata("message"));
 		$this->template->set_template("template" . DIRECTORY_SEPARATOR . "upload");
 		$this->template->set("body_class","yui-skin-sam template layout_3_2colh");
 	}
 
+	private function cek_quota_upload()
+	{
+		if (!$this->ion_auth->in_group("cho admin")) {
+			$this->load->model("quota/Quota_model");
+			$quota_user = $this->Quota_model->get_user_quota();
+			$sisa_quota = $quota_user->sisa_quota_awal;
+			if ($sisa_quota < 1) {
+				$this->session->set_flashdata("message","Quota Insufficent");
+				redirect("en_us","refresh");
+			}
+		}
+	}
+
 	public function index($id = NULL)
 	{
+		$this->cek_quota_upload();
 		$this->data["putaran"] = 10;
 
 		if (!empty($id) && isset($id)) {
@@ -78,6 +92,7 @@ class Upload extends Upload_Controller
 
 	public function zip($id = NULL)
 	{
+		$this->cek_quota_upload();
 		if (!empty($id) && isset($id)) {
 			$this->data["id"] = $id;
 		}
@@ -125,6 +140,7 @@ class Upload extends Upload_Controller
 
 	public function paste($id = NULL)
 	{
+		$this->cek_quota_upload();
 		if (!empty($id) && isset($id)) {
 			$this->data["id"] = $id;
 		}

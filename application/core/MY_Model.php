@@ -402,7 +402,8 @@ class MY_Model extends CI_Model
 			$config["file_name"] = $filename;
 			$config["max_size"] = $max_size;
 
-			$this->load->library("upload", $config);
+			// $this->load->library("upload", $config);
+			$this->upload->initialize($config);
 
 			if(!empty($_FILES[$field_upload]["name"])) {
 				if ($this->upload->do_upload($field_upload)) {
