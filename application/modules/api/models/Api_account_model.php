@@ -165,6 +165,35 @@ class Api_account_model extends MY_Model
 						}
 						break;
 
+					case "pager":
+						$pager = new stdClass();
+						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
+							$pager_components = $resp["value"]["struct"]["member"];
+							foreach ($pager_components as $pager_detail) {
+								switch ($pager_detail["name"]) {
+									case "total_entries":
+										$total_entries = $pager_detail["value"]["int"];
+										$pager->total_entries = $total_entries;
+										break;
+
+									case "current_page":
+										$current_page = $pager_detail["value"]["int"];
+										$pager->current_page = $current_page;
+										break;
+
+									case "entries_per_page":
+										$entries_per_page = $pager_detail["value"]["int"];
+										$pager->entries_per_page = $entries_per_page;
+										break;
+
+									default:
+										break;
+								}
+							}
+							$return->pager = $pager;
+						}
+						break;
+
 					case "uploaded":
 						$uploaded = new stdClass();
 						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
