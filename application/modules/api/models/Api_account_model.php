@@ -165,6 +165,124 @@ class Api_account_model extends MY_Model
 						}
 						break;
 
+					case "account":
+						$account = new stdClass();
+						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
+							foreach ($resp["value"] as $resp_account) {
+								$account_data = $resp_account["member"];
+								// $account = new stdClass();
+								foreach ($account_data as $accounts) {
+									// pre($accounts);
+									switch ($accounts["name"]) {
+										case "valid_until":
+											$valid_until = DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $accounts["value"]["dateTime.iso8601"])->format("Y-m-d H:i:s");
+											$account->valid_until = $valid_until;
+											break;
+
+										case "report_count":
+											$report_count = $accounts["value"]["int"];
+											$account->report_count = $report_count;
+											break;
+
+										case "report_limit":
+											$report_limit = $accounts["value"]["int"];
+											$account->report_limit = $report_limit;
+											break;
+
+										case "user_limit":
+											$user_limit = $accounts["value"]["int"];
+											$account->user_limit = $user_limit;
+											break;
+
+										case "user_count":
+											$user_count = $accounts["value"]["int"];
+											$account->user_count = $user_count;
+											break;
+
+										case "resubmission_limit":
+											$resubmission_limit = $accounts["value"]["int"];
+											$account->resubmission_limit = $resubmission_limit;
+											break;
+
+										case "resubmission_count":
+											$resubmission_count = $accounts["value"]["int"];
+											$account->resubmission_count = $resubmission_count;
+											break;
+
+										case "words_per_Document":
+											$words_per_Document = $accounts["value"]["int"];
+											$account->words_per_document = $words_per_Document;
+											break;
+										
+										default:
+											break;
+									}
+								}
+							}
+						}
+						$return->account = $account;
+						break;
+
+					case "messages":
+						$messages = "";
+						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
+							foreach ($resp["value"] as $resp_messages) {
+								if (isset($resp_messages["data"]["value"]) && !empty($resp_messages["data"]["value"]) && (is_object($resp_messages["data"]["value"]) || is_array($resp_messages["data"]["value"]))) {
+									if (array_key_exists("string", $resp_messages["data"]["value"])) {
+										$string = $resp_messages["data"]["value"]["string"];
+										$messages .= $string;
+									} else {
+										foreach ($resp_messages["data"]["value"] as $pesan) {
+											$string = $pesan["string"];
+											// pre($string);
+											$messages .= $string . "\n";
+										}
+									}
+								}
+							}
+							$return->messages = $messages;
+						}
+						// pre($messages);
+						break;
+
+					case "api":
+						$api;
+						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
+							foreach ($resp["value"] as $resp_api) {
+								if (isset($resp_api["member"]["value"]) && !empty($resp_api["member"]["value"]) && (is_object($resp_api["member"]["value"]) || is_array($resp_api["member"]["value"]))) {
+									foreach ($resp_api["member"]["value"] as $api_code) {
+										$api = $api_code;
+									}
+								}
+							}
+							$return->api = $api;
+						}
+						break;
+
+					case "errors":
+						$errors;
+						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
+							$errors = $resp["value"]["struct"]["member"];
+							// pre($errors);
+							switch ($errors["name"]) {
+								case "username":
+									$error_msg = $errors["value"]["array"]["data"]["value"]["string"];
+									break;
+
+								case "password":
+									$error_msg = $errors["value"]["array"]["data"]["value"]["string"];
+									break;
+								
+								default:
+									$error_msg = "";
+									break;
+							}
+							$errors = $error_msg;
+							$return->errors = $errors;
+						}
+					
+						break;
+
 					case "pager":
 						$pager = new stdClass();
 						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
@@ -242,260 +360,6 @@ class Api_account_model extends MY_Model
 							}
 						}
 						$return->uploaded = $uploaded;
-						break;
-
-					case "folders":
-						$folders = array();
-						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
-							$folder_val = $resp["value"]["array"]["data"]["value"];
-							if (array_key_exists("struct", $folder_val)) {
-								$foldere = array();
-								$folder_components = $folder_val["struct"]["member"];
-								foreach ($folder_components as $folder_component) {
-									switch ($folder_component["name"]) {
-										case "id":
-											$foldere["id"] = $folder_component["value"]["int"];
-											break;
-
-										case "name":
-											$foldere["name"] = $folder_component["value"]["string"];
-											break;
-
-										case "group":
-											$data_group_induk = $folder_component["value"]["struct"]["member"];
-											$group_indukan = array();
-											foreach ($data_group_induk as $group_induk) {
-												switch ($group_induk["name"]) {
-													case "id":
-														$group_indukan["id"] = $group_induk["value"]["int"];
-														break;
-
-													case "name":
-														$group_indukan["name"] = $group_induk["value"]["string"];
-														break;
-													
-													default:
-														break;
-												}
-											}
-											$foldere["group_induk"] = $group_indukan;
-											break;
-										
-										default:
-											break;
-									}
-								}
-								array_push($folders, $foldere);
-							} else {
-								foreach ($folder_val as $folder) {
-									$foldere = array();
-									$folder_components = $folder["struct"]["member"];
-									foreach ($folder_components as $folder_component) {
-										switch ($folder_component["name"]) {
-											case "id":
-												$foldere["id"] = $folder_component["value"]["int"];
-												break;
-
-											case "name":
-												$foldere["name"] = $folder_component["value"]["string"];
-												break;
-
-											case "group":
-												$data_group_induk = $folder_component["value"]["struct"]["member"];
-												$group_indukan = array();
-												foreach ($data_group_induk as $group_induk) {
-													switch ($group_induk["name"]) {
-														case "id":
-															$group_indukan["id"] = $group_induk["value"]["int"];
-															break;
-
-														case "name":
-															$group_indukan["name"] = $group_induk["value"]["string"];
-															break;
-														
-														default:
-															break;
-													}
-												}
-												$foldere["group_induk"] = $group_indukan;
-												break;
-											
-											default:
-												break;
-										}
-									}
-									array_push($folders, $foldere);
-								}
-							}
-						}
-						$return->folders = $folders;
-						break;
-
-					case "account":
-						$account = new stdClass();
-						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
-							foreach ($resp["value"] as $resp_account) {
-								$account_data = $resp_account["member"];
-								// $account = new stdClass();
-								foreach ($account_data as $accounts) {
-									// pre($accounts);
-									switch ($accounts["name"]) {
-										case "valid_until":
-											$valid_until = DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $accounts["value"]["dateTime.iso8601"])->format("Y-m-d H:i:s");
-											$account->valid_until = $valid_until;
-											break;
-
-										case "report_count":
-											$report_count = $accounts["value"]["int"];
-											$account->report_count = $report_count;
-											break;
-
-										case "report_limit":
-											$report_limit = $accounts["value"]["int"];
-											$account->report_limit = $report_limit;
-											break;
-
-										case "user_limit":
-											$user_limit = $accounts["value"]["int"];
-											$account->user_limit = $user_limit;
-											break;
-
-										case "user_count":
-											$user_count = $accounts["value"]["int"];
-											$account->user_count = $user_count;
-											break;
-
-										case "resubmission_limit":
-											$resubmission_limit = $accounts["value"]["int"];
-											$account->resubmission_limit = $resubmission_limit;
-											break;
-
-										case "resubmission_count":
-											$resubmission_count = $accounts["value"]["int"];
-											$account->resubmission_count = $resubmission_count;
-											break;
-
-										case "words_per_Document":
-											$words_per_Document = $accounts["value"]["int"];
-											$account->words_per_document = $words_per_Document;
-											break;
-										
-										default:
-											break;
-									}
-								}
-							}
-						}
-						$return->account = $account;
-						break;
-
-					case "groups":
-						$groups = array();
-						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
-							$group_folders = $resp["value"]["array"]["data"]["value"];
-							if (array_key_exists("struct", $group_folders)) {
-								$group_foldere = array();
-								$group_folder_components = $group_folders["struct"]["member"];
-								foreach ($group_folder_components as $group_components) {
-									switch ($group_components["name"]) {
-										case "id":
-											$group_foldere["id"] = $group_components["value"]["int"];
-											break;
-
-										case "name":
-											$group_foldere["name"] = $group_components["value"]["string"];
-											break;
-										
-										default:
-											break;
-									}
-								}
-								array_push($groups, $group_foldere);
-							} else {
-								foreach ($group_folders as $group_folder) {
-									$group_foldere = array();
-									$group_folder_components = $group_folder["struct"]["member"];
-									// pre($group_folder_components);
-									foreach ($group_folder_components as $group_components) {
-										// pre($group_components);
-										switch ($group_components["name"]) {
-											case "id":
-												$group_foldere["id"] = $group_components["value"]["int"];
-												break;
-
-											case "name":
-												$group_foldere["name"] = $group_components["value"]["string"];
-												break;
-											
-											default:
-												break;
-										}
-									}
-									array_push($groups, $group_foldere);
-								}
-							}
-						}
-						$return->groups = $groups;
-						break;
-
-					case "messages":
-						$messages = "";
-						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
-							foreach ($resp["value"] as $resp_messages) {
-								if (isset($resp_messages["data"]["value"]) && !empty($resp_messages["data"]["value"]) && (is_object($resp_messages["data"]["value"]) || is_array($resp_messages["data"]["value"]))) {
-									if (array_key_exists("string", $resp_messages["data"]["value"])) {
-										$string = $resp_messages["data"]["value"]["string"];
-										$messages .= $string;
-									} else {
-										foreach ($resp_messages["data"]["value"] as $pesan) {
-											$string = $pesan["string"];
-											// pre($string);
-											$messages .= $string . "\n";
-										}
-									}
-								}
-							}
-							$return->messages = $messages;
-						}
-						// pre($messages);
-						break;
-
-					case "api":
-						$api;
-						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
-							foreach ($resp["value"] as $resp_api) {
-								if (isset($resp_api["member"]["value"]) && !empty($resp_api["member"]["value"]) && (is_object($resp_api["member"]["value"]) || is_array($resp_api["member"]["value"]))) {
-									foreach ($resp_api["member"]["value"] as $api_code) {
-										$api = $api_code;
-									}
-								}
-							}
-							$return->api = $api;
-						}
-						break;
-
-					case "errors":
-						$errors;
-						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
-							$errors = $resp["value"]["struct"]["member"];
-							// pre($errors);
-							switch ($errors["name"]) {
-								case "username":
-									$error_msg = $errors["value"]["array"]["data"]["value"]["string"];
-									break;
-
-								case "password":
-									$error_msg = $errors["value"]["array"]["data"]["value"]["string"];
-									break;
-								
-								default:
-									$error_msg = "";
-									break;
-							}
-							$errors = $error_msg;
-							$return->errors = $errors;
-						}
-					
 						break;
 					
 					default:

@@ -7,20 +7,16 @@ defined("BASEPATH") OR exit("No direct script access allowed");
 class Ithenticate extends Api_Controller
 {
 
-	protected $url = "https://api.ithenticate.com/rpc";
-	protected $id_account;
-	protected $username;
-	protected $password;
-	protected $sid;
-	protected $check_only;
-	protected $name_group_folders;
-	protected $api_status;
-	protected $messages;
-	protected $id_folder_group;
-	protected $name_folder;
-	protected $description;
-	protected $id_subfolder_api;
-	protected $upload_param;
+	protected $url = "https://api.ithenticate.com/rpc"; /* link api ithenticate */
+	protected $id_account; /* account id api ithenticate yang aktif */
+	protected $username; /* username api ithenticate */
+	protected $password; /* password user api ithenticate */
+	protected $sid; /* key untuk menjalankan api, kecuali login */
+	protected $check_only; /* status cek login, dicek saja tanpa simpan sid atau disimpan sidnya */
+	protected $api_status; /* status response dari api ithenticate */
+	protected $messages; /* pesan response dari api ithenticate */
+
+	protected $name_group_folders; /* nama group folder yang akan di tambahkan */
 
 	function __construct()
 	{
@@ -36,12 +32,12 @@ class Ithenticate extends Api_Controller
 		// pre($this);
 	}
 
-	function test()
+	public function test()
 	{
 		$this->load->view("index");
 	}
 
-	function get_account()
+	public function get_account()
 	{
 		$postData = $this->input->post();
 		if (isset($postData) && !empty($postData)) {
@@ -64,7 +60,7 @@ class Ithenticate extends Api_Controller
 		return $data;
 	}
 
-	function check_login_api()
+	public function check_login_api()
 	{
 		$postData = $this->input->post();
 		if (isset($postData) && !empty($postData)) {
@@ -98,7 +94,7 @@ class Ithenticate extends Api_Controller
 		return $response;
 	}
 
-	function login($remethod = FALSE)
+	public function login($remethod = FALSE)
 	{
 		if ($remethod === FALSE) {
 			$xml = $this->pre_request("login");
@@ -174,24 +170,8 @@ class Ithenticate extends Api_Controller
 						return $this->account_get();
 						break;
 
-					case "list_folders":
-						return $this->list_folders();
-						break;
-
-					case "list_group_folders":
-						return $this->list_group_folders();
-						break;
-
 					case "group_folder_add":
 						return $this->group_folder_add($this->name_group_folders);
-						break;
-
-					case "folder_add":
-						return $this->folder_add($this->id_folder_group, $this->name_folder, $this->description);
-						break;
-
-					case "file_add":
-						return $this->file_add($this->id_subfolder_api, $this->upload_param);
 						break;
 
 					default:
@@ -201,7 +181,7 @@ class Ithenticate extends Api_Controller
 		}
 	}
 
-	function account_get()
+	public function account_get()
 	{
 		$xml = $this->pre_request("account_get");
 		if (!empty($xml)) {
@@ -220,6 +200,9 @@ class Ithenticate extends Api_Controller
 					if (array_key_exists("response_timestamp", $response)) {
 						$response_timestamp = $response->response_timestamp;
 					}
+					if (array_key_exists("sid", $response)) {
+						$sid = $response->sid;
+					}
 					if (isset($api_status) && !empty($api_status) && isset($status) && !empty($status)) {
 						switch ($api_status) {
 							case "200":
@@ -227,6 +210,7 @@ class Ithenticate extends Api_Controller
 									$account = $response->account;
 								}
 								// pre($account);
+								$this->sid = $sid;
 								return $account;
 								break;
 
@@ -241,9 +225,9 @@ class Ithenticate extends Api_Controller
 										break;
 									
 									default:
+										return $messages;
 										break;
 								}
-								return $messages;
 								break;
 							
 							default:
@@ -255,196 +239,20 @@ class Ithenticate extends Api_Controller
 		}
 	}
 
-	function list_folders()
+	public function group_folder_add($nama = NULL)
 	{
-		$xml = $this->pre_request("list_folders");
-		if (!empty($xml)) {
-			$data = $this->send_request($xml);
-			// pre($data);
-			if (isset($data) && !empty($data)) {
-				$response = $this->Api_account_model->ithenticate_response($data);
-				// pre($response);
-				if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
-					if (array_key_exists("status", $response)) {
-						$status = $response->status;
-					}
-					if (array_key_exists("api_status", $response)) {
-						$api_status = $response->api_status;
-					}
-					if (array_key_exists("response_timestamp", $response)) {
-						$response_timestamp = $response->response_timestamp;
-					}
-					if (isset($api_status) && !empty($api_status) && isset($status) && !empty($status)) {
-						switch ($api_status) {
-							case "200":
-								if (array_key_exists("folders", $response)) {
-									$folders = $response->folders;
-								}
-								return $folders;
-								break;
-
-							case "401":
-								if (array_key_exists("messages", $response)) {
-									$messages = $response->messages;
-								}
-								switch ($messages) {
-									case "Failed to provide authenticated sid":
-										// pre($messages);
-										return $this->login("list_group_folders");
-										break;
-									
-									default:
-										break;
-								}
-								return $messages;
-								break;
-							
-							default:
-								break;
-						}
-					}
-				}
-			}
-		}
-	}
-
-	function list_group_folders()
-	{
-		$xml = $this->pre_request("list_group_folders");
-		if (!empty($xml)) {
-			$data = $this->send_request($xml);
-			// pre($data);
-			if (isset($data) && !empty($data)) {
-				$response = $this->Api_account_model->ithenticate_response($data);
-				// pre($response);
-				if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
-					if (array_key_exists("status", $response)) {
-						$status = $response->status;
-					}
-					if (array_key_exists("api_status", $response)) {
-						$api_status = $response->api_status;
-					}
-					if (array_key_exists("response_timestamp", $response)) {
-						$response_timestamp = $response->response_timestamp;
-					}
-					if (isset($api_status) && !empty($api_status) && isset($status) && !empty($status)) {
-						switch ($api_status) {
-							case "200":
-								if (array_key_exists("groups", $response)) {
-									$groups = $response->groups;
-								}
-								// pre($groups);
-								return $groups;
-								break;
-
-							case "401":
-								if (array_key_exists("messages", $response)) {
-									$messages = $response->messages;
-								}
-								switch ($messages) {
-									case "Failed to provide authenticated sid":
-										// pre($messages);
-										return $this->login("list_group_folders");
-										break;
-									
-									default:
-										break;
-								}
-								return $messages;
-								break;
-							
-							default:
-								break;
-						}
-					}
-				}
-			}
-		}
-	}
-
-	function group_folder_add($name)
-	{
-		if (isset($name) && !empty($name)) {
-			$this->name_group_folders = $name;
-			$params = array("name"=>$name);
-			$xml = $this->pre_request("group_folder_add",$params);
-			if (!empty($xml)) {
-				$data = $this->send_request($xml);
-				if (isset($data) && !empty($data)) {
-					$response = $this->Api_account_model->ithenticate_response($data);
-					if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
-						if (array_key_exists("status", $response)) {
-							$status = $response->status;
-						}
-						if (array_key_exists("api_status", $response)) {
-							$api_status = $response->api_status;
-						}
-						if (array_key_exists("response_timestamp", $response)) {
-							$response_timestamp = $response->response_timestamp;
-						}
-						if (isset($api_status) && !empty($api_status) && isset($status) && !empty($status)) {
-							switch ($api_status) {
-								case "200":
-									if (array_key_exists("id", $response)) {
-										$id = $response->id;
-									}
-									// pre($id);
-									if (array_key_exists("messages", $response)) {
-										$messages = $response->messages;
-									}
-									$this->messages = $messages;
-									$this->api_status = $api_status;
-									return $id;
-									break;
-
-								case "401":
-									if (array_key_exists("messages", $response)) {
-										$messages = $response->messages;
-									}
-									switch ($messages) {
-										case "Failed to provide authenticated sid":
-											// pre($messages);
-											return $this->login("group_folder_add");
-											break;
-										
-										default:
-											break;
-									}
-									$this->api_status = $api_status;
-									return $messages;
-									break;
-								
-								default:
-									break;
-							}
-						}
-					}
-				}
-			}
-		} else {
-			return false;
-		}
-	}
-
-	function folder_add($id_folder_group, $name, $description = NULL, $exclude_quotes = TRUE)
-	{
-		if (isset($id_folder_group) && !empty($id_folder_group) && isset($name) && !empty($name)) {
-			$description = isset($description) ? $description : "";
-			$this->id_folder_group = $id_folder_group;
-			$this->name_folder = $name;
-			$this->description = $description;
+		$nama = isset($nama) ? $nama : $this->name_group_folders;
+		if (!empty($nama)) {
 			$params = array(
-				"id_folder_group" => $id_folder_group,
-				"name" => $name,
-				"description" => $description,
-				"exclude_quotes" => $exclude_quotes,
+				"name" => $nama,
 			);
-			$xml = $this->pre_request("folder_add",$params);
+			$xml = $this->pre_request("group_folder_add",$params);
 			if (!empty($xml)) {
 				$data = $this->send_request($xml);
 				// pre($data);
 				if (isset($data) && !empty($data)) {
 					$response = $this->Api_account_model->ithenticate_response($data);
+					// pre($response);
 					if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
 						if (array_key_exists("status", $response)) {
 							$status = $response->status;
@@ -455,18 +263,19 @@ class Ithenticate extends Api_Controller
 						if (array_key_exists("response_timestamp", $response)) {
 							$response_timestamp = $response->response_timestamp;
 						}
+						if (array_key_exists("sid", $response)) {
+							$sid = $response->sid;
+						}
 						if (isset($api_status) && !empty($api_status) && isset($status) && !empty($status)) {
 							switch ($api_status) {
 								case "200":
-									if (array_key_exists("id", $response)) {
-										$id = $response->id;
-									}
-									// pre($id);
 									if (array_key_exists("messages", $response)) {
 										$messages = $response->messages;
 									}
-									$this->messages = $messages;
-									$this->api_status = $api_status;
+									if (array_key_exists("id", $response)) {
+										$id = $response->id;
+									}
+									$this->sid = $sid;
 									return $id;
 									break;
 
@@ -477,96 +286,13 @@ class Ithenticate extends Api_Controller
 									switch ($messages) {
 										case "Failed to provide authenticated sid":
 											// pre($messages);
-											return $this->login("folder_add");
+											return $this->login("list_group_folders");
 											break;
 										
 										default:
+											return $messages;
 											break;
 									}
-									$this->api_status = $api_status;
-									return $messages;
-									break;
-								
-								default:
-									break;
-							}
-						}
-					}
-				}
-			}
-		} else {
-			return false;
-		}
-	}
-
-	function file_add($id_subfolder_api,$upload_param)
-	{
-		if (isset($id_subfolder_api) && !empty($id_subfolder_api) && isset($upload_param) && !empty($upload_param)) {
-			$submit_to = 1;
-			$this->id_subfolder_api = $id_subfolder_api;
-			$this->upload_param = $upload_param;
-			$params = array(
-				"id_subfolder_api" => $id_subfolder_api,
-				"submit_to" => $submit_to,
-				"title" => $upload_param["title"],
-				"first_name" => $upload_param["first_name"],
-				"last_name" => $upload_param["last_name"],
-				"filename" => $upload_param["filename"],
-				"upload" => $upload_param["path_file"],
-			);
-			$xml = $this->pre_request("file_add",$params);
-			if (!empty($xml)) {
-				$data = $this->send_request($xml);
-				pre($data);
-				if (isset($data) && !empty($data)) {
-					$response = $this->Api_account_model->ithenticate_response($data);
-					if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
-						pre($response);
-						if (array_key_exists("status", $response)) {
-							$status = $response->status;
-						}
-						if (array_key_exists("api_status", $response)) {
-							$api_status = $response->api_status;
-						}
-						if (array_key_exists("response_timestamp", $response)) {
-							$response_timestamp = $response->response_timestamp;
-						}
-						if (isset($api_status) && !empty($api_status) && isset($status) && !empty($status)) {
-							switch ($api_status) {
-								case "200":
-									if (array_key_exists("uploaded", $response)) {
-										$uploaded = $response->uploaded;
-										if (array_key_exists("id", $uploaded)) {
-											$id_upload = $uploaded->id;
-										} else {
-											$id_upload = 0;
-										}
-									} else {
-										$id_upload = 0;
-									}
-									if (array_key_exists("messages", $response)) {
-										$messages = $response->messages;
-									}
-									$this->messages = $messages;
-									$this->api_status = $api_status;
-									return $id_upload;
-									break;
-
-								case "401":
-									if (array_key_exists("messages", $response)) {
-										$messages = $response->messages;
-									}
-									switch ($messages) {
-										case "Failed to provide authenticated sid":
-											// pre($messages);
-											return $this->login("folder_add");
-											break;
-										
-										default:
-											break;
-									}
-									$this->api_status = $api_status;
-									return $messages;
 									break;
 								
 								default:
@@ -578,28 +304,6 @@ class Ithenticate extends Api_Controller
 			}
 		}
 		return false;
-	}
-
-	function get_folder($id_folder)
-	{
-		if (isset($id_folder) && !empty($id_folder)) {
-			$params = array(
-				"id" => $id_folder,
-			);
-			$xml = $this->pre_request("get_folder",$params);
-			if (!empty($xml)) {
-				$data = $this->send_request($xml);
-				// pre($data);
-				if (isset($data) && !empty($data)) {
-					$response = $this->Api_account_model->ithenticate_response($data);
-					if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
-						pre($response);
-					}
-				}
-			}
-		} else {
-			return false;
-		}
 	}
 
 	private function pre_request($method,$params=[])
