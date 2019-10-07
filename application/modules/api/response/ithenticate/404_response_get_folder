@@ -1,0 +1,108 @@
+Array
+(
+	[0] => Array
+		(
+			[name] => response_timestamp
+			[value] => Array
+				(
+					[dateTime.iso8601] => 2019-10-07T14:36:34Z
+				)
+
+		)
+
+	[1] => Array
+		(
+			[name] => api_status
+			[value] => Array
+				(
+					[int] => 404
+				)
+
+		)
+
+	[2] => Array
+		(
+			[name] => status
+			[value] => Array
+				(
+					[int] => 404
+				)
+
+		)
+
+	[3] => Array
+		(
+			[name] => sid
+			[value] => Array
+				(
+					[string] => 0b15d5693ceb9e4133487db84aebea4b4e6494cf
+				)
+
+		)
+
+	[4] => Array
+		(
+			[name] => errors
+			[value] => Array
+				(
+					[struct] => Array
+						(
+							[member] => Array
+								(
+									[name] => id
+									[value] => Array
+										(
+											[array] => Array
+												(
+													[data] => Array
+														(
+															[value] => Array
+																(
+																	[string] => Requested id '1264712' not found.
+																)
+
+														)
+
+												)
+
+										)
+
+								)
+
+						)
+
+				)
+
+		)
+
+	[5] => Array
+		(
+			[name] => folder
+			[value] => Array
+				(
+					[struct] => Array
+						(
+						)
+
+				)
+
+		)
+
+	[6] => Array
+		(
+			[name] => documents
+			[value] => Array
+				(
+					[array] => Array
+						(
+							[data] => Array
+								(
+								)
+
+						)
+
+				)
+
+		)
+
+)

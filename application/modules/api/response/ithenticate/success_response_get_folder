@@ -1,0 +1,3116 @@
+Array
+(
+	[0] => Array
+		(
+			[name] => status
+			[value] => Array
+				(
+					[int] => 200
+				)
+
+		)
+
+	[1] => Array
+		(
+			[name] => response_timestamp
+			[value] => Array
+				(
+					[dateTime.iso8601] => 2019-10-07T14:35:57Z
+				)
+
+		)
+
+	[2] => Array
+		(
+			[name] => sid
+			[value] => Array
+				(
+					[string] => 0b15d5693ceb9e4133487db84aebea4b4e6494cf
+				)
+
+		)
+
+	[3] => Array
+		(
+			[name] => api_status
+			[value] => Array
+				(
+					[int] => 200
+				)
+
+		)
+
+	[4] => Array
+		(
+			[name] => folder
+			[value] => Array
+				(
+					[struct] => Array
+						(
+							[member] => Array
+								(
+									[0] => Array
+										(
+											[name] => collection_detail
+											[value] => Array
+												(
+													[array] => Array
+														(
+															[data] => Array
+																(
+																	[value] => Array
+																		(
+																			[0] => Array
+																				(
+																					[struct] => Array
+																						(
+																							[member] => Array
+																								(
+																									[0] => Array
+																										(
+																											[name] => name
+																											[value] => Array
+																												(
+																													[string] => Crossref
+																												)
+
+																										)
+
+																									[1] => Array
+																										(
+																											[name] => id
+																											[value] => Array
+																												(
+																													[int] => 4
+																												)
+
+																										)
+
+																								)
+
+																						)
+
+																				)
+
+																			[1] => Array
+																				(
+																					[struct] => Array
+																						(
+																							[member] => Array
+																								(
+																									[0] => Array
+																										(
+																											[name] => id
+																											[value] => Array
+																												(
+																													[int] => 780
+																												)
+
+																										)
+
+																									[1] => Array
+																										(
+																											[name] => name
+																											[value] => Array
+																												(
+																													[string] => Crossref Posted Content
+																												)
+
+																										)
+
+																								)
+
+																						)
+
+																				)
+
+																			[2] => Array
+																				(
+																					[struct] => Array
+																						(
+																							[member] => Array
+																								(
+																									[0] => Array
+																										(
+																											[name] => id
+																											[value] => Array
+																												(
+																													[int] => 1
+																												)
+
+																										)
+
+																									[1] => Array
+																										(
+																											[name] => name
+																											[value] => Array
+																												(
+																													[string] => Internet
+																												)
+
+																										)
+
+																								)
+
+																						)
+
+																				)
+
+																			[3] => Array
+																				(
+																					[struct] => Array
+																						(
+																							[member] => Array
+																								(
+																									[0] => Array
+																										(
+																											[name] => name
+																											[value] => Array
+																												(
+																													[string] => ProQuest
+																												)
+
+																										)
+
+																									[1] => Array
+																										(
+																											[name] => id
+																											[value] => Array
+																												(
+																													[int] => 179
+																												)
+
+																										)
+
+																								)
+
+																						)
+
+																				)
+
+																			[4] => Array
+																				(
+																					[struct] => Array
+																						(
+																							[member] => Array
+																								(
+																									[0] => Array
+																										(
+																											[name] => id
+																											[value] => Array
+																												(
+																													[int] => 2
+																												)
+
+																										)
+
+																									[1] => Array
+																										(
+																											[name] => name
+																											[value] => Array
+																												(
+																													[string] => Publications
+																												)
+
+																										)
+
+																								)
+
+																						)
+
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+										)
+
+									[1] => Array
+										(
+											[name] => limit_match_size
+											[value] => Array
+												(
+													[int] => 0
+												)
+
+										)
+
+									[2] => Array
+										(
+											[name] => exclude_percent
+											[value] => Array
+												(
+													[int] => 0
+												)
+
+										)
+
+									[3] => Array
+										(
+											[name] => setup_time
+											[value] => Array
+												(
+													[dateTime.iso8601] => 2019-07-14T22:48:35Z
+												)
+
+										)
+
+									[4] => Array
+										(
+											[name] => exclude_quotes
+											[value] => Array
+												(
+													[int] => 0
+												)
+
+										)
+
+									[5] => Array
+										(
+											[name] => group
+											[value] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 1264712
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => name
+																			[value] => Array
+																				(
+																					[string] => My Folders
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+										)
+
+									[6] => Array
+										(
+											[name] => exclude_word_count
+											[value] => Array
+												(
+													[int] => 0
+												)
+
+										)
+
+									[7] => Array
+										(
+											[name] => description
+											[value] => Array
+												(
+													[string] => Array
+														(
+														)
+
+												)
+
+										)
+
+									[8] => Array
+										(
+											[name] => id
+											[value] => Array
+												(
+													[int] => 1588047
+												)
+
+										)
+
+									[9] => Array
+										(
+											[name] => collections
+											[value] => Array
+												(
+													[array] => Array
+														(
+															[data] => Array
+																(
+																	[value] => Array
+																		(
+																			[0] => Array
+																				(
+																					[int] => 4
+																				)
+
+																			[1] => Array
+																				(
+																					[int] => 780
+																				)
+
+																			[2] => Array
+																				(
+																					[int] => 1
+																				)
+
+																			[3] => Array
+																				(
+																					[int] => 179
+																				)
+
+																			[4] => Array
+																				(
+																					[int] => 2
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+										)
+
+									[10] => Array
+										(
+											[name] => folder_group
+											[value] => Array
+												(
+													[int] => 1264712
+												)
+
+										)
+
+									[11] => Array
+										(
+											[name] => exclude_abstracts
+											[value] => Array
+												(
+													[int] => 0
+												)
+
+										)
+
+									[12] => Array
+										(
+											[name] => exclude_small_matches
+											[value] => Array
+												(
+													[int] => 0
+												)
+
+										)
+
+									[13] => Array
+										(
+											[name] => name
+											[value] => Array
+												(
+													[string] => My Documents
+												)
+
+										)
+
+									[14] => Array
+										(
+											[name] => exclude_by_percent
+											[value] => Array
+												(
+													[int] => 0
+												)
+
+										)
+
+									[15] => Array
+										(
+											[name] => exclude_biblio
+											[value] => Array
+												(
+													[int] => 0
+												)
+
+										)
+
+									[16] => Array
+										(
+											[name] => minimum_match_word_count
+											[value] => Array
+												(
+													[int] => 0
+												)
+
+										)
+
+									[17] => Array
+										(
+											[name] => exclude_methods
+											[value] => Array
+												(
+													[int] => 0
+												)
+
+										)
+
+								)
+
+						)
+
+				)
+
+		)
+
+	[5] => Array
+		(
+			[name] => pager
+			[value] => Array
+				(
+					[struct] => Array
+						(
+							[member] => Array
+								(
+									[0] => Array
+										(
+											[name] => total_entries
+											[value] => Array
+												(
+													[int] => 464
+												)
+
+										)
+
+									[1] => Array
+										(
+											[name] => entries_per_page
+											[value] => Array
+												(
+													[int] => 25
+												)
+
+										)
+
+									[2] => Array
+										(
+											[name] => current_page
+											[value] => Array
+												(
+													[int] => 1
+												)
+
+										)
+
+								)
+
+						)
+
+				)
+
+		)
+
+	[6] => Array
+		(
+			[name] => documents
+			[value] => Array
+				(
+					[array] => Array
+						(
+							[data] => Array
+								(
+									[value] => Array
+										(
+											[0] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Sahyudi
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 14
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/pdf
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50971018
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T14:12:05Z
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T14:10:57Z
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Muhamad
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => Pengembangan Sistem Inventory dan Peminjaman Alat Ukur di PT XYZ
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[1] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 27
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/pdf
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Pais
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50970793
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Muhammad
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T14:02:44Z
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => Pemetaan Persebaran Magang Mahasiswa Jurusan Manajemen Bisnis Politeknik Negeri Batam
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T14:09:52Z
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[2] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Pais
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/pdf
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 28
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50969510
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T13:22:41Z
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => Pemetaan Persebaran Magang Mahasiswa Jurusan Manajemen Bisnis Politeknik Negeri Batam
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Muhammad
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T13:20:41Z
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[3] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => Pemetaan Persebaran Magang Mahasiswa Jurusan Manajemen Bisnis Politeknik Negeri Batam
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T12:35:31Z
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Muhammad
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T12:37:24Z
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50968049
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/pdf
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 29
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Pais
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[4] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 34
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/vnd.openxmlformats-officedocument.wordprocessingml.document
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => MULYANA
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T11:31:03Z
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => MULYANA
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => DAMPAK INVESTASI ASET TIDAK BERWUJUD PADA KINERJA PERUSAHAAN
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T11:32:06Z
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50966354
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[5] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T11:28:18Z
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => PENGARUH PRAKTIK SUMBER DAYA MANUSIA DALAM PENERAPAN INDUSTRI 4.0 TERHADAP KINERJA KARYAWAN
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T11:26:30Z
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => FAMELA
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50966247
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => NANDITA
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/vnd.openxmlformats-officedocument.wordprocessingml.document
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 40
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[6] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Array
+																						(
+																						)
+
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/vnd.openxmlformats-officedocument.wordprocessingml.document
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 34
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50966215
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T11:26:14Z
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => DAMPAK INVESTASI ASET TIDAK BERWUJUD PADA KINERJA PERUSAHAAN
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T11:25:16Z
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => mulyana
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[7] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Array
+																						(
+																						)
+
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 34
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/vnd.openxmlformats-officedocument.wordprocessingml.document
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T11:25:32Z
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T11:24:23Z
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => MULYANA
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => DAMPAK INVESTASI ASET TIDAK BERWUJUD PADA KINERJA PERUSAHAAN
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50966191
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[8] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => IDENTIFIKASI SUHU PERMUKAAN LAHAN DI PULAU BATAM
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T10:18:47Z
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Sthephen
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T10:20:00Z
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50964404
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/vnd.openxmlformats-officedocument.wordprocessingml.document
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 37
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Array
+																						(
+																						)
+
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[9] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T10:18:17Z
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => IDENTIFIKASI SUHU PERMUKAAN LAHAN DI PULAU BATAM
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Sthephen
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T10:17:47Z
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50964386
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Array
+																						(
+																						)
+
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/vnd.openxmlformats-officedocument.wordprocessingml.document
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 34
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[10] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/vnd.openxmlformats-officedocument.wordprocessingml.document
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 37
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Array
+																						(
+																						)
+
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50964356
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => IDENTIFIKASI SUHU PERMUKAAN LAHAN DI PULAU BATAM
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T10:16:06Z
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Sthephen
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T10:17:27Z
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[11] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T10:16:20Z
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => Lap_4311501050.pdf
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => lailatul
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T10:12:59Z
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50964264
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Array
+																						(
+																						)
+
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/pdf
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 36
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[12] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 35
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/pdf
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Array
+																						(
+																						)
+
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50964266
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => lailatul
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T10:13:00Z
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => Pub_4311501050.pdf
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T10:13:59Z
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[13] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T09:26:05Z
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => IMPLEMENTASI PENERAPAN MDA PADA GAME ENDLESS RUNNER 2D CAVE RACER BERBASIS ANDROID
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T09:24:56Z
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Muhammad
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50963035
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Fahrullazi
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/msword
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 21
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[14] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Putubrojo
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 25
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/pdf
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50962799
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T09:19:13Z
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Selo Aji
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T09:17:47Z
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => PERANCANGAN SISTEM INFORMASI INTERNAL MADING DIGITAL BERBASIS WEBSITE DI PT.SCHNEIDER ELECTRIC MANUFACTURING BATAM
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[15] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/pdf
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 21
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Syahputri
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => PENERAPAN TEKNOLOGI AUGMENTED REALITY SEBAGAI SARANA MEDIA PROMOSI PRODUK PT. SCHNEIDER ELECTRIC MANUFACTURING BATAM  BERBASIS ANDROID
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Fajar Aldriani
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T09:16:29Z
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T09:18:20Z
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50962767
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[16] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T07:47:47Z
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Dina
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T07:46:48Z
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => Dina
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50960260
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Dina
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 38
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/msword
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[17] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Eli
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 38
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/msword
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50960229
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T07:46:47Z
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Dina
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T07:45:39Z
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => Dina
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[18] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Elsaona
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T07:08:31Z
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => IMPLEMENTASI TEKNIK FOLEY PADA FILM PENDEK ANIMASI 2D STOP KEKERASAN PADA ANAK
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T07:09:39Z
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50959292
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 28
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/pdf
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => AZ
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[19] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Maulida
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 10
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/pdf
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50958191
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T06:21:31Z
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Rahmi
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T06:20:42Z
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => DAILY REJECT EXECUTION SYSTEM (DRES)
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[20] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => az
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/pdf
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 31
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T05:25:27Z
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => IMPLEMENTASI TEKNIK FOLEY PADA FILM PENDEK ANIMASI 2D STOP KEKERASAN PADA ANAK
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T05:24:16Z
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Elsaona
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50956971
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[21] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Fahrullazi
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/msword
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 22
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T04:46:54Z
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => IMPLEMENTASI PENERAPAN MDA PADA GAME ENDLESS RUNNER 2D CAVE RACER BERBASIS ANDROID
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Muhammad
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T04:45:49Z
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50956361
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[22] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 56
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/vnd.openxmlformats-officedocument.wordprocessingml.document
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => maulana
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => nafsiah
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T04:37:47Z
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => RELATIONSHIP MARKETING
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T04:39:08Z
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50956263
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[23] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50956221
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => kepuasan kerja
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T04:35:23Z
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => maulana
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T04:37:48Z
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/vnd.openxmlformats-officedocument.wordprocessingml.document
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 48
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => nafsiah
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[24] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => percent_match
+																			[value] => Array
+																				(
+																					[int] => 19
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => mime_type
+																			[value] => Array
+																				(
+																					[string] => application/vnd.openxmlformats-officedocument.wordprocessingml.document
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => is_pending
+																			[value] => Array
+																				(
+																					[int] => 1
+																				)
+
+																		)
+
+																	[3] => Array
+																		(
+																			[name] => author_last
+																			[value] => Array
+																				(
+																					[string] => Mufrieda
+																				)
+
+																		)
+
+																	[4] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 50955932
+																				)
+
+																		)
+
+																	[5] => Array
+																		(
+																			[name] => author_first
+																			[value] => Array
+																				(
+																					[string] => Fauriza Zakki
+																				)
+
+																		)
+
+																	[6] => Array
+																		(
+																			[name] => uploaded_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T04:17:27Z
+																				)
+
+																		)
+
+																	[7] => Array
+																		(
+																			[name] => title
+																			[value] => Array
+																				(
+																					[string] => Sistem Customer Relationship Management di PT. Indonesia Villajaya
+																				)
+
+																		)
+
+																	[8] => Array
+																		(
+																			[name] => processed_time
+																			[value] => Array
+																				(
+																					[dateTime.iso8601] => 2019-10-07T04:18:39Z
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+										)
+
+								)
+
+						)
+
+				)
+
+		)
+
+)

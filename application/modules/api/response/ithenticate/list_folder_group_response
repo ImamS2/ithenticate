@@ -1,0 +1,39 @@
+<struct>
+	<member>
+		<name>sid</name>
+		<value><string>52d868fce4a8f16db1c69a5918cc1affc4b61b19</string></value>     </member>
+	<member>
+		<name>api_status</name>
+		<value><int>200</int></value></member>
+	<member>
+		<name>groups</name>
+		<value>
+		<array>
+			<data>
+			<value>
+				<struct>
+					<member>
+						<name>name</name>
+						<value><string>13073_test_group_947</string></value>                     </member>
+					<member>
+						<name>id</name>
+						<value><int>120</int></value>
+					</member>
+				</struct>
+			</value>
+			<value>
+				<struct>
+					<member>
+						<name>name</name>
+						<value><string>2531_test_group_633</string></value>                     </member>
+					<member>
+						<name>id</name>
+						<value><int>116</int></value>
+					</member>
+				</struct>
+			</value>
+			</data>
+		</array>
+		</value>
+	</member>
+</struct>

@@ -1,0 +1,92 @@
+Array
+(
+	[0] => Array
+		(
+			[name] => status
+			[value] => Array
+				(
+					[int] => 200
+				)
+
+		)
+
+	[1] => Array
+		(
+			[name] => sid
+			[value] => Array
+				(
+					[string] => c466a02a775fc61bd912c13b09b6135744ae554a
+				)
+
+		)
+
+	[2] => Array
+		(
+			[name] => response_timestamp
+			[value] => Array
+				(
+					[dateTime.iso8601] => 2019-08-13T14:13:52Z
+				)
+
+		)
+
+	[3] => Array
+		(
+			[name] => groups
+			[value] => Array
+				(
+					[array] => Array
+						(
+							[data] => Array
+								(
+									[value] => Array
+										(
+											[struct] => Array
+												(
+													[member] => Array
+														(
+															[0] => Array
+																(
+																	[name] => name
+																	[value] => Array
+																		(
+																			[string] => My Folders
+																		)
+
+																)
+
+															[1] => Array
+																(
+																	[name] => id
+																	[value] => Array
+																		(
+																			[int] => 1264712
+																		)
+
+																)
+
+														)
+
+												)
+
+										)
+
+								)
+
+						)
+
+				)
+
+		)
+
+	[4] => Array
+		(
+			[name] => api_status
+			[value] => Array
+				(
+					[int] => 200
+				)
+
+		)
+
+)
