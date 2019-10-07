@@ -6,11 +6,10 @@
 	let username;
 	let password;
 	let id_group_folder_api;
-	let name_group_folder_api;
 	let ajax_req;
 	let get_acc;
 	let cek_login;
-	let cek_group_folder;
+	let cek_group;
 
 	$(document).ready(function(){
 		let checked_value = $("input[name=use_api]:checked").val();
@@ -72,6 +71,13 @@
 		let id_folder_group = $(this).data("id_group_folder");
 		if (sid !== undefined) {
 			alert(sid);
+			cek_group = group_checking(acc_id);
+			cek_group.done(function(cek_group_resp){
+				console.log(cek_group_resp);
+			}).fail(function(cek_group_fail){
+				alert(cek_group_fail);
+				return false;
+			});
 			return true;
 		} else {
 			alert("You must check api first");
@@ -96,6 +102,16 @@
 			password: password,
 		};
 		url_request = baseURL + "api/ithenticate/check_login_api";
+		type = "POST";
+		return ajax_request(type,url_request,data,dataType);
+	}
+
+	function group_checking(acc_id) {
+		dataType = "json";
+		data = {
+			acc_id: acc_id,
+		};
+		url_request = baseURL + "api/ithenticate/check_group_folders_api";
 		type = "POST";
 		return ajax_request(type,url_request,data,dataType);
 	}

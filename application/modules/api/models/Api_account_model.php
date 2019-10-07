@@ -272,6 +272,10 @@ class Api_account_model extends MY_Model
 								case "password":
 									$error_msg = $errors["value"]["array"]["data"]["value"]["string"];
 									break;
+
+								case "id":
+									$error_msg = $errors["value"]["array"]["data"]["value"]["string"];
+									break;
 								
 								default:
 									$error_msg = "";
