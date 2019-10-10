@@ -1,0 +1,20 @@
+<struct>
+	<member>
+		<name>sid</name>
+		<value><string>7f5257b23706f66a3484df1078daaddf78f3a435</string></value>
+	</member>
+	<member>
+		<name>messages</name>
+		<value><array><data>
+			<value><string>Folder Group Created</string></value>
+		</data></array></value>
+	</member>
+	<member>
+		<name>api_status</name>
+		<value><int>200</int></value>
+	</member>
+	<member>
+		<name>id</name>
+		<value><int>119</int></value>
+	</member>
+</struct>

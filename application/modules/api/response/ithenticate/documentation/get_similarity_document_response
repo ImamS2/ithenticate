@@ -1,0 +1,30 @@
+<struct>
+    <member>
+        <name>sid</name>
+        <value><string>432d8b581da65ae89f9683803e750884d022c568</string></value>
+    </member>
+    <member>
+        <name>status</name>
+        <value><int>200</int></value>
+    </member>
+    <member>
+        <name>view_only_expires</name>
+        <value><dateTime.iso8601>2008-06-27T20:54:24Z</dateTime.iso8601></value>
+    </member
+    <member>
+        <name>response_timestamp_</name>
+        <value><dateTime.iso8601>2008-06-27T20:34:24Z</dateTime.iso8601></value>
+    </member>
+    <member>
+        <name>report_url</name>
+        <value><string>http://api.ithenticate.com/report/1233814/similarity</string></value>
+    </member>
+    <member>
+        <name>api_status</name>
+        <value><int>200</int></value>
+    </member>
+    <member>
+        <name>view_only_url</name>
+        <value><string>https://api.ithenticate.com/view_report/6DE5D6A2-4488-11DD</string></value>
+    <member>
+</struct>

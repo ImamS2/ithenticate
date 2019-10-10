@@ -1,0 +1,10 @@
+<struct>
+	<member>
+		<name>sid</name>
+		<value><string>ce22ce7de1963cc838c29869eec81a46fec4d847</string></value>
+	</member>
+	<member>
+		<name>api_status</name>
+		<value><int>200</int></value>
+	</member>
+</struct>

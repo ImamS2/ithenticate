@@ -1,0 +1,47 @@
+<struct>
+    <member>
+        <name>sid</name>
+        <value><string>5d58f1491c3355c6dfbdeccd76429a6c3a94cdc1</string></value>
+    </member>
+    <member>
+        <name>messages</name>
+        <value><array><data>
+            <value><string>Uploaded 1 document successfully</string></value>
+        </data></array></value>
+    </member>
+    <member>
+        <name>uploaded</name>
+        <value><array><data>
+            <value><struct>
+                <member>
+                    <name>filename</name>
+                    <value><string>/tmp/0dxBM2vB3i.txt</string></value>
+                </member>
+                <member>
+                    <name>id</name>
+                    <value><int>2161</int></value>
+                </member>
+                <member>
+                    <name>folder</name>
+                    <value><struct>
+                        <member>
+                            <name>name</name>
+                            <value><string>7497_testfolder_199</string></value>
+                        </member>
+                        <member>
+                            <name>id</name>
+                            <value><int>265</int></value>
+                        </member>
+                    </struct></value></member>
+                <member>
+                    <name>mime_type</name>
+                    <value><string>text/plain</string></value>
+                </member>
+            </struct></value>
+        </data></array></value>
+    </member>
+    <member>
+        <name>api_status</name>
+        <value><int>200</int></value>
+    </member>
+</struct>
