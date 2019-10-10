@@ -23,7 +23,7 @@ class Ithenticate extends Api_Controller
 	{
 		parent::__construct();
 		$this->load->model("Api_account_model");
-		$api_active = $this->Api_account_model->where(array("active"=>1))->get()->row();
+		$api_active = $this->Api_account_model->where(array("active"=>1))->get()->row(); /* mencari 1 akun api yang aktif, kalau gak ada, duarr bebek */
 		if (!empty($api_active) && (is_object($api_active) || is_array($api_active))) {
 			$this->id_account = $api_active->id;
 			$this->username = $api_active->api_username;
