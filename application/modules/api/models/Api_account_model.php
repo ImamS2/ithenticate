@@ -342,7 +342,21 @@ class Api_account_model extends MY_Model
 						}
 						$return->groups = $groups;
 						break;
-					
+
+					case "folders": /* untuk list folder, alias folder jamak, namanya juga folders pake "S" */
+						$folder_lists = new stdClass(); /* biar gak ketuker ama yang single, ane kasih nama folder lists */
+						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
+						}
+						$return->folder_lists = $folder_lists;
+						break;
+
+					case "folder": /* untuk satu folder, alias single folder, kan gak pake "S" */
+						$folder = new stdClass();
+						if (isset($resp["value"]) && !empty($resp["value"]) && (is_array($resp["value"]) || is_object($resp["value"]))) {
+						}
+						$return->folder = $folder;
+						break;
+
 					default:
 						$response_timestamp;
 						$status;

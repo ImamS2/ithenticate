@@ -388,7 +388,6 @@ class Ithenticate extends Api_Controller
 											break;
 
 										default:
-											# code...
 											break;
 									}
 									break;
