@@ -1,0 +1,128 @@
+Array
+(
+	[0] => Array
+		(
+			[name] => api_status
+			[value] => Array
+				(
+					[int] => 200
+				)
+
+		)
+
+	[1] => Array
+		(
+			[name] => response_timestamp
+			[value] => Array
+				(
+					[dateTime.iso8601] => 2019-10-11T08:16:43Z
+				)
+
+		)
+
+	[2] => Array
+		(
+			[name] => status
+			[value] => Array
+				(
+					[int] => 200
+				)
+
+		)
+
+	[3] => Array
+		(
+			[name] => sid
+			[value] => Array
+				(
+					[string] => a8d8585a07df7689ecef6b57df6da61c2af0af16
+				)
+
+		)
+
+	[4] => Array
+		(
+			[name] => groups
+			[value] => Array
+				(
+					[array] => Array
+						(
+							[data] => Array
+								(
+									[value] => Array
+										(
+											[0] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 1299328
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => name
+																			[value] => Array
+																				(
+																					[string] => denise.svane
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[1] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 1264712
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => name
+																			[value] => Array
+																				(
+																					[string] => My Folders
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+										)
+
+								)
+
+						)
+
+				)
+
+		)
+
+)

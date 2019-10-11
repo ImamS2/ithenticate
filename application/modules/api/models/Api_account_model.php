@@ -316,7 +316,31 @@ class Api_account_model extends MY_Model
 						}
 						break;
 
-					case "folder":
+					case "groups":
+						$groups = new stdClass();
+						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
+							$groups_comps = $resp["value"]["array"]["data"]["value"];
+							foreach ($groups_comps as $urut_folder => $groups_comp) {
+								$group_folder_comps = $groups_comp["struct"]["member"];
+								$group_folders = new stdClass();
+								foreach ($group_folder_comps as $group_folder_comp) {
+									switch ($group_folder_comp["name"]) {
+										case "name":
+											$group_folders->name = $group_folder_comp["value"]["string"];
+											break;
+
+										case "id":
+											$group_folders->id = $group_folder_comp["value"]["int"];
+											break;
+										
+										default:
+											break;
+									}
+								}
+								$groups->$urut_folder = $group_folders;
+							}
+						}
+						$return->groups = $groups;
 						break;
 					
 					default:

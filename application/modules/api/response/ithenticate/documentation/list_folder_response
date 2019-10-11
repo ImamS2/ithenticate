@@ -1,55 +1,83 @@
 <struct>
 	<member>
 		<name>sid</name>
-		<value><string>f6ebaf325cfec9f69b5a68f3a77d9d0b57b29b96</string></value>
+		<value>
+			<string>f6ebaf325cfec9f69b5a68f3a77d9d0b57b29b96</string>
+		</value>
 	</member>
 	<member>
 		<name>folders</name>
-		<value><array><data>
-			<value><struct>
-				<member>
-				<name>group</name>
-				<value><struct>
-					<member>
-						<name>name</name>
-						<value><string>2531_test_group_633</string></value>
-					</member>
-					<member>
-						<name>id</name>
-						<value><int>116</int></value>
-					</member>
-				</struct></value>
-			</member>
-				<member>
-				<name>name</name>
-				<value><string>2531_testfolder_438</string></value>
-			</member>
-			<member>
-				<name>id</name>
-				<value><int>259</int></value>
-			</member>
-		  </struct></value>
-		</data></array></value>
+		<value>
+			<array>
+				<data>
+					<value>
+						<struct>
+							<member>
+								<name>group</name>
+								<value>
+									<struct>
+										<member>
+											<name>name</name>
+											<value>
+												<string>2531_test_group_633</string>
+											</value>
+										</member>
+										<member>
+											<name>id</name>
+											<value>
+												<int>116</int>
+											</value>
+										</member>
+									</struct>
+								</value>
+							</member>
+							<member>
+								<name>name</name>
+								<value>
+									<string>2531_testfolder_438</string>
+								</value>
+							</member>
+							<member>
+								<name>id</name>
+								<value>
+									<int>259</int>
+								</value>
+							</member>
+						</struct>
+					</value>
+				</data>
+			</array>
+		</value>
 	</member>
 	<member>
 		<name>api_status</name>
-		<value><int>200</int></value>
+		<value>
+			<int>200</int>
+		</value>
 	</member>
 	<member>
 		<name>pager</name>
-		<value><struct>
-			<member>
-				<name>total_entries</name>
-				<value><int>1</int></value>
-			</member>
-			<member>
-				<name>current_page</name>
-				<value><int>1</int></value>
-			</member>
-			<member>
-				<name>entries_per_page</name>
-				<value><int>25</int></value>
-			</member>
-		</struct></value>
+		<value>
+			<struct>
+				<member>
+					<name>total_entries</name>
+					<value>
+						<int>1</int>
+					</value>
+				</member>
+				<member>
+					<name>current_page</name>
+					<value>
+						<int>1</int>
+					</value>
+				</member>
+				<member>
+					<name>entries_per_page</name>
+					<value>
+						<int>25</int>
+					</value>
+				</member>
+			</struct>
+		</value>
 	</member>
 </struct>

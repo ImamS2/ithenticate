@@ -15,9 +15,7 @@ class Ithenticate extends Api_Controller
 	protected $check_only; /* status cek login, dicek saja tanpa simpan sid atau disimpan sidnya */
 	protected $api_status; /* status response dari api ithenticate */
 	protected $messages; /* pesan response dari api ithenticate */
-
-	protected $name_group_folders; /* nama group folder yang akan di tambahkan */
-	protected $id_group_folder; /* id group folder, yang nampung folder lainnya */
+	protected $response_timestamp; /* waktu response dibalas dari api ithenticate */
 
 	function __construct()
 	{
@@ -104,70 +102,7 @@ class Ithenticate extends Api_Controller
 	public function login($remethod = FALSE)
 	{
 		if ($remethod === FALSE) {
-			$xml = $this->pre_request("login");
-			if (!empty($xml)) {
-				$member = $this->send_request($xml);
-				// var_dump($member);
-				if (isset($member) && !empty($member)) {
-					$response = $this->Api_account_model->ithenticate_response($member);
-					if (isset($response) && !empty($response) && (is_object($response) || is_array($response))) {
-						if (array_key_exists("api_status", $response)) {
-							$api_status = $response->api_status;
-						}
-						if (array_key_exists("messages", $response)) {
-							$messages = $response->messages;
-						}
-						if (array_key_exists("errors", $response)) {
-							$errors = $response->errors;
-						}
-						if (array_key_exists("sid", $response)) {
-							$sid = $response->sid;
-						}
-						if (array_key_exists("response_timestamp", $response)) {
-							$response_timestamp = $response->response_timestamp;
-						}
-						if (array_key_exists("status", $response)) {
-							$status = $response->status;
-						}
-					}
-					// pre($response_timestamp);
-					// pre($status);
-					// pre($api_status);
-					if (isset($api_status) && isset($status) && !empty($status) && !empty($api_status)) {
-						switch ($api_status) {
-							case "200":
-								// pre($sid);
-								if (isset($messages) && !empty($messages)) {
-									return $messages;
-								}
-								if (isset($sid) && !empty($sid)) {
-									$this->sid = $sid;
-								}
-								if ($this->check_only === TRUE) {
-									return true;
-								} else {
-									return $this->Api_account_model->edit_account_data($this->id_account,array("sid" => $sid,"response_timestamp"=>$response_timestamp));
-								}
-								break;
-
-							case "401":
-								// pre($messages);
-								// $this->load->model("Settings_model");
-								// $this->Settings_model->get_manual();
-								return $messages;
-								// ganti ke manual
-								break;
-
-							case "500":
-								return $errors;
-								break;
-
-							default:
-								break;
-						}
-					}
-				}
-			}
+			return $this->_request_api("login");
 		} elseif (isset($remethod) && is_string($remethod)) {
 			// pre($remethod);
 			$login = $this->login();
@@ -175,14 +110,6 @@ class Ithenticate extends Api_Controller
 				switch ($remethod) {
 					case "account_get":
 						return $this->account_get();
-						break;
-
-					case "group_folder_add":
-						return $this->group_folder_add($this->name_group_folders);
-						break;
-
-					case "get_folder":
-						return $this->get_folder($this->id_group_folder);
 						break;
 
 					case "list_group_folders":
@@ -198,254 +125,12 @@ class Ithenticate extends Api_Controller
 
 	public function account_get()
 	{
-		$xml = $this->pre_request("account_get");
-		if (!empty($xml)) {
-			$data = $this->send_request($xml);
-			// pre($data);
-			if (isset($data) && !empty($data)) {
-				$response = $this->Api_account_model->ithenticate_response($data);
-				// pre($response);
-				if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
-					if (array_key_exists("status", $response)) {
-						$status = $response->status;
-					}
-					if (array_key_exists("api_status", $response)) {
-						$api_status = $response->api_status;
-					}
-					if (array_key_exists("response_timestamp", $response)) {
-						$response_timestamp = $response->response_timestamp;
-					}
-					if (array_key_exists("sid", $response)) {
-						$sid = $response->sid;
-					}
-					if (isset($api_status) && !empty($api_status) && isset($status) && !empty($status)) {
-						switch ($api_status) {
-							case "200":
-								if (array_key_exists("account", $response)) {
-									$account = $response->account;
-								}
-								// pre($account);
-								$this->sid = $sid;
-								return $account;
-								break;
-
-							case "401":
-								if (array_key_exists("messages", $response)) {
-									$messages = $response->messages;
-								}
-								switch ($messages) {
-									case "Failed to provide authenticated sid":
-										// pre($messages);
-										return $this->login("account_get");
-										break;
-									
-									default:
-										return $messages;
-										break;
-								}
-								break;
-							
-							default:
-								break;
-						}
-					}
-				}
-			}
-		}
+		return $this->_request_api("account_get");
 	}
 
 	public function list_group_folders()
 	{
-		$xml = $this->pre_request("list_group_folders");
-		if (!empty($xml)) {
-			$data = $this->send_request($xml);
-			pre($data);
-			if (isset($data) && !empty($data)) {
-				$response = $this->Api_account_model->ithenticate_response($data);
-				// pre($response);
-				if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
-					if (array_key_exists("status", $response)) {
-						$status = $response->status;
-					}
-					if (array_key_exists("api_status", $response)) {
-						$api_status = $response->api_status;
-					}
-					if (array_key_exists("response_timestamp", $response)) {
-						$response_timestamp = $response->response_timestamp;
-					}
-					if (array_key_exists("sid", $response)) {
-						$sid = $response->sid;
-					}
-					if (isset($api_status) && !empty($api_status) && isset($status) && !empty($status)) {
-						switch ($api_status) {
-							case "200":
-								break;
-
-							case "404":
-								if (array_key_exists("errors", $response)) {
-									$errors = $response->errors;
-								}
-								return $errors;
-								break;
-
-							case "401":
-								if (array_key_exists("messages", $response)) {
-									$messages = $response->messages;
-								}
-								switch ($messages) {
-									case "Failed to provide authenticated sid":
-										// pre($messages);
-										return $this->login("group_folder_add");
-										break;
-									
-									default:
-										return $messages;
-										break;
-								}
-								break;
-							
-							default:
-								break;
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	public function group_folder_add($nama = NULL)
-	{
-		$nama = isset($nama) ? $nama : $this->name_group_folders;
-		if (!empty($nama)) {
-			$params = array(
-				"name" => $nama,
-			);
-			$xml = $this->pre_request("group_folder_add",$params);
-			if (!empty($xml)) {
-				$data = $this->send_request($xml);
-				// pre($data);
-				if (isset($data) && !empty($data)) {
-					$response = $this->Api_account_model->ithenticate_response($data);
-					// pre($response);
-					if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
-						if (array_key_exists("status", $response)) {
-							$status = $response->status;
-						}
-						if (array_key_exists("api_status", $response)) {
-							$api_status = $response->api_status;
-						}
-						if (array_key_exists("response_timestamp", $response)) {
-							$response_timestamp = $response->response_timestamp;
-						}
-						if (array_key_exists("sid", $response)) {
-							$sid = $response->sid;
-						}
-						if (isset($api_status) && !empty($api_status) && isset($status) && !empty($status)) {
-							switch ($api_status) {
-								case "200":
-									if (array_key_exists("messages", $response)) {
-										$messages = $response->messages;
-									}
-									if (array_key_exists("id", $response)) {
-										$id = $response->id;
-									}
-									$this->sid = $sid;
-									return $id;
-									break;
-
-								case "401":
-									if (array_key_exists("messages", $response)) {
-										$messages = $response->messages;
-									}
-									switch ($messages) {
-										case "Failed to provide authenticated sid":
-											// pre($messages);
-											return $this->login("group_folder_add");
-											break;
-										
-										default:
-											return $messages;
-											break;
-									}
-									break;
-								
-								default:
-									break;
-							}
-						}
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	public function get_folder($id_group_folder = NULL)
-	{
-		$id_group_folder = isset($id_group_folder) ? $id_group_folder : $this->id_group_folder;
-		if (!empty($id_group_folder)) {
-			$params = array(
-				"id"=>$id_group_folder,
-			);
-			$xml = $this->pre_request("get_folder",$params);
-			// pre($xml);
-			if (!empty($xml)) {
-				$data = $this->send_request($xml);
-				pre($data);
-				if (isset($data) && !empty($data)) {
-					$response = $this->Api_account_model->ithenticate_response($data);
-					// pre($response);
-					if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
-						if (array_key_exists("status", $response)) {
-							$status = $response->status;
-						}
-						if (array_key_exists("api_status", $response)) {
-							$api_status = $response->api_status;
-						}
-						if (array_key_exists("response_timestamp", $response)) {
-							$response_timestamp = $response->response_timestamp;
-						}
-						if (array_key_exists("sid", $response)) {
-							$sid = $response->sid;
-						}
-						if (isset($api_status) && !empty($api_status) && isset($status) && !empty($status)) {
-							switch ($api_status) {
-								case "200":
-									break;
-
-								case "404":
-									if (array_key_exists("errors", $response)) {
-										$errors = $response->errors;
-									}
-									return $errors;
-									break;
-
-								case "401":
-									if (array_key_exists("messages", $response)) {
-										$messages = $response->messages;
-									}
-									switch ($messages) {
-										case "Failed to provide authenticated sid":
-											// pre($messages);
-											return $this->login("group_folder_add");
-											break;
-										
-										default:
-											return $messages;
-											break;
-									}
-									break;
-								
-								default:
-									break;
-							}
-						}
-					}
-				}
-			}
-		}
-		return false;
+		return $this->_request_api("list_group_folders");
 	}
 
 	private function pre_request($method,$params=[])
@@ -553,7 +238,7 @@ class Ithenticate extends Api_Controller
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 
 		$data = $this->Api_account_model->curl_request($ch,"Ithenticate");
-		// pre($data);
+		// var_dump($data);
 		if ($data !== false) {
 			return $data;
 		}
@@ -572,5 +257,150 @@ class Ithenticate extends Api_Controller
 		//  exit();
 		// }
 		// curl_close($ch);
+	}
+
+	private function update_sid($method, $sid = NULL)
+	{
+		if (isset($sid) && !empty($sid)) {
+			$this->sid = $sid;
+			$update_sid = array(
+				"sid" => $sid,
+				"response_timestamp" => $this->response_timestamp,
+			);
+			switch ($method) {
+				case "login":
+					if ($this->check_only === TRUE) {
+						return true;
+					} else {
+						return $this->Api_account_model->edit_account_data($this->id_account,$update_sid);
+					}
+					break;
+				
+				default:
+					$this->Api_account_model->edit_account_data($this->id_account,$update_sid);
+					break;
+			}
+		}
+		return false;
+	}
+
+	private function _request_api($method,$params = [])
+	{
+		if (isset($method) && !empty($method)) {
+			$xml = $this->pre_request($method,$params);
+			if (!empty($xml)) {
+				$data = $this->send_request($xml);
+				if (isset($data) && !empty($data)) {
+					// pre($data);
+					$response = $this->Api_account_model->ithenticate_response($data);
+					if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
+						if (array_key_exists("api_status", $response)) {
+							$api_status = $response->api_status;
+						}
+						if (array_key_exists("messages", $response)) {
+							$messages = $response->messages;
+						}
+						if (array_key_exists("errors", $response)) {
+							$errors = $response->errors;
+						}
+						if (array_key_exists("sid", $response)) {
+							$sid = $response->sid;
+						}
+						if (array_key_exists("response_timestamp", $response)) {
+							$response_timestamp = $response->response_timestamp;
+							$this->response_timestamp = $response_timestamp;
+						}
+						if (array_key_exists("status", $response)) {
+							$status = $response->status;
+						}
+						if (isset($api_status) && isset($status) && !empty($status) && !empty($api_status)) {
+							switch ($api_status) {
+								case "200": /* success, may contain message but no error */
+									switch ($method) {
+										case "login":
+											// pre($sid);
+											if (isset($messages) && !empty($messages)) {
+												return $messages;
+											}
+											$this->update_sid($method,$sid);
+											break;
+
+										case "account_get":
+											if (array_key_exists("account", $response)) {
+												$account = $response->account;
+											}
+											// pre($account);
+											// pre($sid);
+											$this->update_sid($method,$sid);
+											return $account;
+											break;
+
+										case "list_group_folders":
+											if (array_key_exists("groups", $response)) {
+												$groups = $response->groups;
+											}
+											// pre($groups);
+											// pre($sid);
+											$this->update_sid($method,$sid);
+											return $groups;
+											break;
+
+										default:
+											break;
+									}
+									break;
+
+								case "401": /*  request failed to provide an authenticated session id (sid) for the resource */
+									switch ($method) {
+										case "login":
+											// pre($messages);
+											// $this->load->model("Settings_model");
+											// $this->Settings_model->get_manual();
+											return $messages;
+											// ganti ke manual
+											break;
+
+										default:
+											switch ($messages) {
+												case "Failed to provide authenticated sid":
+													// pre($messages);
+													return $this->login($method);
+													break;
+												
+												default:
+													return $messages;
+													break;
+											}
+											break;
+									}
+									break;
+
+								case "403": /* access to the requested resource is not authorized */
+									break;
+
+								case "404": /* requested resource was not found */
+									break;
+
+								case "500": /* error in the request, response payload may contain errors or messages */
+									switch ($method) {
+										case "login":
+											return $errors;
+											break;
+
+										default:
+											# code...
+											break;
+									}
+									break;
+
+								default:
+									break;
+							}
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 }
