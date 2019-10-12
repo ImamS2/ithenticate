@@ -333,7 +333,7 @@ class Ithenticate extends Api_Controller
 											if (isset($messages) && !empty($messages)) {
 												return $messages;
 											}
-											$this->update_sid($method,$sid);
+											return $this->update_sid($method,$sid);
 											break;
 
 										case "account_get":
@@ -409,6 +409,7 @@ class Ithenticate extends Api_Controller
 											break;
 
 										default:
+											return $errors;
 											break;
 									}
 									break;
