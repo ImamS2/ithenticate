@@ -497,6 +497,9 @@ class Api_account_model extends MY_Model
 						$return->folder = $folder;
 						break;
 
+					case "document":
+						break;
+
 					default:
 						$response_timestamp;
 						$status;

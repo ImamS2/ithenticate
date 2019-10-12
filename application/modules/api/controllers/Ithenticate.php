@@ -17,6 +17,8 @@ class Ithenticate extends Api_Controller
 	protected $messages; /* pesan response dari api ithenticate */
 	protected $response_timestamp; /* waktu response dibalas dari api ithenticate */
 
+	protected $id_folder; /* id folder di server ithenticate */
+
 	function __construct()
 	{
 		parent::__construct();
@@ -105,7 +107,7 @@ class Ithenticate extends Api_Controller
 			return $this->_request_api("login");
 		} elseif (isset($remethod) && is_string($remethod)) {
 			// pre($remethod);
-			$login = $this->login();
+			$login = $this->_request_api("login");
 			if ($login === TRUE) {
 				switch ($remethod) {
 					case "account_get":
@@ -300,7 +302,7 @@ class Ithenticate extends Api_Controller
 			if (!empty($xml)) {
 				$data = $this->send_request($xml);
 				if (isset($data) && !empty($data)) {
-					// pre($data);
+					pre($data);
 					$response = $this->Api_account_model->ithenticate_response($data);
 					if (isset($response) && !empty($response) && (is_array($response) || is_object($response))) {
 						if (array_key_exists("api_status", $response)) {

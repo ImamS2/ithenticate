@@ -1,0 +1,639 @@
+Array
+(
+    [0] => Array
+        (
+            [name] => documents
+            [value] => Array
+                (
+                    [array] => Array
+                        (
+                            [data] => Array
+                                (
+                                    [value] => Array
+                                        (
+                                            [struct] => Array
+                                                (
+                                                    [member] => Array
+                                                        (
+                                                            [0] => Array
+                                                                (
+                                                                    [name] => author_last
+                                                                    [value] => Array
+                                                                        (
+                                                                            [string] => Array
+                                                                                (
+                                                                                )
+
+                                                                        )
+
+                                                                )
+
+                                                            [1] => Array
+                                                                (
+                                                                    [name] => uploaded_time
+                                                                    [value] => Array
+                                                                        (
+                                                                            [dateTime.iso8601] => 2019-07-15T03:31:13Z
+                                                                        )
+
+                                                                )
+
+                                                            [2] => Array
+                                                                (
+                                                                    [name] => id
+                                                                    [value] => Array
+                                                                        (
+                                                                            [int] => 48701974
+                                                                        )
+
+                                                                )
+
+                                                            [3] => Array
+                                                                (
+                                                                    [name] => percent_match
+                                                                    [value] => Array
+                                                                        (
+                                                                            [int] => 99
+                                                                        )
+
+                                                                )
+
+                                                            [4] => Array
+                                                                (
+                                                                    [name] => is_pending
+                                                                    [value] => Array
+                                                                        (
+                                                                            [int] => 0
+                                                                        )
+
+                                                                )
+
+                                                            [5] => Array
+                                                                (
+                                                                    [name] => author_first
+                                                                    [value] => Array
+                                                                        (
+                                                                            [string] => Array
+                                                                                (
+                                                                                )
+
+                                                                        )
+
+                                                                )
+
+                                                            [6] => Array
+                                                                (
+                                                                    [name] => title
+                                                                    [value] => Array
+                                                                        (
+                                                                            [string] => 2css-tutorial-02.pdf
+                                                                        )
+
+                                                                )
+
+                                                            [7] => Array
+                                                                (
+                                                                    [name] => processed_time
+                                                                    [value] => Array
+                                                                        (
+                                                                            [dateTime.iso8601] => 2019-07-15T03:31:27Z
+                                                                        )
+
+                                                                )
+
+                                                        )
+
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [1] => Array
+        (
+            [name] => response_timestamp
+            [value] => Array
+                (
+                    [dateTime.iso8601] => 2019-10-12T17:32:47Z
+                )
+
+        )
+
+    [2] => Array
+        (
+            [name] => pager
+            [value] => Array
+                (
+                    [struct] => Array
+                        (
+                            [member] => Array
+                                (
+                                    [0] => Array
+                                        (
+                                            [name] => entries_per_page
+                                            [value] => Array
+                                                (
+                                                    [int] => 25
+                                                )
+
+                                        )
+
+                                    [1] => Array
+                                        (
+                                            [name] => total_entries
+                                            [value] => Array
+                                                (
+                                                    [int] => 1
+                                                )
+
+                                        )
+
+                                    [2] => Array
+                                        (
+                                            [name] => current_page
+                                            [value] => Array
+                                                (
+                                                    [int] => 1
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [3] => Array
+        (
+            [name] => status
+            [value] => Array
+                (
+                    [int] => 200
+                )
+
+        )
+
+    [4] => Array
+        (
+            [name] => api_status
+            [value] => Array
+                (
+                    [int] => 200
+                )
+
+        )
+
+    [5] => Array
+        (
+            [name] => folder
+            [value] => Array
+                (
+                    [struct] => Array
+                        (
+                            [member] => Array
+                                (
+                                    [0] => Array
+                                        (
+                                            [name] => group
+                                            [value] => Array
+                                                (
+                                                    [struct] => Array
+                                                        (
+                                                            [member] => Array
+                                                                (
+                                                                    [0] => Array
+                                                                        (
+                                                                            [name] => name
+                                                                            [value] => Array
+                                                                                (
+                                                                                    [string] => My Folders
+                                                                                )
+
+                                                                        )
+
+                                                                    [1] => Array
+                                                                        (
+                                                                            [name] => id
+                                                                            [value] => Array
+                                                                                (
+                                                                                    [int] => 1264712
+                                                                                )
+
+                                                                        )
+
+                                                                )
+
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [1] => Array
+                                        (
+                                            [name] => id
+                                            [value] => Array
+                                                (
+                                                    [int] => 1664773
+                                                )
+
+                                        )
+
+                                    [2] => Array
+                                        (
+                                            [name] => exclude_small_matches
+                                            [value] => Array
+                                                (
+                                                    [int] => 0
+                                                )
+
+                                        )
+
+                                    [3] => Array
+                                        (
+                                            [name] => exclude_abstracts
+                                            [value] => Array
+                                                (
+                                                    [int] => 0
+                                                )
+
+                                        )
+
+                                    [4] => Array
+                                        (
+                                            [name] => collections
+                                            [value] => Array
+                                                (
+                                                    [array] => Array
+                                                        (
+                                                            [data] => Array
+                                                                (
+                                                                    [value] => Array
+                                                                        (
+                                                                            [0] => Array
+                                                                                (
+                                                                                    [int] => 4
+                                                                                )
+
+                                                                            [1] => Array
+                                                                                (
+                                                                                    [int] => 780
+                                                                                )
+
+                                                                            [2] => Array
+                                                                                (
+                                                                                    [int] => 1
+                                                                                )
+
+                                                                            [3] => Array
+                                                                                (
+                                                                                    [int] => 179
+                                                                                )
+
+                                                                            [4] => Array
+                                                                                (
+                                                                                    [int] => 2
+                                                                                )
+
+                                                                        )
+
+                                                                )
+
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [5] => Array
+                                        (
+                                            [name] => exclude_percent
+                                            [value] => Array
+                                                (
+                                                    [int] => 0
+                                                )
+
+                                        )
+
+                                    [6] => Array
+                                        (
+                                            [name] => collection_detail
+                                            [value] => Array
+                                                (
+                                                    [array] => Array
+                                                        (
+                                                            [data] => Array
+                                                                (
+                                                                    [value] => Array
+                                                                        (
+                                                                            [0] => Array
+                                                                                (
+                                                                                    [struct] => Array
+                                                                                        (
+                                                                                            [member] => Array
+                                                                                                (
+                                                                                                    [0] => Array
+                                                                                                        (
+                                                                                                            [name] => id
+                                                                                                            [value] => Array
+                                                                                                                (
+                                                                                                                    [int] => 4
+                                                                                                                )
+
+                                                                                                        )
+
+                                                                                                    [1] => Array
+                                                                                                        (
+                                                                                                            [name] => name
+                                                                                                            [value] => Array
+                                                                                                                (
+                                                                                                                    [string] => Crossref
+                                                                                                                )
+
+                                                                                                        )
+
+                                                                                                )
+
+                                                                                        )
+
+                                                                                )
+
+                                                                            [1] => Array
+                                                                                (
+                                                                                    [struct] => Array
+                                                                                        (
+                                                                                            [member] => Array
+                                                                                                (
+                                                                                                    [0] => Array
+                                                                                                        (
+                                                                                                            [name] => name
+                                                                                                            [value] => Array
+                                                                                                                (
+                                                                                                                    [string] => Crossref Posted Content
+                                                                                                                )
+
+                                                                                                        )
+
+                                                                                                    [1] => Array
+                                                                                                        (
+                                                                                                            [name] => id
+                                                                                                            [value] => Array
+                                                                                                                (
+                                                                                                                    [int] => 780
+                                                                                                                )
+
+                                                                                                        )
+
+                                                                                                )
+
+                                                                                        )
+
+                                                                                )
+
+                                                                            [2] => Array
+                                                                                (
+                                                                                    [struct] => Array
+                                                                                        (
+                                                                                            [member] => Array
+                                                                                                (
+                                                                                                    [0] => Array
+                                                                                                        (
+                                                                                                            [name] => name
+                                                                                                            [value] => Array
+                                                                                                                (
+                                                                                                                    [string] => Internet
+                                                                                                                )
+
+                                                                                                        )
+
+                                                                                                    [1] => Array
+                                                                                                        (
+                                                                                                            [name] => id
+                                                                                                            [value] => Array
+                                                                                                                (
+                                                                                                                    [int] => 1
+                                                                                                                )
+
+                                                                                                        )
+
+                                                                                                )
+
+                                                                                        )
+
+                                                                                )
+
+                                                                            [3] => Array
+                                                                                (
+                                                                                    [struct] => Array
+                                                                                        (
+                                                                                            [member] => Array
+                                                                                                (
+                                                                                                    [0] => Array
+                                                                                                        (
+                                                                                                            [name] => id
+                                                                                                            [value] => Array
+                                                                                                                (
+                                                                                                                    [int] => 179
+                                                                                                                )
+
+                                                                                                        )
+
+                                                                                                    [1] => Array
+                                                                                                        (
+                                                                                                            [name] => name
+                                                                                                            [value] => Array
+                                                                                                                (
+                                                                                                                    [string] => ProQuest
+                                                                                                                )
+
+                                                                                                        )
+
+                                                                                                )
+
+                                                                                        )
+
+                                                                                )
+
+                                                                            [4] => Array
+                                                                                (
+                                                                                    [struct] => Array
+                                                                                        (
+                                                                                            [member] => Array
+                                                                                                (
+                                                                                                    [0] => Array
+                                                                                                        (
+                                                                                                            [name] => id
+                                                                                                            [value] => Array
+                                                                                                                (
+                                                                                                                    [int] => 2
+                                                                                                                )
+
+                                                                                                        )
+
+                                                                                                    [1] => Array
+                                                                                                        (
+                                                                                                            [name] => name
+                                                                                                            [value] => Array
+                                                                                                                (
+                                                                                                                    [string] => Publications
+                                                                                                                )
+
+                                                                                                        )
+
+                                                                                                )
+
+                                                                                        )
+
+                                                                                )
+
+                                                                        )
+
+                                                                )
+
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [7] => Array
+                                        (
+                                            [name] => exclude_biblio
+                                            [value] => Array
+                                                (
+                                                    [int] => 0
+                                                )
+
+                                        )
+
+                                    [8] => Array
+                                        (
+                                            [name] => minimum_match_word_count
+                                            [value] => Array
+                                                (
+                                                    [int] => 0
+                                                )
+
+                                        )
+
+                                    [9] => Array
+                                        (
+                                            [name] => name
+                                            [value] => Array
+                                                (
+                                                    [string] => tes
+                                                )
+
+                                        )
+
+                                    [10] => Array
+                                        (
+                                            [name] => exclude_by_percent
+                                            [value] => Array
+                                                (
+                                                    [int] => 0
+                                                )
+
+                                        )
+
+                                    [11] => Array
+                                        (
+                                            [name] => limit_match_size
+                                            [value] => Array
+                                                (
+                                                    [int] => 0
+                                                )
+
+                                        )
+
+                                    [12] => Array
+                                        (
+                                            [name] => description
+                                            [value] => Array
+                                                (
+                                                    [string] => Array
+                                                        (
+                                                        )
+
+                                                )
+
+                                        )
+
+                                    [13] => Array
+                                        (
+                                            [name] => folder_group
+                                            [value] => Array
+                                                (
+                                                    [int] => 1264712
+                                                )
+
+                                        )
+
+                                    [14] => Array
+                                        (
+                                            [name] => exclude_quotes
+                                            [value] => Array
+                                                (
+                                                    [int] => 0
+                                                )
+
+                                        )
+
+                                    [15] => Array
+                                        (
+                                            [name] => setup_time
+                                            [value] => Array
+                                                (
+                                                    [dateTime.iso8601] => 2019-10-12T17:32:10Z
+                                                )
+
+                                        )
+
+                                    [16] => Array
+                                        (
+                                            [name] => exclude_word_count
+                                            [value] => Array
+                                                (
+                                                    [int] => 0
+                                                )
+
+                                        )
+
+                                    [17] => Array
+                                        (
+                                            [name] => exclude_methods
+                                            [value] => Array
+                                                (
+                                                    [int] => 0
+                                                )
+
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+    [6] => Array
+        (
+            [name] => sid
+            [value] => Array
+                (
+                    [string] => 40286e5b0747a18d41b62557471ac48bd13cdb95
+                )
+
+        )
+
+)
