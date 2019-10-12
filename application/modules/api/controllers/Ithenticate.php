@@ -116,6 +116,10 @@ class Ithenticate extends Api_Controller
 						return $this->list_group_folders();
 						break;
 
+					case "list_folders":
+						return $this->list_folders();
+						break;
+
 					default:
 						break;
 				}

@@ -18,22 +18,30 @@
 									<struct>
 										<member>
 											<name>name</name>
-											<value><string>6016_test_group_169</string></value>
+											<value>
+												<string>6016_test_group_169</string>
+											</value>
 										</member>
 										<member>
 											<name>id</name>
-											<value><int>123</int></value>
+											<value>
+												<int>123</int>
+											</value>
 										</member>
 									</struct>
 								</value>
 							</member>
 							<member>
 								<name>name</name>
-								<value><string>6016_testfolder_773</string></value>
+								<value>
+									<string>6016_testfolder_773</string>
+								</value>
 							</member>
 							<member>
 								<name>id</name>
-								<value><int>262</int></value>
+								<value>
+									<int>262</int>
+								</value>
 							</member>
 						</struct>
 					</value>

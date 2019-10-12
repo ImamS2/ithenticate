@@ -165,64 +165,6 @@ class Api_account_model extends MY_Model
 						}
 						break;
 
-					case "account":
-						$account = new stdClass();
-						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
-							foreach ($resp["value"] as $resp_account) {
-								$account_data = $resp_account["member"];
-								// $account = new stdClass();
-								foreach ($account_data as $accounts) {
-									// pre($accounts);
-									switch ($accounts["name"]) {
-										case "valid_until":
-											$valid_until = DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $accounts["value"]["dateTime.iso8601"])->format("Y-m-d H:i:s");
-											$account->valid_until = $valid_until;
-											break;
-
-										case "report_count":
-											$report_count = $accounts["value"]["int"];
-											$account->report_count = $report_count;
-											break;
-
-										case "report_limit":
-											$report_limit = $accounts["value"]["int"];
-											$account->report_limit = $report_limit;
-											break;
-
-										case "user_limit":
-											$user_limit = $accounts["value"]["int"];
-											$account->user_limit = $user_limit;
-											break;
-
-										case "user_count":
-											$user_count = $accounts["value"]["int"];
-											$account->user_count = $user_count;
-											break;
-
-										case "resubmission_limit":
-											$resubmission_limit = $accounts["value"]["int"];
-											$account->resubmission_limit = $resubmission_limit;
-											break;
-
-										case "resubmission_count":
-											$resubmission_count = $accounts["value"]["int"];
-											$account->resubmission_count = $resubmission_count;
-											break;
-
-										case "words_per_Document":
-											$words_per_Document = $accounts["value"]["int"];
-											$account->words_per_document = $words_per_Document;
-											break;
-										
-										default:
-											break;
-									}
-								}
-							}
-						}
-						$return->account = $account;
-						break;
-
 					case "messages":
 						$messages = "";
 						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
@@ -314,6 +256,64 @@ class Api_account_model extends MY_Model
 							}
 							$return->pager = $pager;
 						}
+						break;
+
+					case "account":
+						$account = new stdClass();
+						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
+							foreach ($resp["value"] as $resp_account) {
+								$account_data = $resp_account["member"];
+								// $account = new stdClass();
+								foreach ($account_data as $accounts) {
+									// pre($accounts);
+									switch ($accounts["name"]) {
+										case "valid_until":
+											$valid_until = DateTime::createFromFormat("Y-m-d\TH:i:s\Z", $accounts["value"]["dateTime.iso8601"])->format("Y-m-d H:i:s");
+											$account->valid_until = $valid_until;
+											break;
+
+										case "report_count":
+											$report_count = $accounts["value"]["int"];
+											$account->report_count = $report_count;
+											break;
+
+										case "report_limit":
+											$report_limit = $accounts["value"]["int"];
+											$account->report_limit = $report_limit;
+											break;
+
+										case "user_limit":
+											$user_limit = $accounts["value"]["int"];
+											$account->user_limit = $user_limit;
+											break;
+
+										case "user_count":
+											$user_count = $accounts["value"]["int"];
+											$account->user_count = $user_count;
+											break;
+
+										case "resubmission_limit":
+											$resubmission_limit = $accounts["value"]["int"];
+											$account->resubmission_limit = $resubmission_limit;
+											break;
+
+										case "resubmission_count":
+											$resubmission_count = $accounts["value"]["int"];
+											$account->resubmission_count = $resubmission_count;
+											break;
+
+										case "words_per_Document":
+											$words_per_Document = $accounts["value"]["int"];
+											$account->words_per_document = $words_per_Document;
+											break;
+										
+										default:
+											break;
+									}
+								}
+							}
+						}
+						$return->account = $account;
 						break;
 
 					case "groups":
@@ -450,6 +450,51 @@ class Api_account_model extends MY_Model
 							}
 						}
 						$return->folder_lists = $folder_lists;
+						break;
+
+					case "folder": /* untuk get folder, alias single folder alias siji tok foldere, kan gak pake "S" */
+						$folder = new stdClass();
+						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
+							$key = 0;
+							$folder_detail = new stdClass();
+							$folder_comps = $resp["value"]["struct"]["member"];
+							foreach ($folder_comps as $folder_comp) {
+								switch ($folder_comp["name"]) {
+									case "name":
+										$folder_detail->name = $folder_comp["value"]["string"];
+										break;
+
+									case "id":
+										$folder_detail->id = $folder_comp["value"]["int"];
+										break;
+
+									case "group":
+										$group_det_comps = $folder_comp["value"]["struct"]["member"];
+										$group_detail = new stdClass();
+										foreach ($group_det_comps as $group_det_comp) {
+											switch ($group_det_comp["name"]) {
+												case "name":
+													$group_detail->name = $group_det_comp["value"]["string"];
+													break;
+
+												case "id":
+													$group_detail->id = $group_det_comp["value"]["int"];
+													break;
+
+												default:
+													break;
+											}
+										}
+										$folder_detail->group = $group_detail;
+										break;
+
+									default:
+										break;
+								}
+							}
+							$folder->$key = $folder_detail;
+						}
+						$return->folder = $folder;
 						break;
 
 					default:
