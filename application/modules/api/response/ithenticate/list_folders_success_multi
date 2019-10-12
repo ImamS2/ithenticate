@@ -1,0 +1,478 @@
+Array
+(
+	[0] => Array
+		(
+			[name] => status
+			[value] => Array
+				(
+					[int] => 200
+				)
+
+		)
+
+	[1] => Array
+		(
+			[name] => sid
+			[value] => Array
+				(
+					[string] => 7673e75a05eae5f26010d8b1fa6c9428bd4a90dd
+				)
+
+		)
+
+	[2] => Array
+		(
+			[name] => api_status
+			[value] => Array
+				(
+					[int] => 200
+				)
+
+		)
+
+	[3] => Array
+		(
+			[name] => response_timestamp
+			[value] => Array
+				(
+					[dateTime.iso8601] => 2019-10-12T03:43:51Z
+				)
+
+		)
+
+	[4] => Array
+		(
+			[name] => folders
+			[value] => Array
+				(
+					[array] => Array
+						(
+							[data] => Array
+								(
+									[value] => Array
+										(
+											[0] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => name
+																			[value] => Array
+																				(
+																					[string] => ITATS
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 1633145
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => group
+																			[value] => Array
+																				(
+																					[struct] => Array
+																						(
+																							[member] => Array
+																								(
+																									[0] => Array
+																										(
+																											[name] => id
+																											[value] => Array
+																												(
+																													[int] => 1299328
+																												)
+
+																										)
+
+																									[1] => Array
+																										(
+																											[name] => name
+																											[value] => Array
+																												(
+																													[string] => denise.svane
+																												)
+
+																										)
+
+																								)
+
+																						)
+
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[1] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => group
+																			[value] => Array
+																				(
+																					[struct] => Array
+																						(
+																							[member] => Array
+																								(
+																									[0] => Array
+																										(
+																											[name] => id
+																											[value] => Array
+																												(
+																													[int] => 1299328
+																												)
+
+																										)
+
+																									[1] => Array
+																										(
+																											[name] => name
+																											[value] => Array
+																												(
+																													[string] => denise.svane
+																												)
+
+																										)
+
+																								)
+
+																						)
+
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 1633141
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => name
+																			[value] => Array
+																				(
+																					[string] => UINSA
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[2] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => name
+																			[value] => Array
+																				(
+																					[string] => UIT
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 1633144
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => group
+																			[value] => Array
+																				(
+																					[struct] => Array
+																						(
+																							[member] => Array
+																								(
+																									[0] => Array
+																										(
+																											[name] => id
+																											[value] => Array
+																												(
+																													[int] => 1299328
+																												)
+
+																										)
+
+																									[1] => Array
+																										(
+																											[name] => name
+																											[value] => Array
+																												(
+																													[string] => denise.svane
+																												)
+
+																										)
+
+																								)
+
+																						)
+
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[3] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => name
+																			[value] => Array
+																				(
+																					[string] => UNAIR
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 1633143
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => group
+																			[value] => Array
+																				(
+																					[struct] => Array
+																						(
+																							[member] => Array
+																								(
+																									[0] => Array
+																										(
+																											[name] => id
+																											[value] => Array
+																												(
+																													[int] => 1299328
+																												)
+
+																										)
+
+																									[1] => Array
+																										(
+																											[name] => name
+																											[value] => Array
+																												(
+																													[string] => denise.svane
+																												)
+
+																										)
+
+																								)
+
+																						)
+
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[4] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 1633142
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => group
+																			[value] => Array
+																				(
+																					[struct] => Array
+																						(
+																							[member] => Array
+																								(
+																									[0] => Array
+																										(
+																											[name] => name
+																											[value] => Array
+																												(
+																													[string] => denise.svane
+																												)
+
+																										)
+
+																									[1] => Array
+																										(
+																											[name] => id
+																											[value] => Array
+																												(
+																													[int] => 1299328
+																												)
+
+																										)
+
+																								)
+
+																						)
+
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => name
+																			[value] => Array
+																				(
+																					[string] => UNESA
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+											[5] => Array
+												(
+													[struct] => Array
+														(
+															[member] => Array
+																(
+																	[0] => Array
+																		(
+																			[name] => id
+																			[value] => Array
+																				(
+																					[int] => 1588047
+																				)
+
+																		)
+
+																	[1] => Array
+																		(
+																			[name] => group
+																			[value] => Array
+																				(
+																					[struct] => Array
+																						(
+																							[member] => Array
+																								(
+																									[0] => Array
+																										(
+																											[name] => id
+																											[value] => Array
+																												(
+																													[int] => 1264712
+																												)
+
+																										)
+
+																									[1] => Array
+																										(
+																											[name] => name
+																											[value] => Array
+																												(
+																													[string] => My Folders
+																												)
+
+																										)
+
+																								)
+
+																						)
+
+																				)
+
+																		)
+
+																	[2] => Array
+																		(
+																			[name] => name
+																			[value] => Array
+																				(
+																					[string] => My Documents
+																				)
+
+																		)
+
+																)
+
+														)
+
+												)
+
+										)
+
+								)
+
+						)
+
+				)
+
+		)
+
+)
