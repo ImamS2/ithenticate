@@ -320,9 +320,10 @@ class Api_account_model extends MY_Model
 						$groups = new stdClass();
 						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
 							$groups_comps = $resp["value"]["array"]["data"]["value"];
-							foreach ($groups_comps as $urut_folder => $groups_comp) {
-								$group_folder_comps = $groups_comp["struct"]["member"];
+							if (array_key_exists("struct", $groups_comps)) {
+								$group_folder_comps = $groups_comps["struct"]["member"];
 								$group_folders = new stdClass();
+								$key = 0;
 								foreach ($group_folder_comps as $group_folder_comp) {
 									switch ($group_folder_comp["name"]) {
 										case "name":
@@ -337,7 +338,27 @@ class Api_account_model extends MY_Model
 											break;
 									}
 								}
-								$groups->$urut_folder = $group_folders;
+								$groups->$key = $group_folders;
+							} else {
+								foreach ($groups_comps as $urut_folder => $groups_comp) {
+									$group_folder_comps = $groups_comp["struct"]["member"];
+									$group_folders = new stdClass();
+									foreach ($group_folder_comps as $group_folder_comp) {
+										switch ($group_folder_comp["name"]) {
+											case "name":
+												$group_folders->name = $group_folder_comp["value"]["string"];
+												break;
+
+											case "id":
+												$group_folders->id = $group_folder_comp["value"]["int"];
+												break;
+											
+											default:
+												break;
+										}
+									}
+									$groups->$urut_folder = $group_folders;
+								}
 							}
 						}
 						$return->groups = $groups;
@@ -346,15 +367,89 @@ class Api_account_model extends MY_Model
 					case "folders": /* untuk list folder, alias folder jamak, namanya juga folders pake "S" */
 						$folder_lists = new stdClass(); /* biar gak ketuker ama yang single, ane kasih nama folder lists */
 						if (isset($resp["value"]) && !empty($resp["value"]) && (is_object($resp["value"]) || is_array($resp["value"]))) {
+							$user_folders = $resp["value"]["array"]["data"]["value"];
+							if (array_key_exists("struct", $user_folders)) {
+								$folder_lists_comps = $user_folders["struct"]["member"];
+								$folders = new stdClass();
+								$key = 0;
+								foreach ($folder_lists_comps as $folder_comp) {
+									switch ($folder_comp["name"]) {
+										case "name":
+											$folders->name = $folder_comp["value"]["string"];
+											break;
+
+										case "id":
+											$folders->id = $folder_comp["value"]["int"];
+											break;
+
+										case "group":
+											$group_det_comps = $folder_comp["value"]["struct"]["member"];
+											$group_detail = new stdClass();
+											foreach ($group_det_comps as $group_det_comp) {
+												switch ($group_det_comp["name"]) {
+													case "name":
+														$group_detail->name = $group_det_comp["value"]["string"];
+														break;
+
+													case "id":
+														$group_detail->id = $group_det_comp["value"]["int"];
+														break;
+
+													default:
+														break;
+												}
+											}
+											$folders->group = $group_detail;
+											break;
+
+										default:
+											break;
+									}
+								}
+								$folder_lists->$key = $folders;
+							} else {
+								foreach ($user_folders as $key => $folders) {
+									$folder_lists_comps = $folders["struct"]["member"];
+									$folders = new stdClass();
+									foreach ($folder_lists_comps as $folder_comp) {
+										switch ($folder_comp["name"]) {
+											case "name":
+												$folders->name = $folder_comp["value"]["string"];
+												break;
+
+											case "id":
+												$folders->id = $folder_comp["value"]["int"];
+												break;
+
+											case "group":
+												$group_det_comps = $folder_comp["value"]["struct"]["member"];
+												$group_detail = new stdClass();
+												foreach ($group_det_comps as $group_det_comp) {
+													switch ($group_det_comp["name"]) {
+														case "name":
+															$group_detail->name = $group_det_comp["value"]["string"];
+															break;
+
+														case "id":
+															$group_detail->id = $group_det_comp["value"]["int"];
+															break;
+
+														default:
+															break;
+													}
+												}
+												$folders->group = $group_detail;
+												break;
+
+											default:
+												break;
+										}
+									}
+									$folder_lists->$key = $folders;
+								}
+							}
 						}
 						$return->folder_lists = $folder_lists;
-						break;
-
-					case "folder": /* untuk satu folder, alias single folder, kan gak pake "S" */
-						$folder = new stdClass();
-						if (isset($resp["value"]) && !empty($resp["value"]) && (is_array($resp["value"]) || is_object($resp["value"]))) {
-						}
-						$return->folder = $folder;
 						break;
 
 					default:

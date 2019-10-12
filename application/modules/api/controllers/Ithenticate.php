@@ -133,6 +133,11 @@ class Ithenticate extends Api_Controller
 		return $this->_request_api("list_group_folders");
 	}
 
+	public function list_folders()
+	{
+		return $this->_request_api("list_folders");
+	}
+
 	private function pre_request($method,$params=[])
 	{
 		$xml = "";
@@ -343,6 +348,16 @@ class Ithenticate extends Api_Controller
 											// pre($sid);
 											$this->update_sid($method,$sid);
 											return $groups;
+											break;
+
+										case "list_folders":
+											if (array_key_exists("folder_lists", $response)) {
+												$folders = $response->folder_lists;
+											}
+											// pre($folders);
+											// pre($sid);
+											$this->update_sid($method,$sid);
+											return $folders;
 											break;
 
 										default:
